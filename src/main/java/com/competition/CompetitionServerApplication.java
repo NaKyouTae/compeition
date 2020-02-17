@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.user.User;
-import com.competition.user.repository.UserRepository;
+import com.competition.jpa.model.User;
+import com.competition.jpa.repository.UserRepository;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class CompetitionServerApplication implements WebMvcConfigurer{
@@ -32,8 +32,8 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 		return (args) -> {
 			User u = new User();
 			u.setUsername("test");
-			u.setPassword("test");
-			u.setDate(LocalDateTime.now());
+			u.setPw("test");
+			u.setInsert_date(LocalDateTime.now());
 			
 			userRepository.save(u);
 		};

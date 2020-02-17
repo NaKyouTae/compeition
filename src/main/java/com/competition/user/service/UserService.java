@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.competition.jpa.model.User;
+import com.competition.jpa.repository.UserRepository;
 import com.competition.user.CustomUserDetails;
-import com.competition.user.User;
-import com.competition.user.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {

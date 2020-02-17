@@ -1,4 +1,4 @@
-package com.competition.user;
+package com.competition.jpa.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -35,11 +35,11 @@ public class User implements Serializable {
 
 	// 사용자 비밀번호
 	@Column
-	private String password;
+	private String pw;
 		
 	// 가입 일자 yyyy-mm-dd
 	@Column
-	private LocalDateTime date;
+	private LocalDateTime insert_date;
 	
 	@Column
 	private String role;
