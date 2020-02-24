@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,16 +24,19 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 	@Override
     public void addCorsMappings(CorsRegistry registry) {
     	registry.addMapping("/**")
-        .allowedOrigins("http://localhost:4300")
+        .allowedOrigins("http://localhost:4300", "http://localhost:8080")
         .allowCredentials(true).maxAge(3600);
     }
 	
 	@Bean
 	public CommandLineRunner runner(UserRepository userRepository) {
 		return (args) -> {
+			userRepository.deleteAll();
+			
 			User u = new User();
 			u.setUsername("test");
-			u.setPw("test");
+			u.setPassword(new BCryptPasswordEncoder().encode("test"));
+			u.setRole("ROLE_ADMIN");
 			u.setInsert_date(LocalDateTime.now());
 			
 			userRepository.save(u);
