@@ -20,8 +20,9 @@ spring:
 #      password: skrbxo12!@
   jpa:
     properties:
+      show_sql: true
       hibernate:
-        #show_sql: true
+        ddl-auto: true
         format_sql: true
         temp:
           use_jdbc_metadata_defaults: false

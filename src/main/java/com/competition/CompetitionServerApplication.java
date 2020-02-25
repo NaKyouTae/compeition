@@ -12,7 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
+import com.competition.jpa.model.UserMappingRole;
+import com.competition.jpa.repository.RoleRepository;
+import com.competition.jpa.repository.UserMappingRoleRepository;
 import com.competition.jpa.repository.UserRepository;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
@@ -33,18 +37,44 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 	private PasswordEncoder passwordEncoder;
 	
 	@Bean
-	public CommandLineRunner runner(UserRepository userRepository) {
+	public CommandLineRunner runner(UserRepository user, UserMappingRoleRepository mapping_role, RoleRepository role) {
 		return (args) -> {
-			userRepository.deleteAll();
+			{
+				user.deleteAll();
+				
+				User u = new User();
+				u.setUsername("test");
+				u.setPassword(passwordEncoder.encode("test"));
+				u.setInsert_date(LocalDateTime.now());
+				u.setChange_date(null);
+				user.save(u);
+			}
 			
-			User u = new User();
-			u.setUsername("test");
-			u.setPassword(passwordEncoder.encode("test"));
-			u.setPrincipal(passwordEncoder.encode("test"));
-			u.setRole("ROLE_ADMIN");
-			u.setInsert_date(LocalDateTime.now());
+			{
+				role.deleteAll();
+				
+				Role admin_role = new Role();
+				admin_role.setRolename("ROLE_ADMIN");
+				admin_role.setInsert_date(LocalDateTime.now());
+				admin_role.setChange_date(null);
+				role.save(admin_role);
+
+				Role user_role = new Role();
+				user_role.setRolename("ROLE_USER");
+				user_role.setInsert_date(LocalDateTime.now());
+				user_role.setChange_date(null);
+				role.save(user_role);
+			}
 			
-			userRepository.save(u);
+			{
+				mapping_role.deleteAll();
+				
+				UserMappingRole mapping = new UserMappingRole();
+				mapping.setRolename("ROLE_ADMIN");
+				mapping.setUsername("test");
+				mapping_role.save(mapping);
+			}
+			
 		};
     } 
 }

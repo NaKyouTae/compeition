@@ -1,7 +1,6 @@
 package com.competition.jpa.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,25 +19,16 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table
-public class User implements Serializable {
-	
-	private static final long serialVersionUID = 8840222557670123346L;
+public class UserMappingRole implements Serializable {
+
+	private static final long serialVersionUID = 2501922134200250902L;
 
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idx;
+	private String username;
 	
 	@Column
-	private String username;
+	private String rolename;
 
-	@Column
-	private String password;
-		
-	@Column
-	private LocalDateTime insert_date;
-
-	@Column
-	private LocalDateTime change_date;
-		
 }
