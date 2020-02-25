@@ -41,18 +41,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/service/**", "/user/**").permitAll()
 			.anyRequest().authenticated().and()
-			.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true).and()
 			.cors().disable()
-			.csrf().disable();	
+			.csrf().disable();
+		
+		http.logout()
+		.logoutUrl("/logour")
+		.logoutSuccessUrl("/")
+		.deleteCookies("JSESSIONID")
+		.invalidateHttpSession(true)
+		.clearAuthentication(true);
 		
 	}
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+		auth.eraseCredentials(false).userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 	
 	@Bean

@@ -9,10 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.user.AuthenticationToken;
@@ -23,24 +24,26 @@ import com.competition.user.service.UserService;
 public class LoginController {
 
 	@Autowired
-	private AuthenticationManager authenticationManaget;
+	private AuthenticationManager am;
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/login")
-	public AuthenticationToken Login(@ModelAttribute(name="username") String username, @ModelAttribute(name="password") String password, HttpSession session) {
-		Authentication token = new UsernamePasswordAuthenticationToken (username, password);
-		Authentication authentication = authenticationManaget.authenticate(token);
+	@CrossOrigin("*")
+	@PostMapping("/login")
+	public AuthenticationToken Login(@RequestParam(name="username", required = true) String username, @RequestParam(name="password", required = true) String password, HttpSession session) {
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken (username, password);
+		Authentication authentication = am.authenticate(token);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                  SecurityContextHolder.getContext());
-		
+		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+				SecurityContextHolder.getContext());
+	
 		UserDetails user = userService.loadUserByUsername(username);
 		System.out.println(new AuthenticationToken(user.getUsername(), user.getAuthorities(), session.getId()));
-        return new AuthenticationToken(user.getUsername(), user.getAuthorities(), session.getId());
+		
+		return new AuthenticationToken(user.getUsername(), user.getAuthorities(), session.getId());
 	}
 	
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public Object Logout() {
 		return new Object();
 	}

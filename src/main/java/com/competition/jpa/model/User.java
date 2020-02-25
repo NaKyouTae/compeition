@@ -36,6 +36,9 @@ public class User implements Serializable {
 	// 사용자 비밀번호
 	@Column
 	private String password;
+	
+	@Column
+	private String principal;
 		
 	// 가입 일자 yyyy-mm-dd
 	@Column
