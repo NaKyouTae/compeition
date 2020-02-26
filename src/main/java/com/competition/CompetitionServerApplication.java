@@ -12,9 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.competition.jpa.model.Menu;
 import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
 import com.competition.jpa.model.UserMappingRole;
+import com.competition.jpa.repository.MenuRepository;
 import com.competition.jpa.repository.RoleRepository;
 import com.competition.jpa.repository.UserMappingRoleRepository;
 import com.competition.jpa.repository.UserRepository;
@@ -37,7 +39,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 	private PasswordEncoder passwordEncoder;
 	
 	@Bean
-	public CommandLineRunner runner(UserRepository user, UserMappingRoleRepository mapping_role, RoleRepository role) {
+	public CommandLineRunner runner(UserRepository user, UserMappingRoleRepository mapping_role, RoleRepository role, MenuRepository menu) {
 		return (args) -> {
 			{
 				user.deleteAll();
@@ -73,6 +75,19 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				mapping.setRolename("ROLE_ADMIN");
 				mapping.setUsername("test");
 				mapping_role.save(mapping);
+			}
+			
+			{
+				menu.deleteAll();
+				
+				String[] menuStr = {"삼행시", "이행시", "공지사항", "명예의전당"};
+				
+				for(String s : menuStr) {					
+					Menu menuVO = new Menu();
+					menuVO.setMenuname(s);
+					menuVO.setInsert_date(LocalDateTime.now());
+					menu.save(menuVO);
+				}
 			}
 			
 		};

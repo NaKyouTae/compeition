@@ -20,9 +20,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table
-public class User implements Serializable {
-	
-	private static final long serialVersionUID = 1122861054404748086L;
+public class Menu implements Serializable {
+
+	private static final long serialVersionUID = -7965795983437805021L;
 
 	@Id
 	@Column
@@ -30,15 +30,9 @@ public class User implements Serializable {
 	private Long idx;
 	
 	@Column
-	private String username;
-
-	@Column
-	private String password;
-		
+	private String menuname;
+	
 	@Column
 	private LocalDateTime insert_date;
 
-	@Column
-	private LocalDateTime change_date;
-		
 }

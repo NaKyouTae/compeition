@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.competition.user.service.UserService;
 
@@ -45,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable();
 		
 		http.logout()
-		.logoutUrl("/logour")
+		.logoutUrl("/logout")
 		.logoutSuccessUrl("/")
 		.deleteCookies("JSESSIONID")
 		.invalidateHttpSession(true)
