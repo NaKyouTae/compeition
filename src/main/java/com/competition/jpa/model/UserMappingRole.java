@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table
+@Table(name ="USERMAPPINGROLE")
 public class UserMappingRole implements Serializable {
 
 	private static final long serialVersionUID = 1122861054404748086L;

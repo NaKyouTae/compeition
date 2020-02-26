@@ -1,6 +1,8 @@
 package com.competition;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -46,7 +48,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				
 				User u = new User();
 				u.setUsername("test");
-				u.setPassword(passwordEncoder.encode("test"));
+				u.setPw(passwordEncoder.encode("test"));
 				u.setInsert_date(LocalDateTime.now());
 				u.setChange_date(null);
 				user.save(u);
@@ -80,7 +82,11 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 			{
 				menu.deleteAll();
 				
-				String[] menuStr = {"삼행시", "이행시", "공지사항", "명예의전당"};
+				List<String> menuStr = new ArrayList<String>();
+				menuStr.add("삼행시");
+				menuStr.add("이행시");
+				menuStr.add("공지사항");
+				menuStr.add("명예의전당");
 				
 				for(String s : menuStr) {					
 					Menu menuVO = new Menu();

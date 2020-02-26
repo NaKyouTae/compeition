@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table
+@Table(name = "ROLE")
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1122861054404748086L;

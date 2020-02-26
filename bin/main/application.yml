@@ -3,27 +3,17 @@ server:
   servlet:
     context-path: /
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2console
   data:
-    h2db:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:file:D:/Zenith/h2 DB/competition/testdb;AUTO_SERVER=TRUE
-      username: test
-      password: 1234
-#    mariadb:
-#      jdbc-url: jdbc:mariadb://localhost:3306/competition?characterEncoding=UTF-8
-#      driver-class-name: org.mariadb.jdbc.Driver
-#      username: root
-#      password: skrbxo12!@
+    maria:
+      jdbc-url: jdbc:mariadb://localhost:3306/competition?useUnicode=yes\&characterEncoding=utf8
+      driver-class-name: org.mariadb.jdbc.Driver
+      username: root
+      password: skrbxo12!@
   jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: true
     properties:
-      show_sql: true
-      hibernate:
-        ddl-auto: true
+      hibernate:  
         format_sql: true
-        temp:
-          use_jdbc_metadata_defaults: false
-          generate-ddl: true
+    generate-ddl: true
