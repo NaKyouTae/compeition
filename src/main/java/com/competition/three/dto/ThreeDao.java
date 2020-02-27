@@ -1,4 +1,4 @@
-package com.competition.three.controller.dao;
+package com.competition.three.dto;
 
 import lombok.Data;
 

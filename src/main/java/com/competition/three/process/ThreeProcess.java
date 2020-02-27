@@ -1,4 +1,4 @@
-package com.competition.three.controller.process;
+package com.competition.three.process;
 
 import org.springframework.stereotype.Component;
 

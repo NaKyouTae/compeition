@@ -47,8 +47,8 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				user.deleteAll();
 				
 				User u = new User();
-				u.setUsername("test");
-				u.setPw(passwordEncoder.encode("test"));
+				u.setUsername("admin");
+				u.setPw(passwordEncoder.encode("skrbxo12!@"));
 				u.setInsert_date(LocalDateTime.now());
 				u.setChange_date(null);
 				user.save(u);
@@ -75,7 +75,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				
 				UserMappingRole mapping = new UserMappingRole();
 				mapping.setRolename("ROLE_ADMIN");
-				mapping.setUsername("test");
+				mapping.setUsername("admin");
 				mapping_role.save(mapping);
 			}
 			

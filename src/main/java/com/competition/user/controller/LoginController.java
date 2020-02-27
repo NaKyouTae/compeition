@@ -1,14 +1,13 @@
 package com.competition.user.controller;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.User;
 import com.competition.jpa.repository.UserRepository;
 import com.competition.user.AuthenticationToken;
@@ -42,10 +42,17 @@ public class LoginController {
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
-	public Object SignUp(@ModelAttribute(name = "signup") User user) {
+	public <T> ControllerResponse<Object> SignUp(@ModelAttribute(name = "signup") User user) {
+		ControllerResponse<Object> response = new ControllerResponse<Object>();
+
 		user.setInsert_date(LocalDateTime.now());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
+		user.setPw(passwordEncoder.encode(user.getPw()));
+		
+		response.setResultCode(HttpStatus.OK);
+		response.setMessage("Sing Up Success :)");
+		response.setResult(userRepository.save(user));
+		
+		return response;
 	}
 	
 	@CrossOrigin("*")
@@ -63,16 +70,18 @@ public class LoginController {
 	}
 	
 	@GetMapping("/logout")
-	public Object Logout(HttpServletRequest request, HttpServletResponse response) {
+	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("ResultCode", "OK");		
-		return map;
+		ControllerResponse<Object> res = new ControllerResponse<Object>();
+
+		res.setResultCode(HttpStatus.OK);
+		res.setMessage("LogOut Success :)");
+		return res;
 	}
 	
 }

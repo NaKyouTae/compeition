@@ -1,4 +1,4 @@
-package com.competition.three.controller.service;
+package com.competition.three.service;
 
 import org.springframework.stereotype.Service;
 
