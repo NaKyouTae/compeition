@@ -42,45 +42,67 @@ public class LoginController {
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
-	public <T> ControllerResponse<Object> SignUp(@ModelAttribute(name = "signup") User user) {
+	public <T> ControllerResponse<Object> SignUp(@ModelAttribute(name = "signup") User user) throws Exception {
 		ControllerResponse<Object> response = new ControllerResponse<Object>();
 
-		user.setInsert_date(LocalDateTime.now());
-		user.setPw(passwordEncoder.encode(user.getPw()));
-		
-		response.setResultCode(HttpStatus.OK);
-		response.setMessage("Sing Up Success :)");
-		response.setResult(userRepository.save(user));
+		try {
+			user.setInsert_date(LocalDateTime.now());
+			user.setPw(passwordEncoder.encode(user.getPw()));
+			
+			response.setResultCode(HttpStatus.OK);
+			response.setMessage("Sing Up Success :)");
+			response.setResult(userRepository.save(user));
+		}catch(Exception e) {
+			response.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			response.setMessage(e.getMessage());
+			response.setResult(null);
+		}
 		
 		return response;
 	}
 	
 	@CrossOrigin("*")
 	@PostMapping("/login")
-	public AuthenticationToken Login(@RequestParam(name="username", required = true) String username, @RequestParam(name="password", required = true) String password, HttpSession session) {
+	public ControllerResponse<AuthenticationToken> Login(@RequestParam(name="username", required = true) String username, @RequestParam(name="password", required = true) String password, HttpSession session) throws Exception {
+		ControllerResponse<AuthenticationToken> res = new ControllerResponse<AuthenticationToken>();
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken (username, password);
-		Authentication auth = am.authenticate(token);
-		SecurityContextHolder.getContext().setAuthentication(auth);
-		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-				SecurityContextHolder.getContext());
 		
-		System.out.println(new AuthenticationToken(username, auth.getAuthorities(), session.getId()));
+		try {
+			Authentication auth = am.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+					SecurityContextHolder.getContext());
+			
+			res.setMessage("Success Login :)");
+			res.setResult(new AuthenticationToken(username, auth.getAuthorities(), session.getId()));
+			res.setResultCode(HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
 		
-		return new AuthenticationToken(username, auth.getAuthorities(), session.getId());
+		return res;
 	}
 	
 	@GetMapping("/logout")
-	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		
+	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<Object>();
+		
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+			if (auth != null) {
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+			}
+			
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("LogOut Success :)");
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
 
-		res.setResultCode(HttpStatus.OK);
-		res.setMessage("LogOut Success :)");
 		return res;
 	}
 	
