@@ -5,7 +5,7 @@ server:
 spring:
   data:
     maria:
-      jdbc-url: jdbc:mariadb://localhost:3306/competition?useUnicode=yes\&characterEncoding=utf8
+      jdbc-url: jdbc:mariadb://localhost:3306/competition?useUnicode=yes&characterEncoding=UTF-8
       driver-class-name: org.mariadb.jdbc.Driver
       username: root
       password: skrbxo12!@

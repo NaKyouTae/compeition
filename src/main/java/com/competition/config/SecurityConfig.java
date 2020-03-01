@@ -25,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	UserService userService;
 	
 	@Bean
+	public JWTConfig jwtConfig() {
+		return new JWTConfig();
+	}
+	
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
@@ -42,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated().and()
 			.cors().disable()
 			.csrf().disable();
+		
+//		http.addFilterBefore(jwtConfig(), beforeFilter)
 		
 		http.logout()
 		.logoutUrl("/logout")
