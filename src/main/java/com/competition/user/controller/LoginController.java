@@ -27,6 +27,8 @@ import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.User;
 import com.competition.jpa.repository.UserRepository;
 import com.competition.user.AuthenticationToken;
+import com.competition.user.CustomUserDetails;
+import com.competition.util.JWTUtill;
 
 @RestController
 @RequestMapping("/user")
@@ -38,7 +40,8 @@ public class LoginController {
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+	@Autowired
+	private JWTUtill jwtUtill;
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
@@ -63,7 +66,9 @@ public class LoginController {
 	
 	@CrossOrigin("*")
 	@PostMapping("/login")
-	public ControllerResponse<AuthenticationToken> Login(@RequestParam(name="username", required = true) String username, @RequestParam(name="password", required = true) String password, HttpSession session) throws Exception {
+	public ControllerResponse<AuthenticationToken> Login(@RequestParam(name="username", required = true) String username,
+			@RequestParam(name="password", required = true) String password,
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		ControllerResponse<AuthenticationToken> res = new ControllerResponse<AuthenticationToken>();
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken (username, password);
 		
@@ -72,10 +77,15 @@ public class LoginController {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
 					SecurityContextHolder.getContext());
+			CustomUserDetails custom =  (CustomUserDetails) auth.getPrincipal();		
 			
+			if(custom.getUser() != null) {
+				String jwt = jwtUtill.getUserToken(request, response, custom.getUser());
+				response.addHeader("Authentication", jwt);
+			}
 			res.setMessage("Success Login :)");
-			res.setResult(new AuthenticationToken(username, auth.getAuthorities(), session.getId()));
 			res.setResultCode(HttpStatus.OK);
+			res.setResult(new AuthenticationToken(username, auth.getAuthorities(), session.getId()));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());

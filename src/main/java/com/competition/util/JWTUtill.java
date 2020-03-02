@@ -1,4 +1,4 @@
-package com.competition.config;
+package com.competition.util;
 
 import java.security.Key;
 import java.util.Date;
@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
+import org.springframework.stereotype.Component;
+
 import com.competition.jpa.model.User;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JWTConfig {
+@Component
+public class JWTUtill {
 	
 	private String secretKey = "competitionjwt";
 	

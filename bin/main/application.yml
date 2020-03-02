@@ -17,3 +17,9 @@ spring:
       hibernate:  
         format_sql: true
     generate-ddl: true
+security:
+  oauth2:
+    authorization:
+      token-key-access: isAuthenticated()
+    jwt:
+      key-uri: http://localhost:8080/oauth/token_key
