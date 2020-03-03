@@ -12,8 +12,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.competition.interceptor.JwtInterceptor;
 import com.competition.jpa.model.Menu;
 import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
@@ -36,6 +38,13 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
         .allowedOrigins("http://localhost:4300", "http://localhost:8080")
         .allowCredentials(true).maxAge(3600);
     }
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new JwtInterceptor())
+				.addPathPatterns("/service/**")
+				.excludePathPatterns("/user/**");
+	}
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

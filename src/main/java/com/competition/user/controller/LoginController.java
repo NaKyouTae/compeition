@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.User;
 import com.competition.jpa.repository.UserRepository;
+import com.competition.token.service.JwtService;
 import com.competition.user.AuthenticationToken;
 import com.competition.user.CustomUserDetails;
-import com.competition.util.JWTUtill;
 
 @RestController
 @RequestMapping("/user")
@@ -41,7 +41,7 @@ public class LoginController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
-	private JWTUtill jwtUtill;
+	private JwtService jwtUtill;
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
@@ -79,8 +79,8 @@ public class LoginController {
 					SecurityContextHolder.getContext());
 			CustomUserDetails custom =  (CustomUserDetails) auth.getPrincipal();		
 			
-			if(custom.getUser() != null) {
-				String jwt = jwtUtill.getUserToken(request, response, custom.getUser());
+			if(custom != null) {
+				String jwt = jwtUtill.createToken(request, response, custom);
 				response.addHeader("Authentication", jwt);
 			}
 			res.setMessage("Success Login :)");
