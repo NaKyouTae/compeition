@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.User;
 import com.competition.jpa.repository.UserRepository;
-import com.competition.token.service.JwtService;
+import com.competition.service.token.JwtService;
 import com.competition.user.AuthenticationToken;
 import com.competition.user.CustomUserDetails;
 

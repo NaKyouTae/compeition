@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.interceptor.JwtInterceptor;
+import com.competition.config.interceptor.JwtInterceptor;
 import com.competition.jpa.model.Menu;
 import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
