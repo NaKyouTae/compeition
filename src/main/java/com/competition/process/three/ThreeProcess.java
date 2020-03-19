@@ -25,6 +25,6 @@ public class ThreeProcess {
 		String now = LocalDateTime.now().format(format);
 		WeekWordDto dto = weekWordRepository.findByWord(now);
 		
-		return (T) threeRepository.findByWordIdx(dto.getIdx());
+		return (T) threeRepository.findByWordIdx(dto.idx());
 	}
 }

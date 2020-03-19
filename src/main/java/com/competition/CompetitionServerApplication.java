@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.config.interceptor.JwtInterceptor;
 import com.competition.jpa.model.Menu;
 import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
@@ -41,9 +40,9 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new JwtInterceptor())
-				.addPathPatterns("/service/**")
-				.excludePathPatterns("/user/**");
+//		registry.addInterceptor(new JwtInterceptor())
+//				.addPathPatterns("/service/**")
+//				.excludePathPatterns("/user/**");
 	}
 	
 	@Autowired

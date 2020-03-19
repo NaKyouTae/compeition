@@ -13,7 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ThreeTest {
 
 	@Test
@@ -25,8 +25,7 @@ public class ThreeTest {
 		
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		
-		headers.add("Authorization",
-		"Bearer sk_test_LGfiAFch0kEXI3aSqYrp25ON");
+		headers.add("Content-Type", "application/json");
 		
 		ResponseEntity<Object> re = rest.exchange(uri, HttpMethod.GET, new HttpEntity<Object>(headers), Object.class);
 		

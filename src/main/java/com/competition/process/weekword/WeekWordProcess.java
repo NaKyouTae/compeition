@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.repository.WeekWordRepository;
 
 @Component
@@ -18,6 +19,9 @@ public class WeekWordProcess {
 	public <T extends Object> T getWeekWords() {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		return (T) weekWordRepository.findByWord(now);
+		WeekWordDto result = weekWordRepository.findByWord(now);
+		
+		return (T) result;
 	}
+	
 }
