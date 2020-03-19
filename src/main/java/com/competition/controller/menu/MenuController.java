@@ -30,7 +30,7 @@ public class MenuController {
 		return (T) menuService.inMenu(menu);
 	}
 	
-	@PutMapping("/menus/{menu.idx}")
+	@PutMapping("/menus/{idx}")
 	public <T extends Object> T upMenu(@RequestBody MenuVO menu) throws Exception {
 		return (T) menuService.upMenu(menu);
 	}

@@ -7,17 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.competition.dto.weekword.WeekWordDto;
+import com.competition.jpa.model.WeekWord;
 import com.competition.jpa.repository.WeekWordRepository;
 import com.competition.jpa.repository.WeekWordRepository.test;
 
 @Component
+@SuppressWarnings("unchecked")
 public class WeekWordProcess {
 	
 	@Autowired
 	private WeekWordRepository weekWordRepository;
 	
-	@SuppressWarnings("unchecked")
-	public <T extends Object> T getWeekWords() {
+	public <T extends Object> T getWeekWords() throws Exception {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
 		test result = weekWordRepository.findByWord(now);
@@ -32,6 +33,16 @@ public class WeekWordProcess {
 		word.setEnd_date(result.getEnd_date());
 		
 		return (T) word;
+	}
+	
+	public <T extends Object> T inWord(WeekWord word) throws Exception {
+		return (T) weekWordRepository.save(word);
+	}
+	public <T extends Object> T upWord(WeekWord word) throws Exception {
+		return (T) weekWordRepository.save(word);
+	}
+	public void deWord(WeekWord word) throws Exception {
+		weekWordRepository.delete(word);
 	}
 	
 }
