@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.Nullable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -26,12 +28,14 @@ public class Menu implements Serializable {
 	private String idx;
 	
 	@Column
+	@Nullable
 	private String p_idx;
 	
 	@Column
 	private String title;
 	
 	@Column
+	@Nullable
 	private String url;
 	
 	@Column

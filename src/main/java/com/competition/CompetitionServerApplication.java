@@ -1,8 +1,6 @@
 package com.competition;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.jpa.model.Menu;
 import com.competition.jpa.model.Role;
 import com.competition.jpa.model.User;
 import com.competition.jpa.model.UserMappingRole;
@@ -85,25 +82,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				mapping.setRolename("ROLE_ADMIN");
 				mapping.setUsername("admin");
 				mapping_role.save(mapping);
-			}
-			
-			{
-				menu.deleteAll();
-				
-				List<String> menuStr = new ArrayList<String>();
-				menuStr.add("삼행시");
-				menuStr.add("이행시");
-				menuStr.add("공지사항");
-				menuStr.add("명예의전당");
-				
-				for(String s : menuStr) {					
-					Menu menuVO = new Menu();
-					menuVO.setMenuname(s);
-					menuVO.setInsert_date(LocalDateTime.now());
-					menu.save(menuVO);
-				}
-			}
-			
+			}			
 		};
     } 
 }
