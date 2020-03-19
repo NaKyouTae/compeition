@@ -6,9 +6,9 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.repository.ThreeRepository;
 import com.competition.jpa.repository.WeekWordRepository;
+import com.competition.jpa.repository.WeekWordRepository.test;
 
 @Component
 public class ThreeProcess {
@@ -23,8 +23,8 @@ public class ThreeProcess {
 	public <T extends Object> T getList() {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		WeekWordDto dto = weekWordRepository.findByWord(now);
+		test dto = weekWordRepository.findByWord(now);
 		
-		return (T) threeRepository.findByWordIdx(dto.idx());
+		return (T) threeRepository.findByWordIdx(dto.getIdx());
 	}
 }

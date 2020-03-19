@@ -7,5 +7,5 @@ import com.competition.jpa.model.Menu;
 
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-	Menu findByMenuname(String menuname);
+	Menu findByTitle(String menuname);
 }

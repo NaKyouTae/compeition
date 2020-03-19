@@ -1,12 +1,9 @@
 package com.competition.jpa.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -26,13 +23,18 @@ public class Menu implements Serializable {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idx;
+	private String idx;
 	
 	@Column
-	private String menuname;
+	private String p_idx;
 	
 	@Column
-	private LocalDateTime insert_date;
+	private String title;
+	
+	@Column
+	private String url;
+	
+	@Column
+	private String insert_date;
 
 }
