@@ -18,10 +18,14 @@ public class WeekWordProcess {
 	@Autowired
 	private WeekWordRepository weekWordRepository;
 	
-	public <T extends Object> T getWeekWords() throws Exception {
+	public <T extends Object> T getLists() throws Exception {
+		return (T) weekWordRepository.findAll();
+	}
+	
+	public <T extends Object> T getWeekWords(String group) throws Exception {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		test result = weekWordRepository.findByWord(now);
+		test result = weekWordRepository.findByWord(group, now);
 		
 		WeekWordDto word = new WeekWordDto();
 		

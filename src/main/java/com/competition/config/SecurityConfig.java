@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.competition.user.service.UserService;
+import com.competition.service.user.UserService;
 
 import lombok.AllArgsConstructor;
 

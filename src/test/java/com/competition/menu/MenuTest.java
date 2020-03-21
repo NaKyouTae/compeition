@@ -14,14 +14,18 @@ import org.springframework.web.client.RestTemplate;
 import com.competition.vo.menu.MenuVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @author nkt
+ * 2020-03-19 CRUD Completed
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SuppressWarnings("unused")
 public class MenuTest {
 
 	@Test
 	public void test() throws Exception {
-		seMenu();
-//		inMenu();
+//		seMenu();
+		inMenu();
 //		upMenu();
 //		deMenu();
 		seMenu();
@@ -49,9 +53,9 @@ public class MenuTest {
 		
 		MenuVO vo = new MenuVO();
 		
-		vo.setP_idx("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
-		vo.setTitle("사용자");
-		vo.setUrl("/user");
+		vo.setParent("f47ed1ff-74a2-4a3e-89bc-65e4e3c78489");
+		vo.setTitle("제시어");
+		vo.setUrl("/weekword");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(vo);
@@ -73,7 +77,7 @@ public class MenuTest {
 		MenuVO vo = new MenuVO();
 		
 		vo.setIdx("dc8f2773-66e9-4482-b4ec-8f3204f7c66b");
-		vo.setP_idx("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
+		vo.setParent("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
 		vo.setInsert_date("2020-03-19T16:57:28.349113500");
 		vo.setTitle("메뉴");
 		vo.setUrl("/menu");
@@ -98,7 +102,7 @@ public class MenuTest {
 		MenuVO vo = new MenuVO();
 		
 		vo.setIdx("367aebc8-9afc-428c-ab72-ba02f3a66cb0");
-		vo.setP_idx("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
+		vo.setParent("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
 		vo.setInsert_date("2020-03-19T16:59:48.825433700");
 		vo.setTitle("사용자");
 		vo.setUrl("/user");

@@ -1,12 +1,9 @@
 package com.competition.jpa.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -26,16 +23,15 @@ public class Role implements Serializable {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idx;
+	private String idx;
 	
 	@Column
 	private String rolename;
 	
 	@Column
-	private LocalDateTime insert_date;
+	private String insert_date;
 
 	@Column
-	private LocalDateTime change_date;
+	private String change_date;
 
 }

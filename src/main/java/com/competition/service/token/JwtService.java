@@ -13,8 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
-import com.competition.user.service.UserService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

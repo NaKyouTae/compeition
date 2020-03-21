@@ -1,4 +1,4 @@
-package com.competition.user.controller;
+package com.competition.controller.user;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ import com.competition.jpa.model.User;
 import com.competition.jpa.model.UserMappingRole;
 import com.competition.jpa.repository.UserMappingRoleRepository;
 import com.competition.jpa.repository.UserRepository;
+import com.competition.service.user.UserService;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -24,16 +25,19 @@ public class UserController {
 	UserRepository userRepository;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
 	UserMappingRoleRepository userMappingRoleRepository;
 	
-	@GetMapping("users")
-	public ControllerResponse<List<User>> Users() throws Exception {
+	@GetMapping("/lists")
+	public ControllerResponse<List<User>> getLists() throws Exception {
 		ControllerResponse<List<User>> res = new ControllerResponse<List<User>>();
 
 		try {
-			res.setResult(userRepository.findAll());
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get User Lists :) ");
+			res.setResult(userService.getLists());
 		} catch (Exception e) {
 			res.setResult(null);
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -43,7 +47,7 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping("userinfo")
+	@GetMapping("/userinfo")
 	public ControllerResponse<User> UserInfo(@ModelAttribute("username") String username) throws Exception {
 		ControllerResponse<User> res = new ControllerResponse<User>();
 
@@ -60,7 +64,7 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping("userrole")
+	@GetMapping("/userrole")
 	public ControllerResponse<List<UserMappingRole>> UserRole(@ModelAttribute("username") String username) throws Exception {
 		ControllerResponse<List<UserMappingRole>> res = new ControllerResponse<List<UserMappingRole>>();
 		

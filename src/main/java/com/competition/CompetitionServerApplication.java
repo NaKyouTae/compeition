@@ -1,6 +1,6 @@
 package com.competition;
 
-import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +20,7 @@ import com.competition.jpa.repository.MenuRepository;
 import com.competition.jpa.repository.RoleRepository;
 import com.competition.jpa.repository.UserMappingRoleRepository;
 import com.competition.jpa.repository.UserRepository;
+import com.competition.util.DateUtil;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class CompetitionServerApplication implements WebMvcConfigurer{
@@ -52,9 +53,10 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				user.deleteAll();
 				
 				User u = new User();
+				u.setIdx(UUID.randomUUID().toString());
 				u.setUsername("admin");
 				u.setPw(passwordEncoder.encode("skrbxo12!@"));
-				u.setInsert_date(LocalDateTime.now());
+				u.setInsert_date(DateUtil.now());
 				u.setChange_date(null);
 				user.save(u);
 			}
@@ -63,14 +65,16 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				role.deleteAll();
 				
 				Role admin_role = new Role();
+				admin_role.setIdx(UUID.randomUUID().toString());
 				admin_role.setRolename("ROLE_ADMIN");
-				admin_role.setInsert_date(LocalDateTime.now());
+				admin_role.setInsert_date(DateUtil.now());
 				admin_role.setChange_date(null);
 				role.save(admin_role);
 
 				Role user_role = new Role();
+				user_role.setIdx(UUID.randomUUID().toString());
 				user_role.setRolename("ROLE_USER");
-				user_role.setInsert_date(LocalDateTime.now());
+				user_role.setInsert_date(DateUtil.now());
 				user_role.setChange_date(null);
 				role.save(user_role);
 			}

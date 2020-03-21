@@ -1,14 +1,12 @@
 package com.competition.process.three;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.competition.jpa.repository.ThreeRepository;
 import com.competition.jpa.repository.WeekWordRepository;
 import com.competition.jpa.repository.WeekWordRepository.test;
+import com.competition.util.DateUtil;
 
 @Component
 public class ThreeProcess {
@@ -21,9 +19,7 @@ public class ThreeProcess {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Object> T getList() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String now = LocalDateTime.now().format(format);
-		test dto = weekWordRepository.findByWord(now);
+		test dto = weekWordRepository.findByWord("THREE", DateUtil.now());
 		
 		return (T) threeRepository.findByWordIdx(dto.getIdx());
 	}

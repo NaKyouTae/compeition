@@ -1,4 +1,4 @@
-package com.competition.user.service;
+package com.competition.service.user;
 
 import java.util.List;
 
@@ -12,16 +12,21 @@ import com.competition.jpa.model.User;
 import com.competition.jpa.model.UserMappingRole;
 import com.competition.jpa.repository.UserMappingRoleRepository;
 import com.competition.jpa.repository.UserRepository;
+import com.competition.process.user.UserProcess;
 import com.competition.user.CustomUserDetails;
 
 @Service
+@SuppressWarnings("unchecked")
 public class UserService implements UserDetailsService {
 
 	@Autowired
-	UserRepository userRepository; 
+	private UserRepository userRepository; 
 	
 	@Autowired
-	UserMappingRoleRepository userMappingRoleRepository; 
+	private UserProcess userProcess;
+	
+	@Autowired
+	private UserMappingRoleRepository userMappingRoleRepository; 
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,4 +40,7 @@ public class UserService implements UserDetailsService {
 		return ud;
 	}
 	
+	public <T extends Object> T getLists() {
+		return (T) userProcess.getLists();
+	}
 }

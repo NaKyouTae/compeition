@@ -1,6 +1,4 @@
-package com.competition.user.controller;
-
-import java.time.LocalDateTime;
+package com.competition.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +27,7 @@ import com.competition.jpa.repository.UserRepository;
 import com.competition.service.token.JwtService;
 import com.competition.user.AuthenticationToken;
 import com.competition.user.CustomUserDetails;
+import com.competition.util.DateUtil;
 
 @RestController
 @RequestMapping("/user")
@@ -49,7 +48,7 @@ public class LoginController {
 		ControllerResponse<Object> response = new ControllerResponse<Object>();
 
 		try {
-			user.setInsert_date(LocalDateTime.now());
+			user.setInsert_date(DateUtil.now());
 			user.setPw(passwordEncoder.encode(user.getPw()));
 			
 			response.setResultCode(HttpStatus.OK);

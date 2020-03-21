@@ -33,10 +33,10 @@ public class MenuService {
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
 
-		if(vo.getP_idx() == null) {			
-			dto.setP_idx(null);
+		if(vo.getParent() == null) {			
+			dto.setParent(null);
 		}else {
-			dto.setP_idx(vo.getP_idx());
+			dto.setParent(vo.getParent());
 		}
 		
 		return (T) menuProcess.inMenu(dto);
@@ -51,10 +51,10 @@ public class MenuService {
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
 		
-		if(vo.getP_idx().isEmpty()) {			
-			dto.setP_idx(null);
+		if(vo.getParent().isEmpty()) {			
+			dto.setParent(null);
 		}else {
-			dto.setP_idx(vo.getP_idx());
+			dto.setParent(vo.getParent());
 		}
 		
 		return (T) menuProcess.inMenu(dto);
@@ -70,10 +70,10 @@ public class MenuService {
 			dto.setTitle(vo.getTitle());
 			dto.setUrl(vo.getUrl());
 			
-			if(vo.getP_idx().isEmpty()) {			
-				dto.setP_idx(null);
+			if(vo.getParent().isEmpty()) {			
+				dto.setParent(null);
 			}else {
-				dto.setP_idx(vo.getP_idx());
+				dto.setParent(vo.getParent());
 			}
 			
 			menuProcess.deMenu(dto);

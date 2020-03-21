@@ -28,11 +28,23 @@ public class Menu implements Serializable {
 	private String idx;
 	
 	@Column
+	private Integer order;
+	
+	@Column
 	@Nullable
-	private String p_idx;
+	private String parent;
+	
+	@Column
+	private String group;
 	
 	@Column
 	private String title;
+	
+	@Column
+	private Integer level;
+	
+	@Column
+	private Boolean child;
 	
 	@Column
 	@Nullable
