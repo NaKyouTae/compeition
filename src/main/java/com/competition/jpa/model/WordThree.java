@@ -1,7 +1,6 @@
 package com.competition.jpa.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,12 +40,15 @@ public class WordThree implements Serializable {
 	private String userName;
 
 	@Column
-	private LocalDateTime insertDate;
-
-	@Column
-	private Integer point;
+	private String insertDate;
 	
 	@Column
-	private boolean love;
+	private String updateDate;
+
+	@Column
+	private Integer point = 0;
+	
+	@Column
+	private boolean love = false;
 
 }
