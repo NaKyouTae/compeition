@@ -21,7 +21,9 @@ public class MenuService {
 	public <T extends Object> T getList() throws Exception {
 		return (T) menuProcess.getList();
 	}
-	
+	public <T extends Object> T getListByLevel(String pidx) throws Exception {
+		return menuProcess.getListByLevel(pidx);
+	}
 	public <T extends Object> T inMenu(MenuVO vo) throws Exception {
 		
 		Menu dto = new Menu();

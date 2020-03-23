@@ -41,6 +41,23 @@ public class MenuController {
 		return (T) res;
 	}
 	
+	@GetMapping("/levels")
+	public <T extends Object> T getListByLevel(String pidx) throws Exception  {
+		ControllerResponse<List<Menu>> res = new ControllerResponse<>();
+		
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Get Children List :) ");
+			res.setResult(menuService.getListByLevel(pidx));
+		}catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
 	@PostMapping("/menus")
 	public <T extends Object> T inMenu(@RequestBody MenuVO menu) throws Exception {
 		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();

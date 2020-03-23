@@ -23,22 +23,20 @@ public class Menu implements Serializable {
 
 	private static final long serialVersionUID = -7965795983437805021L;
 
-	@Id
 	@Column
-	private String idx;
-	
-	@Column
-	private Integer order;
-	
-	@Column
-	@Nullable
-	private String parent;
+	private String title;
 	
 	@Column
 	private String group;
 	
 	@Column
-	private String title;
+	@Nullable
+	private String url;
+	
+	
+	@Column
+	private Integer order;
+	
 	
 	@Column
 	private Integer level;
@@ -47,10 +45,14 @@ public class Menu implements Serializable {
 	private Boolean child;
 	
 	@Column
-	@Nullable
-	private String url;
+	private String insert_date;
+	
+	@Id
+	@Column
+	private String idx;
 	
 	@Column
-	private String insert_date;
+	@Nullable
+	private String parent;
 
 }
