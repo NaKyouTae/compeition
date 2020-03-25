@@ -27,7 +27,7 @@ public class Menu implements Serializable {
 	private String title;
 	
 	@Column
-	private String group;
+	private String menu_group;
 	
 	@Column
 	@Nullable
@@ -35,7 +35,7 @@ public class Menu implements Serializable {
 	
 	
 	@Column
-	private Integer order;
+	private Integer menu_order;
 	
 	
 	@Column

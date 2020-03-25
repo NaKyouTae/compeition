@@ -2,6 +2,8 @@ package com.competition.menu;
 
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,22 +54,45 @@ public class MenuTest {
 		
 		
 		MenuVO vo = new MenuVO();
+		MenuVO vo1 = new MenuVO();
+		MenuVO vo2 = new MenuVO();
 		
-		vo.setParent("f47ed1ff-74a2-4a3e-89bc-65e4e3c78489");
-		vo.setTitle("제시어");
-		vo.setUrl("/weekword");
+		vo.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
+		vo.setTitle("메뉴");
+		vo.setUrl("/menu");
+		vo.setMenu_order(3);
 		
-		ObjectMapper mapper = new ObjectMapper();
-		String str = mapper.writeValueAsString(vo);
+		vo1.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
+		vo1.setTitle("제시어");
+		vo1.setUrl("/weekword");
+		vo1.setMenu_order(2);
+
+		vo2.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
+		vo2.setTitle("사용자");
+		vo2.setUrl("/user");
+		vo2.setMenu_order(1);
+
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json");
-		HttpEntity<Object> entity = new HttpEntity<Object>(str, headers);
+		List<MenuVO> menus = new ArrayList<>();
+		menus.add(vo);
+		menus.add(vo1);
+		menus.add(vo2);
 		
-		RestTemplate rest = new RestTemplate();
-		ResponseEntity<Object> re = rest.exchange(uri, HttpMethod.POST, entity, Object.class);
 		
-		System.out.println(re);
+		for(MenuVO m : menus) {			
+			ObjectMapper mapper = new ObjectMapper();
+			String str = mapper.writeValueAsString(m);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "application/json");
+			HttpEntity<Object> entity = new HttpEntity<Object>(str, headers);
+			
+			RestTemplate rest = new RestTemplate();
+			ResponseEntity<Object> re = rest.exchange(uri, HttpMethod.POST, entity, Object.class);
+			
+			System.out.println(re);
+		}
+		
 	}
 	public void upMenu() throws Exception {
 		
