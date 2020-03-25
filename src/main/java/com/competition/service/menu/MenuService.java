@@ -31,7 +31,7 @@ public class MenuService {
 		dto.setIdx(UUID.randomUUID().toString());
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		dto.setInsert_date(now);
+		dto.setInsertdate(now);
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
 
@@ -49,7 +49,7 @@ public class MenuService {
 		Menu dto = new Menu();
 		
 		dto.setIdx(vo.getIdx());
-		dto.setInsert_date(vo.getInsert_date());
+		dto.setInsertdate(vo.getInsert_date());
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
 		
@@ -68,7 +68,7 @@ public class MenuService {
 			Menu dto = new Menu();
 			
 			dto.setIdx(vo.getIdx());
-			dto.setInsert_date(vo.getInsert_date());
+			dto.setInsertdate(vo.getInsert_date());
 			dto.setTitle(vo.getTitle());
 			dto.setUrl(vo.getUrl());
 			
