@@ -2,6 +2,8 @@ package com.competition.service.menu;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,16 @@ public class MenuService {
 		return (T) menuProcess.getList();
 	}
 	public <T extends Object> T getListByLevel(String pidx) throws Exception {
-		return menuProcess.getListByLevel(pidx);
+		
+		List<Menu> list = new ArrayList<>();
+		
+		if(pidx.equals("null")) {
+			list = menuProcess.getListByLevelIsNull();
+		}else {
+			list = menuProcess.getListByLevel(pidx);
+		}
+		
+		return (T) list;
 	}
 	public <T extends Object> T inMenu(MenuVO vo) throws Exception {
 		
