@@ -57,20 +57,15 @@ public class MenuTest {
 		MenuVO vo1 = new MenuVO();
 		MenuVO vo2 = new MenuVO();
 		
-		vo.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
-		vo.setTitle("메뉴");
-		vo.setUrl("/menu");
-		vo.setMenu_order(3);
+		vo.setParent("ca3a1e03-925c-4faa-9b52-2edff5b03831");
+		vo.setTitle("제시어 2");
+		vo.setUrl("/test2");
+		vo.setMenu_order(2);
 		
-		vo1.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
-		vo1.setTitle("제시어");
-		vo1.setUrl("/weekword");
-		vo1.setMenu_order(2);
-
-		vo2.setParent("2524bf48-1239-4041-8159-c4df1ec42079");
-		vo2.setTitle("사용자");
-		vo2.setUrl("/user");
-		vo2.setMenu_order(1);
+		vo1.setParent("ca3a1e03-925c-4faa-9b52-2edff5b03831");
+		vo1.setTitle("제시어 1");
+		vo1.setUrl("/test1");
+		vo1.setMenu_order(1);
 
 		
 		List<MenuVO> menus = new ArrayList<>();
