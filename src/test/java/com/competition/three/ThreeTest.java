@@ -19,8 +19,8 @@ public class ThreeTest {
 
 	@Test
 	public void test() throws Exception {
-//		seThree();
-		inThree();
+		seThree();
+//		inThree();
 //		upThree();
 //		deThree();
 	}
@@ -34,8 +34,7 @@ public class ThreeTest {
 
 		headers.add("Content-Type", "application/json");
 
-		ResponseEntity<Object> re = rest.exchange(uri, HttpMethod.GET,
-				new HttpEntity<Object>(headers), Object.class);
+		ResponseEntity<Object> re = rest.exchange(uri, HttpMethod.GET, new HttpEntity<Object>(headers), Object.class);
 
 		System.out.println(re.toString());
 	}
@@ -45,11 +44,11 @@ public class ThreeTest {
 		RestTemplate rest = new RestTemplate();
 
 		WordThree word = new WordThree();
+		
 		word.setContentOne("노");
 		word.setContentTwo("트");
 		word.setContentThree("북");
 		word.setUserName("admin");
-		word.setWordIdx("123123");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(word);

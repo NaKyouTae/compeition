@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.model.WeekWord;
 import com.competition.jpa.repository.WeekWordRepository;
-import com.competition.jpa.repository.WeekWordRepository.test;
+import com.competition.jpa.repository.WeekWordRepository.WordInter;
 
 @Component
 @SuppressWarnings("unchecked")
@@ -25,7 +25,7 @@ public class WeekWordProcess {
 	public <T extends Object> T getWeekWords(String group) throws Exception {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		test result = weekWordRepository.findByWord(group, now);
+		WordInter result = weekWordRepository.findByWord(group, now);
 		
 		WeekWordDto word = new WeekWordDto();
 		

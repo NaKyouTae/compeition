@@ -26,7 +26,7 @@ public class WeekWordTest {
 	@Test
 	public void test() throws Exception {
 //		seWord();
-//		inWord();
+		inWord();
 //		upWord();
 //		deWord();
 	}
@@ -48,10 +48,10 @@ public class WeekWordTest {
 
 		WeekWordVO vo = new WeekWordVO();
 
-		vo.setWord("야구");
-		vo.setWord_group("이행시");
-		vo.setStart_date("2020-03-16 00:00:00");
-		vo.setEnd_date("2020-03-22 23:59:59");
+		vo.setWord("노트북");
+		vo.setWord_group("THREE");
+		vo.setStart_date("2020-03-23 00:00:00");
+		vo.setEnd_date("2020-03-29 23:59:59");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(vo);

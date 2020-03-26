@@ -11,9 +11,9 @@ import com.competition.jpa.model.WeekWord;
 public interface WeekWordRepository extends JpaRepository<WeekWord, Long> {
 	
 	@Query(value="select * from weekword where DATE(start_date) <= :nowData and DATE(end_date) >= :nowData and word_group = :group", nativeQuery = true)
-	test findByWord(@Param("group") String group, @Param("nowData") String nowData);
+	WordInter findByWord(@Param("group") String group, @Param("nowData") String nowData);
 	
-	public static interface test{
+	public static interface WordInter{
 		String getIdx();
 		String getWord_group();
 		String getWord();
