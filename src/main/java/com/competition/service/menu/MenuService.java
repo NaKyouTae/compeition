@@ -23,6 +23,41 @@ public class MenuService {
 	public <T extends Object> T getList() throws Exception {
 		return (T) menuProcess.getList();
 	}
+	public <T extends Object> T getRouteMenu() throws Exception {
+		List<MenuVO> result = new ArrayList<>();
+		
+		
+		List<Menu> allMenu = getList();
+		
+		for(Menu a : allMenu) {
+			MenuVO routeMenu = new MenuVO();
+			if(a.getChild().equals(true)) {
+				
+				
+				routeMenu.setChild(true);
+				routeMenu.setIdx(a.getIdx());
+				routeMenu.setInsert_date(a.getInsertdate());
+				routeMenu.setLevel(a.getLevel());
+				routeMenu.setMenu_group(a.getMenugroup());
+				routeMenu.setMenu_order(a.getMenuorder());
+				routeMenu.setParent(a.getParent());
+				routeMenu.setTitle(a.getTitle());
+				routeMenu.setUrl(a.getUrl());
+				routeMenu.setChildren(menuProcess.getListByLevel(a.getIdx()));			
+				
+			}
+			result.add(routeMenu);
+		}
+		
+		for(MenuVO r : result) {
+			if(!r.getLevel().equals(1)) {
+				result.remove(r);
+			}
+		}
+		
+		return (T) result;
+	}
+	
 	public <T extends Object> T getListByLevel(String pidx) throws Exception {
 		
 		List<Menu> list = new ArrayList<>();
@@ -35,8 +70,12 @@ public class MenuService {
 		
 		return (T) list;
 	}
+	
+	public <T extends Object> T seMenu(String idx) throws Exception {
+		return (T) menuProcess.seMenu(idx);
+	}
+	
 	public <T extends Object> T inMenu(MenuVO vo) throws Exception {
-		
 		Menu dto = new Menu();
 		
 		dto.setIdx(UUID.randomUUID().toString());
@@ -47,8 +86,25 @@ public class MenuService {
 		dto.setUrl(vo.getUrl());
 
 		if(vo.getParent() == null) {			
-			dto.setParent(null);
+			dto.setParent("null");
 		}else {
+			
+			Menu parentMenu = seMenu(vo.getParent());
+			
+			MenuVO parentVO = new MenuVO();
+			
+			parentVO.setChild(true);
+			parentVO.setIdx(parentMenu.getIdx());
+			parentVO.setInsert_date(parentMenu.getInsertdate());
+			parentVO.setLevel(parentMenu.getLevel());
+			parentVO.setMenu_group(parentMenu.getMenugroup());
+			parentVO.setMenu_order(parentMenu.getMenuorder());
+			parentVO.setParent(parentMenu.getParent());
+			parentVO.setTitle(parentMenu.getTitle());
+			parentVO.setUrl(parentMenu.getUrl());
+			
+			upMenu(parentVO);
+			
 			dto.setParent(vo.getParent());
 		}
 		

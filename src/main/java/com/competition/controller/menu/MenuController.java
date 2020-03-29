@@ -41,6 +41,22 @@ public class MenuController {
 		return (T) res;
 	}
 	
+	@GetMapping("/routes")
+	public <T extends Object> T getRouteMenu() throws Exception {
+		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Get Routes Menu :) "); 
+			res.setResult(menuService.getRouteMenu());
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
 	@GetMapping("/levels")
 	public <T extends Object> T getListByLevel(String pidx) throws Exception  {
 		ControllerResponse<List<Menu>> res = new ControllerResponse<>();
@@ -52,6 +68,22 @@ public class MenuController {
 		}catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
+	@GetMapping("/menus/{idx}")
+	public <T extends Object> T seMenu(String idx) throws Exception {
+		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search One Menu :) "); 
+			res.setResult(menuService.seMenu(idx));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
 			res.setResult(null);
 		}
 		

@@ -53,6 +53,6 @@ public class Menu implements Serializable {
 	
 	@Column
 	@Nullable
-	private String parent;
+	private String parent = "null";
 
 }
