@@ -76,7 +76,7 @@ public class MenuController {
 	
 	@GetMapping("/menus/{idx}")
 	public <T extends Object> T seMenu(String idx) throws Exception {
-		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		ControllerResponse<List<MenuVO>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search One Menu :) "); 

@@ -31,7 +31,6 @@ public class MenuService {
 		
 		for(Menu a : allMenu) {
 			MenuVO routeMenu = new MenuVO();
-			if(a.getChild().equals(true)) {
 				
 				
 				routeMenu.setChild(true);
@@ -45,15 +44,14 @@ public class MenuService {
 				routeMenu.setUrl(a.getUrl());
 				routeMenu.setChildren(menuProcess.getListByLevel(a.getIdx()));			
 				
-			}
 			result.add(routeMenu);
 		}
 		
-		for(MenuVO r : result) {
-			if(!r.getLevel().equals(1)) {
-				result.remove(r);
-			}
-		}
+//		for(MenuVO r : result) {
+//			if(!r.getLevel().equals(1)) {
+//				result.remove(r);
+//			}
+//		}
 		
 		return (T) result;
 	}
