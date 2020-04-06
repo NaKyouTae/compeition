@@ -35,10 +35,10 @@ public class MenuService {
 				
 				routeMenu.setChild(true);
 				routeMenu.setIdx(a.getIdx());
-				routeMenu.setInsert_date(a.getInsertdate());
+				routeMenu.setInsertdate(a.getInsertdate());
 				routeMenu.setLevel(a.getLevel());
-				routeMenu.setMenu_group(a.getMenugroup());
-				routeMenu.setMenu_order(a.getMenuorder());
+				routeMenu.setMenugroup(a.getMenugroup());
+				routeMenu.setMenuorder(a.getMenuorder());
 				routeMenu.setParent(a.getParent());
 				routeMenu.setTitle(a.getTitle());
 				routeMenu.setUrl(a.getUrl());
@@ -74,12 +74,17 @@ public class MenuService {
 	}
 	
 	public <T extends Object> T inMenu(MenuVO vo) throws Exception {
-		Menu dto = new Menu();
-		
-		dto.setIdx(UUID.randomUUID().toString());
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
+		
+		Menu dto = new Menu();
+		
+		dto.setIdx(UUID.randomUUID().toString().replace("-", ""));
+		dto.setChild(vo.getChild());
 		dto.setInsertdate(now);
+		dto.setLevel(vo.getLevel());
+		dto.setMenugroup(vo.getMenugroup());
+		dto.setMenuorder(vo.getMenuorder());
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
 
@@ -93,10 +98,10 @@ public class MenuService {
 			
 			parentVO.setChild(true);
 			parentVO.setIdx(parentMenu.getIdx());
-			parentVO.setInsert_date(parentMenu.getInsertdate());
+			parentVO.setInsertdate(parentMenu.getInsertdate());
 			parentVO.setLevel(parentMenu.getLevel());
-			parentVO.setMenu_group(parentMenu.getMenugroup());
-			parentVO.setMenu_order(parentMenu.getMenuorder());
+			parentVO.setMenugroup(parentMenu.getMenugroup());
+			parentVO.setMenuorder(parentMenu.getMenuorder());
 			parentVO.setParent(parentMenu.getParent());
 			parentVO.setTitle(parentMenu.getTitle());
 			parentVO.setUrl(parentMenu.getUrl());
@@ -113,16 +118,15 @@ public class MenuService {
 		
 		Menu dto = new Menu();
 		
+		dto.setChild(vo.getChild());
 		dto.setIdx(vo.getIdx());
-		dto.setInsertdate(vo.getInsert_date());
+		dto.setInsertdate(vo.getInsertdate());
+		dto.setLevel(vo.getLevel());
+		dto.setMenugroup(vo.getMenugroup());
+		dto.setMenuorder(vo.getMenuorder());
+		dto.setParent(vo.getParent());
 		dto.setTitle(vo.getTitle());
 		dto.setUrl(vo.getUrl());
-		
-		if(vo.getParent().isEmpty()) {			
-			dto.setParent(null);
-		}else {
-			dto.setParent(vo.getParent());
-		}
 		
 		return (T) menuProcess.inMenu(dto);
 	}
@@ -132,16 +136,15 @@ public class MenuService {
 			
 			Menu dto = new Menu();
 			
+			dto.setChild(vo.getChild());
 			dto.setIdx(vo.getIdx());
-			dto.setInsertdate(vo.getInsert_date());
+			dto.setInsertdate(vo.getInsertdate());
+			dto.setLevel(vo.getLevel());
+			dto.setMenugroup(vo.getMenugroup());
+			dto.setMenuorder(vo.getMenuorder());
+			dto.setParent(vo.getParent());
 			dto.setTitle(vo.getTitle());
 			dto.setUrl(vo.getUrl());
-			
-			if(vo.getParent().isEmpty()) {			
-				dto.setParent(null);
-			}else {
-				dto.setParent(vo.getParent());
-			}
 			
 			menuProcess.deMenu(dto);
 			

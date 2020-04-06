@@ -92,7 +92,7 @@ public class MenuController {
 	
 	@PostMapping("/menus")
 	public <T extends Object> T inMenu(@RequestBody MenuVO menu) throws Exception {
-		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Insert Menu :) "); 
@@ -108,7 +108,7 @@ public class MenuController {
 	
 	@PutMapping("/menus/{idx}")
 	public <T extends Object> T upMenu(@RequestBody MenuVO menu) throws Exception {
-		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update Menu :) "); 
@@ -124,7 +124,7 @@ public class MenuController {
 	
 	@DeleteMapping("/menus/{idx}")
 	public <T extends Object> T deMenu(@RequestBody MenuVO menu) throws Exception{
-		ControllerResponse<List<Menu>> res = new ControllerResponse<List<Menu>>();
+		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Menu :) "); 

@@ -11,9 +11,9 @@ public class MenuVO {
 	private String title;
 	private String url;
 	private Integer level;
-	private String insert_date;
-	private String menu_group;
-	private Integer menu_order;
+	private String insertdate;
+	private String menugroup;
+	private Integer menuorder;
 	private Boolean child;
 	private List<MenuVO> children;
 }
