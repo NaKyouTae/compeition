@@ -86,7 +86,6 @@ public class MenuService {
 		dto.setMenugroup(vo.getMenugroup());
 		dto.setMenuorder(vo.getMenuorder());
 		dto.setTitle(vo.getTitle());
-		dto.setUrl(vo.getUrl());
 
 		if(vo.getParent() == null) {			
 			dto.setParent("null");
@@ -108,6 +107,7 @@ public class MenuService {
 			
 			upMenu(parentVO);
 			
+			dto.setUrl(parentMenu.getUrl() + vo.getUrl());
 			dto.setParent(vo.getParent());
 		}
 		
@@ -145,6 +145,26 @@ public class MenuService {
 			dto.setParent(vo.getParent());
 			dto.setTitle(vo.getTitle());
 			dto.setUrl(vo.getUrl());
+			
+			if(vo.getParent() != null) {
+				
+				Menu parentMenu = seMenu(vo.getParent());
+				
+				MenuVO parentVO = new MenuVO();
+				
+				parentVO.setChild(false);
+				parentVO.setIdx(parentMenu.getIdx());
+				parentVO.setInsertdate(parentMenu.getInsertdate());
+				parentVO.setLevel(parentMenu.getLevel());
+				parentVO.setMenugroup(parentMenu.getMenugroup());
+				parentVO.setMenuorder(parentMenu.getMenuorder());
+				parentVO.setParent(parentMenu.getParent());
+				parentVO.setTitle(parentMenu.getTitle());
+				parentVO.setUrl(parentMenu.getUrl());
+				
+				upMenu(parentVO);
+			}
+			
 			
 			menuProcess.deMenu(dto);
 			

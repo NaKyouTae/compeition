@@ -124,7 +124,7 @@ public class MenuController {
 	
 	@DeleteMapping("/menus/{idx}")
 	public <T extends Object> T deMenu(@RequestBody MenuVO menu) throws Exception{
-		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
+		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Menu :) "); 
