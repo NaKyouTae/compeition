@@ -146,7 +146,11 @@ public class MenuService {
 			dto.setTitle(vo.getTitle());
 			dto.setUrl(vo.getUrl());
 			
-			if(vo.getParent() != null) {
+			menuProcess.deMenu(dto);
+
+			List<Menu> children = getListByLevel(vo.getParent());
+			
+			if(children.size() == 0) {
 				
 				Menu parentMenu = seMenu(vo.getParent());
 				
@@ -166,7 +170,6 @@ public class MenuService {
 			}
 			
 			
-			menuProcess.deMenu(dto);
 			
 			return (T) Boolean.TRUE;
 		}catch(Exception e) {
