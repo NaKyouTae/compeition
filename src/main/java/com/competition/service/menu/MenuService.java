@@ -47,12 +47,6 @@ public class MenuService {
 			result.add(routeMenu);
 		}
 		
-//		for(MenuVO r : result) {
-//			if(!r.getLevel().equals(1)) {
-//				result.remove(r);
-//			}
-//		}
-		
 		return (T) result;
 	}
 	
@@ -168,8 +162,6 @@ public class MenuService {
 				
 				upMenu(parentVO);
 			}
-			
-			
 			
 			return (T) Boolean.TRUE;
 		}catch(Exception e) {
