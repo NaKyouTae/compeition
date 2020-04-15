@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.model.WeekWord;
 import com.competition.service.weekword.WeekWordService;
 import com.competition.vo.weekword.WeekWordVO;
@@ -91,7 +90,7 @@ public class WeekWordController {
 	}
 	@DeleteMapping("/words/{idx}")
 	public <T extends Object> T deWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<WeekWordDto> res = new ControllerResponse<WeekWordDto>();
+		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Week Word :) "); 
