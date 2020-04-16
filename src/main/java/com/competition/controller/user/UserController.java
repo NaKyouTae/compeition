@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +23,13 @@ import com.competition.service.user.UserService;
 public class UserController {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	UserMappingRoleRepository userMappingRoleRepository;
+	private UserMappingRoleRepository userMappingRoleRepository;
 	
 	@GetMapping("/lists")
 	public ControllerResponse<List<User>> getLists() throws Exception {
@@ -79,6 +80,22 @@ public class UserController {
 		}
 		
 		return res;
+	}
+	
+	@DeleteMapping("/{idx}")
+	public ControllerResponse<Boolean> destoryUser(User user){
+		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
+		try {
+			res.setResult(userService.destoryUser(user));
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Delete User :) ");
+		} catch (Exception e) {
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		
+		return res; 
 	}
 	
 }

@@ -25,6 +25,7 @@ import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.User;
 import com.competition.jpa.repository.UserRepository;
 import com.competition.service.token.JwtService;
+import com.competition.service.user.UserService;
 import com.competition.user.AuthenticationToken;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
@@ -37,6 +38,8 @@ public class LoginController {
 	private AuthenticationManager am;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserService	userService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -53,7 +56,7 @@ public class LoginController {
 			
 			response.setResultCode(HttpStatus.OK);
 			response.setMessage("Sing Up Success :)");
-			response.setResult(userRepository.save(user));
+			response.setResult(userService.signUp(user));
 		}catch(Exception e) {
 			response.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			response.setMessage(e.getMessage());
