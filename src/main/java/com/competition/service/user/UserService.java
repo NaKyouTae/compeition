@@ -53,7 +53,14 @@ public class UserService implements UserDetailsService {
 		
 		return (T) userProcess.signUp(user);
 	}
-	
+	public <T extends Object> T updateUser(User user) throws Exception {
+		try {
+			user.setChange_date(DateUtil.now());
+			return (T) userProcess.updateUser(user); 
+		}catch(Exception e) {
+			return (T) e;
+		}
+	}
 	public <T extends Object> T destoryUser(User user) throws Exception {
 		try {
 			userProcess.destoryUser(user);

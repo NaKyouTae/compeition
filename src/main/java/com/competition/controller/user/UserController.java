@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,8 +83,24 @@ public class UserController {
 		return res;
 	}
 	
+	@PutMapping("/{idx}")
+	public ControllerResponse<User> updateUser(User user) throws Exception{
+		ControllerResponse<User> res = new ControllerResponse<User>();
+		try {
+			res.setResult(userService.updateUser(user));
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Update User :) ");
+		} catch (Exception e) {
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		
+		return res; 
+	}
+	
 	@DeleteMapping("/{idx}")
-	public ControllerResponse<Boolean> destoryUser(User user){
+	public ControllerResponse<Boolean> destoryUser(User user) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
 			res.setResult(userService.destoryUser(user));
