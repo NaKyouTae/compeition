@@ -38,6 +38,8 @@ public class WordThree implements Serializable {
 
 	@Column
 	private String userName;
+	@Column
+	private String userIdx;
 
 	@Column
 	private String insertDate;

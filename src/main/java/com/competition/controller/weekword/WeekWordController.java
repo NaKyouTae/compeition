@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
+import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.model.WeekWord;
 import com.competition.service.weekword.WeekWordService;
 import com.competition.vo.weekword.WeekWordVO;
@@ -44,7 +45,7 @@ public class WeekWordController {
 	
 	@GetMapping("/words")
 	public <T extends Object> T geWeekWords(@Param(value = "group") String group) throws Exception {
-		ControllerResponse<WeekWord> res = new ControllerResponse<WeekWord>();
+		ControllerResponse<WeekWordDto> res = new ControllerResponse<WeekWordDto>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Week Word :) "); 

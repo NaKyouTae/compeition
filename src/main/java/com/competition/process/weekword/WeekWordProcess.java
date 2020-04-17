@@ -25,7 +25,7 @@ public class WeekWordProcess {
 	public <T extends Object> T getWeekWords(String group) throws Exception {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
-		WordInter result = weekWordRepository.findByWord(group, now);
+		WordInter result = weekWordRepository.findByWord("THREE", now.toString());
 		
 		WeekWordDto word = new WeekWordDto();
 		
