@@ -34,6 +34,7 @@ public class WeekWordService {
 		word.setWord_group(vo.getWord_group());
 		word.setStart_date(vo.getStart_date());
 		word.setEnd_date(vo.getEnd_date());		
+		word.setDescription(vo.getDescription());
 		
 		return (T) weekWordProcess.inWord(word);
 	}
@@ -46,6 +47,7 @@ public class WeekWordService {
 		word.setWord_group(vo.getWord_group());
 		word.setStart_date(vo.getStart_date());
 		word.setEnd_date(vo.getEnd_date());
+		word.setDescription(vo.getDescription());
 		
 		return (T) weekWordProcess.upWord(word);
 	}
@@ -59,6 +61,7 @@ public class WeekWordService {
 			word.setWord_group(vo.getWord_group());
 			word.setStart_date(vo.getStart_date());
 			word.setEnd_date(vo.getEnd_date());
+			word.setDescription(vo.getDescription());
 			
 			weekWordProcess.deWord(word);
 			return (T) Boolean.TRUE;

@@ -20,5 +20,6 @@ public interface WeekWordRepository extends JpaRepository<WeekWord, Long> {
 		String getInsert_date();
 		String getStart_date();
 		String getEnd_date();
+		String getDescription();
 	}
 }

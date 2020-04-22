@@ -35,6 +35,7 @@ public class WeekWordProcess {
 		word.setInsert_date(result.getInsert_date());
 		word.setStart_date(result.getStart_date());
 		word.setEnd_date(result.getEnd_date());
+		word.setDescription(result.getDescription());
 		
 		return (T) word;
 	}

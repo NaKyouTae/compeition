@@ -10,4 +10,5 @@ public class WeekWordVO {
 	private String insert_date;
 	private String start_date;
 	private String end_date;
+	private String description;
 }

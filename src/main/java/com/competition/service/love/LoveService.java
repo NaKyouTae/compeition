@@ -1,9 +1,13 @@
 package com.competition.service.love;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.Love;
+import com.competition.jpa.model.User;
+import com.competition.jpa.repository.UserRepository;
 import com.competition.process.love.LoveProcess;
 
 @Service
@@ -13,10 +17,27 @@ public class LoveService {
 	@Autowired
 	private LoveProcess loveProcess;
 	
+	@Autowired
+	private UserRepository userRepository;
 	
-	public <T extends Object> T seLove(String idx) throws Exception {
+	
+	public <T extends Object> T seLove(String idx, String username) throws Exception {
 		try {
-			return (T) loveProcess.seLove(idx);
+			Boolean result = Boolean.FALSE;
+			
+			User user = userRepository.findByUsername(username);
+			
+			List<Love> loves = loveProcess.seLove(idx);
+			
+			if(user != null && loves.size() > 0) {				
+				for(Love love : loves) {				
+					if(love.getUserIdx().equals(user.getIdx())) {
+						result = Boolean.TRUE;
+					}
+				}
+			}
+						
+			return (T) result;
 		}catch(Exception e) {
 			return (T) e;
 		}

@@ -23,13 +23,12 @@ public class WeekWord implements Serializable {
 	@Id
 	@Column
 	private String idx;
-
 	@Column
 	private String word_group;
-
 	@Column
 	private String word;
-
+	@Column
+	private String description;
 	@Column
 	private String insert_date;
 	@Column
