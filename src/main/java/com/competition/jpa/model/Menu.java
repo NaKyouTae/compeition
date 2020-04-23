@@ -25,34 +25,34 @@ public class Menu implements Serializable {
 
 	@Id
 	@Column
-	public String idx;
+	private String idx;
 	
 	@Column
-	public String title;
+	private String title;
 	
 	@Column(name = "menu_group")
-	public String menugroup;
+	private String menugroup;
 	
 	@Column
 	@Nullable
-	public String url;
+	private String url;
 	
 	
 	@Column(name = "menu_order")
-	public Integer menuorder;
+	private Integer menuorder;
 	
 	
 	@Column
-	public Integer level;
+	private Integer level;
 	
 	@Column
-	public Boolean child;
+	private Boolean child;
 	
 	@Column(name = "insert_date")
-	public String insertdate;
+	private String insertdate;
 	
 	@Column
 	@Nullable
-	public String parent = "null";
+	private String parent = "null";
 
 }

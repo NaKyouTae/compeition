@@ -34,6 +34,9 @@ public class ObjectUtil {
 					
 					Field sOne = sClass.getDeclaredField(s.getName());
 					
+					tOne.setAccessible(true);
+					sOne.setAccessible(true);
+					
 					Object value = sOne.get(source);
 					
 					tOne.set(tObj, value);
