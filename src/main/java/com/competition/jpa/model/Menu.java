@@ -23,36 +23,36 @@ public class Menu implements Serializable {
 
 	private static final long serialVersionUID = -7965795983437805021L;
 
+	@Id
 	@Column
-	private String title;
+	public String idx;
+	
+	@Column
+	public String title;
 	
 	@Column(name = "menu_group")
-	private String menugroup;
+	public String menugroup;
 	
 	@Column
 	@Nullable
-	private String url;
+	public String url;
 	
 	
 	@Column(name = "menu_order")
-	private Integer menuorder;
+	public Integer menuorder;
 	
 	
 	@Column
-	private Integer level;
+	public Integer level;
 	
 	@Column
-	private Boolean child;
+	public Boolean child;
 	
 	@Column(name = "insert_date")
-	private String insertdate;
-	
-	@Id
-	@Column
-	private String idx;
+	public String insertdate;
 	
 	@Column
 	@Nullable
-	private String parent = "null";
+	public String parent = "null";
 
 }

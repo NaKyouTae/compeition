@@ -29,14 +29,10 @@ public class LoveService {
 			
 			List<Love> loves = loveProcess.seLove(idx);
 			
-			if(user != null && loves.size() > 0) {				
-				for(Love love : loves) {				
-					if(love.getUserIdx().equals(user.getIdx())) {
-						result = Boolean.TRUE;
-					}
-				}
+			if(user != null && loves.size() > 0) {
+				result = loves.stream().anyMatch(love -> love.getUserIdx().equals(user.getIdx()));
 			}
-						
+			
 			return (T) result;
 		}catch(Exception e) {
 			return (T) e;
