@@ -18,8 +18,6 @@ public class ObjectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, S extends Object> T toObject(S source, T target) throws Exception {
-		Class<S> sClass = (Class<S>) source.getClass();
-		
 		T tObj = (T) target.getClass().getDeclaredConstructor().newInstance();
 		
 		Field[] sField = source.getClass().getDeclaredFields();
@@ -29,17 +27,12 @@ public class ObjectUtil {
 		for(Field s : sField) {
 			for(Field t : tField) {
 				if(s.getName().equals(t.getName())) {
-					Class<?> tClazz = tObj.getClass();
-					Field tOne = tClazz.getDeclaredField(t.getName());
+					s.setAccessible(true);
+					t.setAccessible(true);
 					
-					Field sOne = sClass.getDeclaredField(s.getName());
+					Object value = s.get(source);
 					
-					tOne.setAccessible(true);
-					sOne.setAccessible(true);
-					
-					Object value = sOne.get(source);
-					
-					tOne.set(tObj, value);
+					t.set(tObj, value);
 				}
 			}
 		}
