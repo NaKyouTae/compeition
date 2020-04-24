@@ -7,5 +7,6 @@ import com.competition.jpa.model.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-	Role findByRolename(String rolename);
+	Role findByRoleName(String rolename);
+	Role findByIdx(String idx);
 }

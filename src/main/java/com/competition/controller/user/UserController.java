@@ -54,7 +54,7 @@ public class UserController {
 		ControllerResponse<User> res = new ControllerResponse<User>();
 
 		try {
-			res.setResult(userRepository.findByUsername(username));
+			res.setResult(userRepository.findByUserName(username));
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get User Info :) ");
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class UserController {
 		ControllerResponse<List<UserMappingRole>> res = new ControllerResponse<List<UserMappingRole>>();
 		
 		try {
-			res.setResult(userMappingRoleRepository.findByUsername(username));
+			res.setResult(userMappingRoleRepository.findByUserName(username));
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get User Role :) ");
 		} catch (Exception e) {

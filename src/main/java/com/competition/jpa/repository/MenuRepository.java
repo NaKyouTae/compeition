@@ -13,7 +13,7 @@ import com.competition.jpa.model.Menu;
 public interface MenuRepository extends JpaRepository<Menu, Long> {
 	Menu findByIdx(String idx);
 	
-	@Query(value="select idx, child, insert_date, level, menu_group, menu_order, parent, title, url from menu where parent = 'null' order by menu_order asc", nativeQuery = true)
+	@Query(value="select idx, child, insertDate, level, menuGroup, menuOrder, parent, title, url from menu where parent = 'null' order by menuOrder asc", nativeQuery = true)
 	List<Menu> findByParentIsNull();
 	
 	List<Menu> findByParent(String parent, Sort sort);

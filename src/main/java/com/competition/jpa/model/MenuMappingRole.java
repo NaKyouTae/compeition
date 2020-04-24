@@ -18,26 +18,20 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name ="USERMAPPINGROLE")
-public class UserMappingRole implements Serializable {
+@Table(name ="MENUMAPPINGROLE")
+public class MenuMappingRole implements Serializable {
 
-	private static final long serialVersionUID = 6038453839096370467L;
+	private static final long serialVersionUID = -2114602465412441179L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	private Long idx;
-	
-	@Column
-	private String userIdx;
-	
-	@Column
-	private String userName;
 	
 	@Column
 	private String roleIdx;
 	
 	@Column
-	private String roleName;
+	private String roleTitle;
 
 }

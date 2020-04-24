@@ -55,10 +55,10 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				
 				User u = new User();
 				u.setIdx(UUID.randomUUID().toString());
-				u.setUsername("admin");
+				u.setUserName("admin");
 				u.setPw(passwordEncoder.encode("skrbxo12!@"));
-				u.setInsert_date(DateUtil.now());
-				u.setChange_date(null);
+				u.setInsertDate(DateUtil.now());
+				u.setChangeDate(null);
 				user.save(u);
 			}
 			
@@ -66,17 +66,17 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				role.deleteAll();
 				
 				Role admin_role = new Role();
-				admin_role.setIdx(UUID.randomUUID().toString());
-				admin_role.setRolename("ROLE_ADMIN");
-				admin_role.setInsert_date(DateUtil.now());
-				admin_role.setChange_date(null);
+				admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
+				admin_role.setRoleName("ROLE_ADMIN");
+				admin_role.setInsertDate(DateUtil.now());
+				admin_role.setChangeDate(null);
 				role.save(admin_role);
 
 				Role user_role = new Role();
-				user_role.setIdx(UUID.randomUUID().toString());
-				user_role.setRolename("ROLE_USER");
-				user_role.setInsert_date(DateUtil.now());
-				user_role.setChange_date(null);
+				user_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
+				user_role.setRoleName("ROLE_USER");
+				user_role.setInsertDate(DateUtil.now());
+				user_role.setChangeDate(null);
 				role.save(user_role);
 			}
 			
@@ -84,8 +84,8 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				mapping_role.deleteAll();
 				
 				UserMappingRole mapping = new UserMappingRole();
-				mapping.setRolename("ROLE_ADMIN");
-				mapping.setUsername("admin");
+				mapping.setRoleName("ROLE_ADMIN");
+				mapping.setUserName("admin");
 				mapping_role.save(mapping);
 			}			
 		};

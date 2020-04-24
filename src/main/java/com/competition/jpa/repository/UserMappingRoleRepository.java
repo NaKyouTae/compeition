@@ -9,7 +9,7 @@ import com.competition.jpa.model.UserMappingRole;
 
 @Repository
 public interface UserMappingRoleRepository extends JpaRepository<UserMappingRole, Long> {
-	List<UserMappingRole> findByUsername(String username);
+	List<UserMappingRole> findByUserName(String username);
 	
-	List<UserMappingRole> findByRolename(String rolename);
+	List<UserMappingRole> findByRoleName(String rolename);
 }

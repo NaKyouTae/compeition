@@ -30,7 +30,7 @@ public class WeekWordService {
 		WeekWord word = ObjectUtil.toObject(vo, new WeekWord());
 		
 		word.setIdx(UUID.randomUUID().toString());
-		word.setInsert_date(DateUtil.now());
+		word.setInsertDate(DateUtil.now());
 //		word.setWord(vo.getWord());
 //		word.setWord_group(vo.getWord_group());
 //		word.setStart_date(vo.getStart_date());

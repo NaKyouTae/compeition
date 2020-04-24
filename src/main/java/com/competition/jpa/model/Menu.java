@@ -30,16 +30,16 @@ public class Menu implements Serializable {
 	@Column
 	private String title;
 	
-	@Column(name = "menu_group")
-	private String menugroup;
+	@Column
+	private String menuGroup;
 	
 	@Column
 	@Nullable
 	private String url;
 	
 	
-	@Column(name = "menu_order")
-	private Integer menuorder;
+	@Column
+	private Integer menuOrder;
 	
 	
 	@Column
@@ -48,8 +48,8 @@ public class Menu implements Serializable {
 	@Column
 	private Boolean child;
 	
-	@Column(name = "insert_date")
-	private String insertdate;
+	@Column
+	private String insertDate;
 	
 	@Column
 	@Nullable

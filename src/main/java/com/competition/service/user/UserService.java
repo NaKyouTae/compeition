@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByUserName(username);
 		
-		List<UserMappingRole> roles = userMappingRoleRepository.findByUsername(username);
+		List<UserMappingRole> roles = userMappingRoleRepository.findByUserName(username);
 		
 		CustomUserDetails ud = new CustomUserDetails();
 		ud.setUser(user);
@@ -49,13 +49,13 @@ public class UserService implements UserDetailsService {
 	public <T extends Object> T signUp(User user) throws Exception {
 		
 		user.setIdx(UUID.randomUUID().toString().replace("-", ""));
-		user.setInsert_date(DateUtil.now());
+		user.setInsertDate(DateUtil.now());
 		
 		return (T) userProcess.signUp(user);
 	}
 	public <T extends Object> T updateUser(User user) throws Exception {
 		try {
-			user.setChange_date(DateUtil.now());
+			user.setChangeDate(DateUtil.now());
 			return (T) userProcess.updateUser(user); 
 		}catch(Exception e) {
 			return (T) e;

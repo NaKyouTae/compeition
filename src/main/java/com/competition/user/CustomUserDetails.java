@@ -27,7 +27,7 @@ public class CustomUserDetails implements UserDetails {
 		List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 		
 		for(UserMappingRole r : roles) {			
-			auth.add(new SimpleGrantedAuthority(r.getRolename()));
+			auth.add(new SimpleGrantedAuthority(r.getRoleName()));
 		}
 		
 		return auth;
@@ -41,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getUsername();
+		return user.getUserName();
 	}
 
 	@Override

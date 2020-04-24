@@ -25,12 +25,12 @@ public class Love implements Serializable {
 	@Column
 	private String idx;
 
-	@Column(name = "insert_date")
+	@Column
 	private String insertDate;
 		
-	@Column(name = "user_idx")
+	@Column
 	private String userIdx;
 
-	@Column(name = "content_idx")
+	@Column
 	private String contentIdx;
 }

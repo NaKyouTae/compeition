@@ -75,7 +75,7 @@ public class MenuService {
 		Menu dto = ObjectUtil.toObject(vo, new Menu());
 		
 		dto.setIdx(UUID.randomUUID().toString().replace("-", ""));
-		dto.setInsertdate(now);
+		dto.setInsertDate(now);
 //		dto.setChild(vo.getChild());
 //		dto.setLevel(vo.getLevel());
 //		dto.setMenugroup(vo.getMenugroup());

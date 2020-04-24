@@ -51,7 +51,7 @@ public class LoginController {
 		ControllerResponse<Object> response = new ControllerResponse<Object>();
 
 		try {
-			user.setInsert_date(DateUtil.now());
+			user.setInsertDate(DateUtil.now());
 			user.setPw(passwordEncoder.encode(user.getPw()));
 			
 			response.setResultCode(HttpStatus.OK);

@@ -15,11 +15,11 @@ public interface WeekWordRepository extends JpaRepository<WeekWord, Long> {
 	
 	public static interface WordInter{
 		String getIdx();
-		String getWord_group();
+		String getWordGroup();
 		String getWord();
-		String getInsert_date();
-		String getStart_date();
-		String getEnd_date();
+		String getInsertDate();
+		String getStartDate();
+		String getEndDate();
 		String getDescription();
 	}
 }

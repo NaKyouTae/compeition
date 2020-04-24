@@ -15,13 +15,13 @@ public class MenuProcess {
 	private MenuRepository menuRepository;
 
 	public <T extends Object> T getList() throws Exception {
-		return (T) menuRepository.findAll(Sort.by(Sort.Direction.ASC, "menuorder"));
+		return (T) menuRepository.findAll(Sort.by(Sort.Direction.ASC, "menuOrder"));
 	}
 	public <T extends Object> T getListByLevelIsNull() throws Exception {
 		return(T) menuRepository.findByParentIsNull();
 	}
 	public <T extends Object> T getListByLevel(String pidx) throws Exception {
-		return(T) menuRepository.findByParent(pidx, Sort.by(Sort.Direction.ASC, "menuorder"));
+		return(T) menuRepository.findByParent(pidx, Sort.by(Sort.Direction.ASC, "menuOrder"));
 	}
 	public <T extends Object> T seMenu(String idx) throws Exception {
 		return (T) menuRepository.findByIdx(idx);

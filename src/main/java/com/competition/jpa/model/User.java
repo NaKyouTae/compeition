@@ -26,15 +26,15 @@ public class User implements Serializable {
 	private String idx;
 	
 	@Column
-	private String username;
+	private String userName;
 
 	@Column
 	private String pw;
 		
 	@Column
-	private String insert_date;
+	private String insertDate;
 
 	@Column
-	private String change_date;
+	private String changeDate;
 		
 }

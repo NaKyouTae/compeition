@@ -26,12 +26,12 @@ public class Role implements Serializable {
 	private String idx;
 	
 	@Column
-	private String rolename;
+	private String roleName;
 	
 	@Column
-	private String insert_date;
+	private String insertDate;
 
 	@Column
-	private String change_date;
+	private String changeDate;
 
 }

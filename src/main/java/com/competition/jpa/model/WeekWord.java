@@ -24,16 +24,16 @@ public class WeekWord implements Serializable {
 	@Column
 	private String idx;
 	@Column
-	private String word_group;
+	private String wordGroup;
 	@Column
 	private String word;
 	@Column
 	private String description;
 	@Column
-	private String insert_date;
+	private String insertDate;
 	@Column
-	private String start_date;
+	private String startDate;
 	@Column
-	private String end_date;
+	private String endDate;
 
 }
