@@ -24,9 +24,17 @@ public class LoveController {
 	@GetMapping("/loves")
 	public <T extends Object> T seLove(String idx, String username) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
+		
+		if(username == null) {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("User Name is null...");
+			res.setResult(Boolean.FALSE);
+			return (T) res;
+		}
+		
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Love History :) "); 
+			res.setMessage("Success Search Love History :) ");
 			res.setResult(loveService.seLove(idx, username));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);

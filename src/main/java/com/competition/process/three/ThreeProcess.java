@@ -1,5 +1,6 @@
 package com.competition.process.three;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,11 @@ public class ThreeProcess {
 	private LoveRepository loveRepository;
 	
 	public <T extends Object> T getList() throws Exception {
-		WordInter dto = weekWordRepository.findByWord("THREE", DateUtil.now());
-
-		return (T) threeRepository.findByWordIdx(dto.getIdx());
+		WordInter dto = weekWordRepository.findByWord("THREE");
+		
+		List<WordThree> three = threeRepository.findByWordIdx(dto.getIdx());
+		
+		return (T) three;
 	}
 
 	public <T extends Object> T inThree(WordThree three) throws Exception {

@@ -49,9 +49,9 @@ public class WeekWordTest {
 		WeekWordVO vo = new WeekWordVO();
 
 		vo.setWord("노트북");
-		vo.setWord_group("THREE");
-		vo.setStart_date("2020-03-23 00:00:00");
-		vo.setEnd_date("2020-03-29 23:59:59");
+		vo.setWordGroup("THREE");
+		vo.setStartDate("2020-03-23 00:00:00");
+		vo.setEndDate("2020-03-29 23:59:59");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(vo);
@@ -74,10 +74,10 @@ public class WeekWordTest {
 		WeekWordVO vo = new WeekWordVO();
 
 		vo.setIdx("4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
-		vo.setWord_group("THREE");
+		vo.setWordGroup("THREE");
 		vo.setWord("태블릿");
-		vo.setStart_date("2020-03-23 00:00:00");
-		vo.setEnd_date("2020-03-29 23:59:59");
+		vo.setStartDate("2020-03-23 00:00:00");
+		vo.setEndDate("2020-03-29 23:59:59");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(vo);
@@ -100,10 +100,10 @@ public class WeekWordTest {
 		WeekWordVO vo = new WeekWordVO();
 
 		vo.setIdx("4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
-		vo.setWord_group("THREE");
+		vo.setWordGroup("THREE");
 		vo.setWord("태블릿");
-		vo.setStart_date("2020-03-23 00:00:00");
-		vo.setEnd_date("2020-03-29 23:59:59");
+		vo.setStartDate("2020-03-23 00:00:00");
+		vo.setEndDate("2020-03-29 23:59:59");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(vo);
