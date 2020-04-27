@@ -35,13 +35,13 @@ public class JwtService {
 	
 	private final Key key = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 	
-	public String createToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user) {
+	public String createToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", user.getAuthorities());
 		
 		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setSubject(user.getUsername()).setClaims(claims)
-				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 60 * 24))).signWith(signatureAlgorithm, key).compact();
+				.setExpiration(expriation).signWith(signatureAlgorithm, key).compact();
 		
 		return jwt;		
 	}

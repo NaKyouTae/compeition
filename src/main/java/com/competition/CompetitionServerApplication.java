@@ -34,6 +34,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
     	registry.addMapping("/**")
         .allowedOrigins("http://localhost:4300", "http://localhost:8080")
         .allowedMethods("GET","POST", "PUT", "DELETE")
+        .exposedHeaders("Access-JWT", "Refresh-JWT")
         .allowCredentials(true).maxAge(3600);
     }
 	

@@ -1,11 +1,16 @@
 package com.competition.controller.user;
 
+import java.util.Date;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,16 +22,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
+import com.competition.jpa.model.RefreshToken;
 import com.competition.jpa.model.User;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.jpa.repository.RefreshTokenRepository;
 import com.competition.service.token.JwtService;
 import com.competition.service.user.UserService;
-import com.competition.user.AuthenticationToken;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
 
@@ -37,13 +42,13 @@ public class LoginController {
 	@Autowired
 	private AuthenticationManager am;
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private UserService	userService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private JwtService jwtUtill;
+	@Autowired
+	private RefreshTokenRepository refreshTokenRepository;
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
@@ -68,11 +73,14 @@ public class LoginController {
 	
 	@CrossOrigin("*")
 	@PostMapping("/login")
-	public ControllerResponse<AuthenticationToken> Login(@RequestParam(name="username", required = true) String username,
-			@RequestParam(name="password", required = true) String password,
+	public ResponseEntity<ControllerResponse<Boolean>> Login(@RequestBody Map<String, Object> map,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-		ControllerResponse<AuthenticationToken> res = new ControllerResponse<AuthenticationToken>();
+		String username = (String)map.get("username");
+		String password = (String)map.get("password");
+		
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken (username, password);
+		HttpHeaders headers = new HttpHeaders();
 		
 		try {
 			Authentication auth = am.authenticate(token);
@@ -82,19 +90,30 @@ public class LoginController {
 			CustomUserDetails custom =  (CustomUserDetails) auth.getPrincipal();		
 			
 			if(custom != null) {
-				String jwt = jwtUtill.createToken(request, response, custom);
-				response.addHeader("Authentication", jwt);
+				String accessJWT = jwtUtill.createToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+				String refreshJWT = jwtUtill.createToken(request, response, custom, new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
+				
+				
+				headers.add("Access-JWT", accessJWT);
+				headers.add("Refresh-JWT", refreshJWT);
+				
+				RefreshToken refreshToken = new RefreshToken();
+				refreshToken.setUserName(custom.getUsername());
+				refreshToken.setToken(refreshJWT);
+				
+				refreshTokenRepository.save(refreshToken);
 			}
+			
 			res.setMessage("Success Login :)");
 			res.setResultCode(HttpStatus.OK);
-			res.setResult(new AuthenticationToken(username, auth.getAuthorities(), session.getId()));
+			res.setResult(Boolean.TRUE);
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
 			res.setResult(null);
 		}
 		
-		return res;
+		return ResponseEntity.ok().headers(headers).body(res);
 	}
 	
 	@GetMapping("/logout")
