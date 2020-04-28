@@ -15,5 +15,7 @@ public class MenuVO {
 	private String menuGroup;
 	private Integer menuOrder;
 	private Boolean child;
+	private String roleIdx;
+	private String roleTitle;
 	private List<MenuVO> children;
 }

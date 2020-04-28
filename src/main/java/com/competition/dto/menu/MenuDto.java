@@ -12,10 +12,12 @@ public class MenuDto {
 	private String parent;
 	private String title;
 	private String url;
-	private String insert_date;
+	private String insertDate;
 	private String group;
 	private Integer order;
 	private Integer level;
 	private Boolean child;
+	private String roleIdx;
+	private String roleTitle;
 	private List<Menu> children;
 }
