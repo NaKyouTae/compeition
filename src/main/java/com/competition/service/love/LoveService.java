@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.Love;
-import com.competition.jpa.model.User;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.jpa.model.love.Love;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.repository.user.UserRepository;
 import com.competition.process.love.LoveProcess;
 
 @Service

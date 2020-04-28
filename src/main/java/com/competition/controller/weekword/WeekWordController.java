@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.WeekWord;
+import com.competition.jpa.model.weekword.WeekWord;
 import com.competition.service.weekword.WeekWordService;
 import com.competition.vo.weekword.WeekWordVO;
 

@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.WeekWord;
+import com.competition.jpa.model.weekword.WeekWord;
 import com.competition.process.weekword.WeekWordProcess;
 import com.competition.util.DateUtil;
 import com.competition.util.ObjectUtil;

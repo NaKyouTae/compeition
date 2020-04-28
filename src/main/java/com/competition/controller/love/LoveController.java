@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.Love;
+import com.competition.jpa.model.love.Love;
 import com.competition.service.love.LoveService;
 
 @RestController

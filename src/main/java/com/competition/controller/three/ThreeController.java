@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.WordThree;
+import com.competition.jpa.model.three.WordThree;
 import com.competition.service.three.ThreeService;
 
 @RestController

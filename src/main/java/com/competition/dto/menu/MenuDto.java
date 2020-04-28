@@ -2,7 +2,7 @@ package com.competition.dto.menu;
 
 import java.util.List;
 
-import com.competition.jpa.model.Menu;
+import com.competition.jpa.model.menu.Menu;
 
 import lombok.Data;
 

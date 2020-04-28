@@ -13,13 +13,14 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.jpa.model.Role;
-import com.competition.jpa.model.User;
-import com.competition.jpa.model.UserMappingRole;
-import com.competition.jpa.repository.MenuRepository;
-import com.competition.jpa.repository.RoleRepository;
-import com.competition.jpa.repository.UserMappingRoleRepository;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.config.interceptor.JwtInterceptor;
+import com.competition.jpa.model.role.Role;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserRole;
+import com.competition.jpa.repository.menu.MenuRepository;
+import com.competition.jpa.repository.role.RoleRepository;
+import com.competition.jpa.repository.user.UserRepository;
+import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.util.DateUtil;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
@@ -40,16 +41,16 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(new JwtInterceptor())
-//				.addPathPatterns("/service/**")
-//				.excludePathPatterns("/user/**");
+		registry.addInterceptor(new JwtInterceptor())
+				.addPathPatterns("/service/**")
+				.excludePathPatterns("/user/**");
 	}
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Bean
-	public CommandLineRunner runner(UserRepository user, UserMappingRoleRepository mapping_role, RoleRepository role, MenuRepository menu) {
+	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role, MenuRepository menu) {
 		return (args) -> {
 			{
 				user.deleteAll();
@@ -84,7 +85,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 			{
 				mapping_role.deleteAll();
 				
-				UserMappingRole mapping = new UserMappingRole();
+				UserRole mapping = new UserRole();
 				mapping.setRoleName("ROLE_ADMIN");
 				mapping.setUserName("admin");
 				mapping_role.save(mapping);

@@ -3,8 +3,8 @@ package com.competition.process.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.User;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.repository.user.UserRepository;
 
 @Component
 @SuppressWarnings("unchecked")

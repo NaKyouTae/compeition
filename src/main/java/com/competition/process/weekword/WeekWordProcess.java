@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.WeekWord;
-import com.competition.jpa.repository.WeekWordRepository;
-import com.competition.jpa.repository.WeekWordRepository.WordInter;
+import com.competition.jpa.model.weekword.WeekWord;
+import com.competition.jpa.repository.weekword.WeekWordRepository;
+import com.competition.jpa.repository.weekword.WeekWordRepository.WordInter;
 
 @Component
 @SuppressWarnings("unchecked")

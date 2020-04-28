@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.Role;
+import com.competition.jpa.model.role.Role;
 import com.competition.service.role.RoleService;
 
 @RestController

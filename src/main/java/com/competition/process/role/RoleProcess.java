@@ -3,8 +3,8 @@ package com.competition.process.role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.Role;
-import com.competition.jpa.repository.RoleRepository;
+import com.competition.jpa.model.role.Role;
+import com.competition.jpa.repository.role.RoleRepository;
 
 @Component
 @SuppressWarnings("unchecked")

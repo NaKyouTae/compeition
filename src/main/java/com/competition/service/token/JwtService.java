@@ -22,45 +22,72 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
+@SuppressWarnings("unchecked")
 public class JwtService {
 	
 	@Autowired
 	private UserService userService;
 	
-	private String secretKey = "competitionjwt";
+	private String accessSecretKey = "CompetitionAccessjwt";
+	private byte[] accessSecretBytes = DatatypeConverter.parseBase64Binary(accessSecretKey);
+	private SignatureAlgorithm accessSignatureAlgorithm = SignatureAlgorithm.HS256;
+	private final Key accessKey = new SecretKeySpec(accessSecretBytes, accessSignatureAlgorithm.getJcaName());
+
+	private String refreshSecretKey = "CompetitionRefreshjwt";
+	private byte[] refreshSecretBytes = DatatypeConverter.parseBase64Binary(refreshSecretKey);
+	private SignatureAlgorithm refreshSignatureAlgorithm = SignatureAlgorithm.HS256;
+	private final Key refreshKey = new SecretKeySpec(refreshSecretBytes, refreshSignatureAlgorithm.getJcaName());
 	
-	private byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
-	
-	private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-	
-	private final Key key = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-	
-	public String createToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
+	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", user.getAuthorities());
 		
-		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setSubject(user.getUsername()).setClaims(claims)
-				.setExpiration(expriation).signWith(signatureAlgorithm, key).compact();
+		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT").setSubject(user.getUsername()).setClaims(claims)
+				.setExpiration(expriation).signWith(accessSignatureAlgorithm, accessKey).compact();
 		
-		return jwt;		
+		return (T) jwt;
+	}
+	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String user, Date expriation) {
+		
+		Claims claims = Jwts.claims().setSubject(user);
+		claims.put("roles", user);
+		
+		String jwt = Jwts.builder().setHeaderParam("typ", "REFRESHJWT").setSubject(user).setClaims(claims)
+				.setExpiration(expriation).signWith(refreshSignatureAlgorithm, refreshKey).compact();
+		
+		return (T) jwt;
 	}
 	
-	public boolean validateToken(String token){
+	public boolean validateToken(String token, String type){
 		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+			Jws<Claims> claims = null;
+			
+			if(type.equals("Access")) {
+				claims = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token);
+			}else if(type.equals("Refresh")) {
+				claims = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token);
+			}
+				
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	public String getUserInfo(String token) {
-		return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+	public String getUserInfo(String token, String type) {
+		String result = "";
+		
+		if(type.equals("Access")) {
+			result = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token).getBody().getSubject();
+		}else if(type.equals("Refresh")) {
+			result = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token).getBody().getSubject();
+		}
+		return result;
 	}
 	
-	public Authentication getAuthentication(String token) {
-		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getUserInfo(token));
+	public Authentication getAuthentication(String token, String type) {
+		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getUserInfo(token, type));
 		return new UsernamePasswordAuthenticationToken(user,"",user.getAuthorities());
 	}
 }

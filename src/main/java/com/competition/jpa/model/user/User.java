@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.user;
 
 import java.io.Serializable;
 

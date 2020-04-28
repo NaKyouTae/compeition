@@ -1,4 +1,4 @@
-package com.competition.jpa.repository;
+package com.competition.jpa.repository.menu;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.competition.jpa.model.Menu;
+import com.competition.jpa.model.menu.Menu;
 
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Long> {

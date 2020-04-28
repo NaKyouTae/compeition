@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.role;
 
 import java.io.Serializable;
 
@@ -16,15 +16,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "REFRESHTOKEN")
-public class RefreshToken implements Serializable {
+@Table(name = "ROLE")
+public class Role implements Serializable {
 
-	private static final long serialVersionUID = 4368682883404823822L;
+	private static final long serialVersionUID = 1122861054404748086L;
 
 	@Id
 	@Column
-	private String userName;
+	private String idx;
+	
+	@Column
+	private String roleName;
+	
+	@Column
+	private String insertDate;
 
 	@Column
-	private String token;
+	private String changeDate;
+
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.competition.jpa.model.Menu;
+import com.competition.jpa.model.menu.Menu;
 import com.competition.util.ObjectUtil;
 import com.competition.vo.menu.MenuVO;
 

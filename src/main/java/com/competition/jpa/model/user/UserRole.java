@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.user;
 
 import java.io.Serializable;
 
@@ -18,20 +18,26 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name ="MENUMAPPINGROLE")
-public class MenuMappingRole implements Serializable {
+@Table(name ="USERROLE")
+public class UserRole implements Serializable {
 
-	private static final long serialVersionUID = -2114602465412441179L;
+	private static final long serialVersionUID = 6038453839096370467L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
 	private Long idx;
+	
+	@Column
+	private String userIdx;
+	
+	@Column
+	private String userName;
 	
 	@Column
 	private String roleIdx;
 	
 	@Column
-	private String roleTitle;
+	private String roleName;
 
 }

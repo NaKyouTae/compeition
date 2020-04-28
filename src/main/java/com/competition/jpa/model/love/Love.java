@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.love;
 
 import java.io.Serializable;
 
@@ -16,22 +16,21 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "ROLE")
-public class Role implements Serializable {
+@Table(name = "LOVE")
+public class Love implements Serializable {
 
-	private static final long serialVersionUID = 1122861054404748086L;
+	private static final long serialVersionUID = -763568391708728064L;
 
 	@Id
 	@Column
 	private String idx;
-	
-	@Column
-	private String roleName;
-	
+
 	@Column
 	private String insertDate;
+		
+	@Column
+	private String userIdx;
 
 	@Column
-	private String changeDate;
-
+	private String contentIdx;
 }

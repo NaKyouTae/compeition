@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.menu;
 
 import java.io.Serializable;
 
@@ -54,5 +54,11 @@ public class Menu implements Serializable {
 	@Column
 	@Nullable
 	private String parent = "null";
+	
+	@Column
+	private String roleIdx;
+	
+	@Column
+	private String roleTitle;
 
 }

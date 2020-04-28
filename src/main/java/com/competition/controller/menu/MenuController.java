@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.Menu;
+import com.competition.jpa.model.menu.Menu;
 import com.competition.service.menu.MenuService;
 import com.competition.vo.menu.MenuVO;
 

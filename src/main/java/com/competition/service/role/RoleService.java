@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.Role;
+import com.competition.jpa.model.role.Role;
 import com.competition.process.role.RoleProcess;
 import com.competition.util.DateUtil;
 

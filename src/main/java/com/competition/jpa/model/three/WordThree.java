@@ -1,4 +1,4 @@
-package com.competition.jpa.model;
+package com.competition.jpa.model.three;
 
 import java.io.Serializable;
 

@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.RefreshToken;
-import com.competition.jpa.model.User;
-import com.competition.jpa.repository.RefreshTokenRepository;
+import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.repository.token.RefreshTokenRepository;
 import com.competition.service.token.JwtService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
@@ -90,9 +90,8 @@ public class LoginController {
 			CustomUserDetails custom =  (CustomUserDetails) auth.getPrincipal();		
 			
 			if(custom != null) {
-				String accessJWT = jwtUtill.createToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
-				String refreshJWT = jwtUtill.createToken(request, response, custom, new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
-				
+				String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+				String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
 				
 				headers.add("Access-JWT", accessJWT);
 				headers.add("Refresh-JWT", refreshJWT);

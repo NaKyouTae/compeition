@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.User;
-import com.competition.jpa.model.UserMappingRole;
-import com.competition.jpa.repository.UserMappingRoleRepository;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserRole;
+import com.competition.jpa.repository.user.UserRepository;
+import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
 
 @RestController
@@ -30,7 +30,7 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
-	private UserMappingRoleRepository userMappingRoleRepository;
+	private UserRoleRepository userMappingRoleRepository;
 	
 	@GetMapping("/lists")
 	public ControllerResponse<List<User>> getLists() throws Exception {
@@ -67,8 +67,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/userrole")
-	public ControllerResponse<List<UserMappingRole>> UserRole(@ModelAttribute("username") String username) throws Exception {
-		ControllerResponse<List<UserMappingRole>> res = new ControllerResponse<List<UserMappingRole>>();
+	public ControllerResponse<List<UserRole>> UserRole(@ModelAttribute("username") String username) throws Exception {
+		ControllerResponse<List<UserRole>> res = new ControllerResponse<List<UserRole>>();
 		
 		try {
 			res.setResult(userMappingRoleRepository.findByUserName(username));

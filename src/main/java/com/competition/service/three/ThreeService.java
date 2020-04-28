@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.WordThree;
+import com.competition.jpa.model.three.WordThree;
 import com.competition.process.three.ThreeProcess;
 import com.competition.service.weekword.WeekWordService;
 import com.competition.util.DateUtil;

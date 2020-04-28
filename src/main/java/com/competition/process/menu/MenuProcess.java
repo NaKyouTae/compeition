@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.Menu;
-import com.competition.jpa.repository.MenuRepository;
+import com.competition.jpa.model.menu.Menu;
+import com.competition.jpa.repository.menu.MenuRepository;
 
 @Component
 @SuppressWarnings("unchecked")

@@ -6,12 +6,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.Love;
-import com.competition.jpa.model.WordThree;
-import com.competition.jpa.repository.LoveRepository;
-import com.competition.jpa.repository.ThreeRepository;
-import com.competition.jpa.repository.WeekWordRepository;
-import com.competition.jpa.repository.WeekWordRepository.WordInter;
+import com.competition.jpa.model.love.Love;
+import com.competition.jpa.model.three.WordThree;
+import com.competition.jpa.repository.love.LoveRepository;
+import com.competition.jpa.repository.three.ThreeRepository;
+import com.competition.jpa.repository.weekword.WeekWordRepository;
+import com.competition.jpa.repository.weekword.WeekWordRepository.WordInter;
 import com.competition.util.DateUtil;
 
 @Component

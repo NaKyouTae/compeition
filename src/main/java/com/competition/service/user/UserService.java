@@ -9,10 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.User;
-import com.competition.jpa.model.UserMappingRole;
-import com.competition.jpa.repository.UserMappingRoleRepository;
-import com.competition.jpa.repository.UserRepository;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserRole;
+import com.competition.jpa.repository.user.UserRepository;
+import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.process.user.UserProcess;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
@@ -28,13 +28,13 @@ public class UserService implements UserDetailsService {
 	private UserProcess userProcess;
 	
 	@Autowired
-	private UserMappingRoleRepository userMappingRoleRepository; 
+	private UserRoleRepository userMappingRoleRepository; 
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUserName(username);
 		
-		List<UserMappingRole> roles = userMappingRoleRepository.findByUserName(username);
+		List<UserRole> roles = userMappingRoleRepository.findByUserName(username);
 		
 		CustomUserDetails ud = new CustomUserDetails();
 		ud.setUser(user);
