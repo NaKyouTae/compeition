@@ -1,11 +1,11 @@
 package com.competition.service.token;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.competition.process.token.BlackTokenProcess;
 
-@Component
+@Service
 @SuppressWarnings("unchecked")
 public class BlackTokenService {
 	

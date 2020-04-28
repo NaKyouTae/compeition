@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -23,7 +22,7 @@ import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.util.DateUtil;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+@SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer{
 
 	public static void main(String[] args) {
@@ -39,10 +38,15 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
         .allowCredentials(true).maxAge(3600);
     }
 	
+	@Bean
+	public JwtInterceptor jwtInterceptor() {
+		return new JwtInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new JwtInterceptor())
-				.addPathPatterns("/service/**")
+		registry.addInterceptor(jwtInterceptor())
+				.addPathPatterns("/**")
 				.excludePathPatterns("/user/**");
 	}
 	
