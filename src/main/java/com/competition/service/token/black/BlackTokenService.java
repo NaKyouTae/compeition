@@ -1,4 +1,4 @@
-package com.competition.service.token;
+package com.competition.service.token.black;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

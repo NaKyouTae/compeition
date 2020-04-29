@@ -1,4 +1,4 @@
-package com.competition.controller.token;
+package com.competition.controller.token.refresh;
 
 import java.util.Date;
 
@@ -21,7 +21,7 @@ import com.competition.user.CustomUserDetails;
 @RestController
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/tokens")
-public class TokenController {
+public class RefreshTokenController {
 	
 	@Autowired
 	private JwtService jwtService;
@@ -32,7 +32,7 @@ public class TokenController {
 	private RefreshTokenRepository refreshTokenRepository;
 	
 	@GetMapping("")
-	public <T extends Object> T createAccessToken(String refreshToken, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public <T extends Object> T createToken(String refreshToken, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<Object>();
 		try {
 			

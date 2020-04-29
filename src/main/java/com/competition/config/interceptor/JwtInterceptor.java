@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.competition.service.token.BlackTokenService;
 import com.competition.service.token.JwtService;
-import com.competition.service.token.RefreshTokenService;
+import com.competition.service.token.black.BlackTokenService;
+import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 

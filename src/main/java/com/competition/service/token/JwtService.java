@@ -1,7 +1,9 @@
 package com.competition.service.token;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +42,14 @@ public class JwtService {
 	
 	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
+		List<String> authList = new ArrayList<>();
+
+		user.getAuthorities().stream().forEach(item -> {
+			authList.add(item.getAuthority());
+		});
+		
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
-		claims.put("roles", user.getAuthorities());
+		claims.put("roles", authList);
 		
 		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT").setSubject(user.getUsername()).setClaims(claims)
 				.setExpiration(expriation).signWith(accessSignatureAlgorithm, accessKey).compact();

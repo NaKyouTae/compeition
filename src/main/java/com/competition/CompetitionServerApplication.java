@@ -66,6 +66,14 @@ public class CompetitionServerApplication implements WebMvcConfigurer{
 				u.setInsertDate(DateUtil.now());
 				u.setChangeDate(null);
 				user.save(u);
+				
+				User u1 = new User();
+				u1.setIdx(UUID.randomUUID().toString());
+				u1.setUserName("test");
+				u1.setPw(passwordEncoder.encode("test"));
+				u1.setInsertDate(DateUtil.now());
+				u1.setChangeDate(null);
+				user.save(u1);
 			}
 			
 			{
