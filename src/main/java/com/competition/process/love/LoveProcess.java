@@ -13,8 +13,8 @@ public class LoveProcess {
 	@Autowired
 	private LoveRepository loveRepository;
 
-	public <T extends Object> T seLove(String idx) throws Exception {
-		return (T) loveRepository.findByContentIdx(idx);
+	public <T extends Object> T seLove(String contentIdx) throws Exception {
+		return (T) loveRepository.findByContentIdx(contentIdx);
 	}
 	public <T extends Object> T inLove(Love love) throws Exception {
 		return (T) loveRepository.save(love);

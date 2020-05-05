@@ -1,4 +1,4 @@
-package com.competition.jpa.repository.token;
+package com.competition.jpa.repository.token.black;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

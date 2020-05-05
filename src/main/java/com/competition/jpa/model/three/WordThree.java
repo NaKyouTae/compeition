@@ -52,5 +52,7 @@ public class WordThree implements Serializable {
 	
 	@Column
 	private boolean love = false;
+	@Column
+	private String loveName;
 
 }

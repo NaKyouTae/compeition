@@ -1,7 +1,5 @@
 package com.competition.service.love;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +19,16 @@ public class LoveService {
 	private UserRepository userRepository;
 	
 	
-	public <T extends Object> T seLove(String idx, String username) throws Exception {
+	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
 		try {
 			Boolean result = Boolean.FALSE;
 			
 			User user = userRepository.findByUserName(username);
 			
-			List<Love> loves = loveProcess.seLove(idx);
+			Love love = loveProcess.seLove(contentIdx);
 			
-			if(user != null && loves.size() > 0) {
-				result = loves.stream().anyMatch(love -> love.getUserIdx().equals(user.getIdx()));
+			if(user != null && love != null) {
+				result = love.getUserIdx().equals(user.getIdx());
 			}
 			
 			return (T) result;

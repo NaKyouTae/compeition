@@ -60,12 +60,12 @@ public class MenuTest {
 		vo.setParent("ca3a1e03-925c-4faa-9b52-2edff5b03831");
 		vo.setTitle("제시어 2");
 		vo.setUrl("/test2");
-		vo.setMenuorder(2);
+		vo.setMenuOrder(2);
 		
 		vo1.setParent("ca3a1e03-925c-4faa-9b52-2edff5b03831");
 		vo1.setTitle("제시어 1");
 		vo1.setUrl("/test1");
-		vo1.setMenuorder(1);
+		vo1.setMenuOrder(1);
 
 		
 		List<MenuVO> menus = new ArrayList<>();
@@ -98,7 +98,7 @@ public class MenuTest {
 		
 		vo.setIdx("dc8f2773-66e9-4482-b4ec-8f3204f7c66b");
 		vo.setParent("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
-		vo.setInsertdate("2020-03-19T16:57:28.349113500");
+		vo.setInsertDate("2020-03-19T16:57:28.349113500");
 		vo.setTitle("메뉴");
 		vo.setUrl("/menu");
 		
@@ -123,7 +123,7 @@ public class MenuTest {
 		
 		vo.setIdx("367aebc8-9afc-428c-ab72-ba02f3a66cb0");
 		vo.setParent("b2fa9a39-9546-49be-b9f8-af5149a0bbbb");
-		vo.setInsertdate("2020-03-19T16:59:48.825433700");
+		vo.setInsertDate("2020-03-19T16:59:48.825433700");
 		vo.setTitle("사용자");
 		vo.setUrl("/user");
 		

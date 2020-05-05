@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.competition.jpa.model.token.RefreshToken;
 import com.competition.service.token.JwtService;
 import com.competition.service.token.black.BlackTokenService;
 import com.competition.service.token.refresh.RefreshTokenService;
@@ -46,9 +47,8 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 			}
 			
 			if(!jwtService.validateToken(Access, "Access")) {
-				
-				String username = jwtService.getUserInfo(Access, "Access");
-				CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(username);
+				RefreshToken reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
+				CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
 				
 				response.setHeader("Access-JWT", jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30))));
 			}

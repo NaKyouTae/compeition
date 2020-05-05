@@ -22,7 +22,7 @@ public class LoveController {
 	private LoveService loveService;
 	
 	@GetMapping("/loves")
-	public <T extends Object> T seLove(String idx, String username) throws Exception {
+	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		
 		if(username == null) {
@@ -35,7 +35,7 @@ public class LoveController {
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Love History :) ");
-			res.setResult(loveService.seLove(idx, username));
+			res.setResult(loveService.seLove(contentIdx, username));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 

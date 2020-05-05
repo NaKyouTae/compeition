@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ import com.competition.service.user.UserService;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/user")
+@RequestMapping("/service/users")
 public class UserController {
 
 	@Autowired
@@ -32,7 +33,7 @@ public class UserController {
 	@Autowired
 	private UserRoleRepository userMappingRoleRepository;
 	
-	@GetMapping("/lists")
+	@GetMapping("")
 	public ControllerResponse<List<User>> getLists() throws Exception {
 		ControllerResponse<List<User>> res = new ControllerResponse<List<User>>();
 
@@ -49,7 +50,7 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping("/userinfo")
+	@GetMapping("/{username}")
 	public ControllerResponse<User> UserInfo(@ModelAttribute("username") String username) throws Exception {
 		ControllerResponse<User> res = new ControllerResponse<User>();
 
@@ -66,7 +67,7 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping("/userrole")
+	@GetMapping("/role/{username}")
 	public ControllerResponse<List<UserRole>> UserRole(@ModelAttribute("username") String username) throws Exception {
 		ControllerResponse<List<UserRole>> res = new ControllerResponse<List<UserRole>>();
 		
@@ -84,7 +85,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{idx}")
-	public ControllerResponse<User> updateUser(User user) throws Exception{
+	public ControllerResponse<User> updateUser(@RequestBody User user) throws Exception{
 		ControllerResponse<User> res = new ControllerResponse<User>();
 		try {
 			res.setResult(userService.updateUser(user));
@@ -100,7 +101,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{idx}")
-	public ControllerResponse<Boolean> destoryUser(User user) throws Exception{
+	public ControllerResponse<Boolean> destoryUser(@RequestBody User user) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
 			res.setResult(userService.destoryUser(user));

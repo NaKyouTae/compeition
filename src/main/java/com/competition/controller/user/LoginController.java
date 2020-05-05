@@ -16,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
-import com.competition.jpa.repository.token.RefreshTokenRepository;
 import com.competition.service.token.JwtService;
+import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
@@ -48,7 +47,7 @@ public class LoginController {
 	@Autowired
 	private JwtService jwtUtill;
 	@Autowired
-	private RefreshTokenRepository refreshTokenRepository;
+	private RefreshTokenService refreshTokenService;
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
@@ -100,7 +99,7 @@ public class LoginController {
 				refreshToken.setUserName(custom.getUsername());
 				refreshToken.setToken(refreshJWT);
 				
-				refreshTokenRepository.save(refreshToken);
+				refreshTokenService.inRefreshToken(refreshToken);
 			}
 			
 			res.setMessage("Success Login :)");
@@ -120,17 +119,21 @@ public class LoginController {
 		ControllerResponse<Object> res = new ControllerResponse<Object>();
 		
 		try {
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//			
+//			if (auth != null) {
+//				new SecurityContextLogoutHandler().logout(request, response, auth);
+//			}
 			
-			if (auth != null) {
-				new SecurityContextLogoutHandler().logout(request, response, auth);
-			}
+			String Access = response.getHeader("Refresh-JWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("LogOut Success :)");
+			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(Access)));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
+			res.setResult(null);
 		}
 
 		return res;

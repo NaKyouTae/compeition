@@ -75,7 +75,7 @@ public class MenuService {
 			
 			Menu parentMenu = seMenu(vo.getParent());
 			
-			MenuVO parentVO = ObjectUtil.toObject(vo, new MenuVO());
+			MenuVO parentVO = ObjectUtil.toObject(parentMenu, new MenuVO());
 			
 			parentVO.setChild(true);
 			
