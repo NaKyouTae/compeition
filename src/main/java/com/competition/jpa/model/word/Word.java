@@ -1,4 +1,4 @@
-package com.competition.jpa.model.weekword;
+package com.competition.jpa.model.word;
 
 import java.io.Serializable;
 
@@ -15,8 +15,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "WEEKWORD")
-public class WeekWord implements Serializable {
+@Table(name = "WORD")
+public class Word implements Serializable {
 
 	private static final long serialVersionUID = -1139838270144095544L;
 

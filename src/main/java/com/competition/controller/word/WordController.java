@@ -1,4 +1,4 @@
-package com.competition.controller.weekword;
+package com.competition.controller.word;
 
 import java.util.List;
 
@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.weekword.WeekWord;
-import com.competition.service.weekword.WeekWordService;
+import com.competition.jpa.model.word.Word;
+import com.competition.service.word.WordService;
 import com.competition.vo.weekword.WeekWordVO;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/weekword")
-public class WeekWordController {
+@RequestMapping("/service/words")
+public class WordController {
 
 	@Autowired
-	private WeekWordService weekWordService;
+	private WordService weekWordService;
 	
-	@GetMapping("/lists")
+	@GetMapping("")
 	public <T extends Object> T getLists() throws Exception {
-		ControllerResponse<List<WeekWord>> res = new ControllerResponse<List<WeekWord>>();
+		ControllerResponse<List<Word>> res = new ControllerResponse<List<Word>>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Week Word List :) "); 
@@ -43,7 +43,7 @@ public class WeekWordController {
 		return (T) res;
 	}
 	
-	@GetMapping("/words")
+	@GetMapping("/group")
 	public <T extends Object> T geWeekWords(@Param(value = "group") String group) throws Exception {
 		ControllerResponse<WeekWordDto> res = new ControllerResponse<WeekWordDto>();
 		try {
@@ -59,9 +59,9 @@ public class WeekWordController {
 		return (T) res;
 	}
 	
-	@PostMapping("/words")
+	@PostMapping("")
 	public <T extends Object> T inWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<WeekWord> res = new ControllerResponse<WeekWord>();
+		ControllerResponse<Word> res = new ControllerResponse<Word>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Insert Week Word :) "); 
@@ -74,9 +74,9 @@ public class WeekWordController {
 		
 		return (T) res;
 	}
-	@PutMapping("/words/{idx}")
+	@PutMapping("/{idx}")
 	public <T extends Object> T upWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<WeekWord> res = new ControllerResponse<WeekWord>();
+		ControllerResponse<Word> res = new ControllerResponse<Word>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update Week Word :) "); 
@@ -89,7 +89,7 @@ public class WeekWordController {
 		
 		return (T) res;
 	}
-	@DeleteMapping("/words/{idx}")
+	@DeleteMapping("/{idx}")
 	public <T extends Object> T deWord(@RequestBody WeekWordVO vo) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {

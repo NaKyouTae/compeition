@@ -21,9 +21,9 @@ public class ObjectTest {
 		vo.setTitle("test");
 		vo.setUrl("test");
 		vo.setLevel(1);
-		vo.setInsertdate("test");
-		vo.setMenugroup("test");
-		vo.setMenuorder(2);
+		vo.setInsertDate("test");
+		vo.setMenuGroup("test");
+		vo.setMenuOrder(2);
 		vo.setChild(Boolean.TRUE);
 		vo.setChildren(new ArrayList<>());
 		

@@ -11,7 +11,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.competition.jpa.model.three.WordThree;
+import com.competition.jpa.model.three.Three;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,7 +43,7 @@ public class ThreeTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WordThree word = new WordThree();
+		Three word = new Three();
 		
 		word.setContentOne("노");
 		word.setContentTwo("트");
@@ -66,7 +66,7 @@ public class ThreeTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WordThree word = new WordThree();
+		Three word = new Three();
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(word);
@@ -85,7 +85,7 @@ public class ThreeTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WordThree word = new WordThree();
+		Three word = new Three();
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String str = mapper.writeValueAsString(word);

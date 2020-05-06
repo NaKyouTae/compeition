@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.three.WordThree;
+import com.competition.jpa.model.three.Three;
 import com.competition.process.three.ThreeProcess;
-import com.competition.service.weekword.WeekWordService;
+import com.competition.service.word.WordService;
 import com.competition.util.DateUtil;
 
 @Service
@@ -19,13 +19,17 @@ public class ThreeService {
 	private ThreeProcess threeProcess;
 	
 	@Autowired
-	private WeekWordService weekWordService;
+	private WordService weekWordService;
+	
+	public <T extends Object> T getPopular() throws Exception {
+		return (T) threeProcess.getPopular();
+	}
 	
 	public <T extends Object> T getList() throws Exception {
 		return (T) threeProcess.getList();
 	}
 	
-	public <T extends Object> T inThree(WordThree three) throws Exception {
+	public <T extends Object> T inThree(Three three) throws Exception {
 		WeekWordDto word = weekWordService.getWeekWords("THREE");
 		
 		three.setIdx(UUID.randomUUID().toString());
@@ -35,13 +39,13 @@ public class ThreeService {
 		
 		return (T) threeProcess.inThree(three);
 	}
-	public <T extends Object> T upThree(WordThree word) throws Exception {
-		word.setUpdateDate(DateUtil.now());
-		return (T) threeProcess.upThree(word);
+	public <T extends Object> T upThree(Three three) throws Exception {
+		three.setUpdateDate(DateUtil.now());
+		return (T) threeProcess.upThree(three);
 	}
-	public <T extends Object> T deThree(WordThree word) throws Exception {
+	public <T extends Object> T deThree(Three three) throws Exception {
 		try {
-			threeProcess.deThree(word);
+			threeProcess.deThree(three);
 			return (T) Boolean.TRUE;
 		}catch(Exception e) {
 			return (T) e;

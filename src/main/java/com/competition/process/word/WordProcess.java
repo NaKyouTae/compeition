@@ -1,19 +1,19 @@
-package com.competition.process.weekword;
+package com.competition.process.word;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.competition.dto.weekword.WeekWordDto;
-import com.competition.jpa.model.weekword.WeekWord;
-import com.competition.jpa.repository.weekword.WeekWordRepository;
-import com.competition.jpa.repository.weekword.WeekWordRepository.WordInter;
+import com.competition.jpa.model.word.Word;
+import com.competition.jpa.repository.word.WordRepository;
+import com.competition.jpa.repository.word.WordRepository.WordInter;
 
 @Component
 @SuppressWarnings("unchecked")
-public class WeekWordProcess {
+public class WordProcess {
 	
 	@Autowired
-	private WeekWordRepository weekWordRepository;
+	private WordRepository weekWordRepository;
 	
 	public <T extends Object> T getLists() throws Exception {
 		return (T) weekWordRepository.findAll();
@@ -36,13 +36,13 @@ public class WeekWordProcess {
 		return (T) word;
 	}
 	
-	public <T extends Object> T inWord(WeekWord word) throws Exception {
+	public <T extends Object> T inWord(Word word) throws Exception {
 		return (T) weekWordRepository.save(word);
 	}
-	public <T extends Object> T upWord(WeekWord word) throws Exception {
+	public <T extends Object> T upWord(Word word) throws Exception {
 		return (T) weekWordRepository.save(word);
 	}
-	public void deWord(WeekWord word) throws Exception {
+	public void deWord(Word word) throws Exception {
 		weekWordRepository.delete(word);
 	}
 	

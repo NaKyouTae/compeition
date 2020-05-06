@@ -1,4 +1,4 @@
-package com.competition.process.three;
+package com.competition.process.two;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,10 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.competition.jpa.model.love.Love;
-import com.competition.jpa.model.three.Three;
+import com.competition.jpa.model.two.Two;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.love.LoveRepository;
-import com.competition.jpa.repository.three.ThreeRepository;
+import com.competition.jpa.repository.two.TwoRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.word.WordRepository;
 import com.competition.jpa.repository.word.WordRepository.WordInter;
@@ -19,10 +19,10 @@ import com.competition.util.DateUtil;
 
 @Component
 @SuppressWarnings("unchecked")
-public class ThreeProcess {
+public class TwoProcess {
 
 	@Autowired
-	private ThreeRepository threeRepository;
+	private TwoRepository twoRepository;
 
 	@Autowired
 	private WordRepository weekWordRepository;
@@ -34,48 +34,47 @@ public class ThreeProcess {
 	private UserRepository userRepository;
 	
 	public <T extends Object> T getPopular() throws Exception {
-		try {
-			WordInter dto = weekWordRepository.findByWord("THREE");
-			
-			return (T) threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
-		} catch (Exception e) {
-			return(T) e;
-		}
+		WordInter dto = weekWordRepository.findByWord("TWO");
+		
+		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
+		
+		return (T) two;
 	}
-	
 	public <T extends Object> T getList() throws Exception {
-		WordInter dto = weekWordRepository.findByWord("THREE");
+		WordInter dto = weekWordRepository.findByWord("TWO");
 		
-		List<Three> three = threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
+		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
 		
-		return (T) three;
+		return (T) two;
 	}
 
-	public <T extends Object> T inThree(Three three) throws Exception {
-		return (T) threeRepository.save(three);
+	public <T extends Object> T inTwo(Two two) throws Exception {
+		return (T) twoRepository.save(two);
 	}
-	public <T extends Object> T upThree(Three three) throws Exception {
+	
+	public <T extends Object> T upTwo(Two two) throws Exception {
 		
-		Three dbThree = threeRepository.findByIdx(three.getIdx());
+		Two dbTwo = twoRepository.findByIdx(two.getIdx());
 		
-		if(!dbThree.getPoint().equals(three.getPoint())) {
+		if(!dbTwo.getPoint().equals(two.getPoint())) {
 			
 			Love love = new Love();
 			love.setIdx(UUID.randomUUID().toString().replace("-", ""));
 			love.setInsertDate(DateUtil.now());
-			love.setContentIdx(three.getIdx());
+			love.setContentIdx(two.getIdx());
 			
-			User user = userRepository.findByUserName(three.getLoveName());
+			User user = userRepository.findByUserName(two.getLoveName());
 			
 			love.setUserIdx(user.getIdx());
 			
 			loveRepository.save(love);
-			three.setLoveName("");
+			two.setLoveName("");
 		}
 		
-		return (T) threeRepository.save(three);
+		return (T) twoRepository.save(two);
 	}
-	public void deThree(Three three) throws Exception {
-		threeRepository.delete(three);
+	
+	public void deTwo(Two two) throws Exception {
+		twoRepository.delete(two);
 	}
 }

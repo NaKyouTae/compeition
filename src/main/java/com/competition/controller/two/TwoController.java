@@ -1,4 +1,4 @@
-package com.competition.controller.three;
+package com.competition.controller.two;
 
 import java.util.List;
 
@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.three.Three;
-import com.competition.service.three.ThreeService;
+import com.competition.jpa.model.two.Two;
+import com.competition.service.two.TwoService;
 
 @RestController
-@RequestMapping("/service/three")
-public class ThreeController {
+@RequestMapping("/service/twice")
+public class TwoController {
 
 	@Autowired
-	private ThreeService threeService;
+	private TwoService twoService;
 	
 	@GetMapping("/popular")
-	public ControllerResponse<List<Three>> getPopular(){
-		ControllerResponse<List<Three>> res = new ControllerResponse<>();
+	public ControllerResponse<List<Two>> getPopular(){
+		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Get Three Popular Lists :) "); 
-			res.setResult(threeService.getPopular());
+			res.setMessage("Success Get Two Popular Lists :) "); 
+			res.setResult(twoService.getPopular());
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -40,12 +40,12 @@ public class ThreeController {
 	}
 	
 	@GetMapping("")
-	public ControllerResponse<List<Three>> getList() throws Exception {
-		ControllerResponse<List<Three>> res = new ControllerResponse<>();
+	public ControllerResponse<List<Two>> getList() throws Exception {
+		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Get Three Lists :) "); 
-			res.setResult(threeService.getList());
+			res.setMessage("Success Get Two Lists :) "); 
+			res.setResult(twoService.getList());
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -54,14 +54,13 @@ public class ThreeController {
 		
 		return res;
 	}
-	
 	@PostMapping("")
-	public ControllerResponse<Three> inThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+	public ControllerResponse<Two> inTwo(@RequestBody Two two) throws Exception {
+		ControllerResponse<Two> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Insert Three :) "); 
-			res.setResult(threeService.inThree(word));
+			res.setMessage("Success Insert Two :) "); 
+			res.setResult(twoService.inTwo(two));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -71,12 +70,12 @@ public class ThreeController {
 		return res;
 	}
 	@PutMapping("/{idx}")
-	public ControllerResponse<Three> upThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+	public ControllerResponse<Two> upTwo(@RequestBody Two two) throws Exception {
+		ControllerResponse<Two> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Update Three :) "); 
-			res.setResult(threeService.upThree(word));
+			res.setMessage("Success Update Two :) "); 
+			res.setResult(twoService.upTwo(two));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -86,12 +85,12 @@ public class ThreeController {
 		return res;
 	}
 	@DeleteMapping("/{idx}")
-	public ControllerResponse<Three> deThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+	public ControllerResponse<Two> deTwo(@RequestBody Two two) throws Exception {
+		ControllerResponse<Two> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Delete Three Word :) "); 
-			res.setResult(threeService.deThree(word));
+			res.setMessage("Success Delete Two :) "); 
+			res.setResult(twoService.deTwo(two));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 

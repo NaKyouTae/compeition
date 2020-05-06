@@ -1,22 +1,22 @@
-package com.competition.service.weekword;
+package com.competition.service.word;
 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.weekword.WeekWord;
-import com.competition.process.weekword.WeekWordProcess;
+import com.competition.jpa.model.word.Word;
+import com.competition.process.word.WordProcess;
 import com.competition.util.DateUtil;
 import com.competition.util.ObjectUtil;
 import com.competition.vo.weekword.WeekWordVO;
 
 @Service
 @SuppressWarnings("unchecked")
-public class WeekWordService {
+public class WordService {
 	
 	@Autowired
-	private WeekWordProcess weekWordProcess;
+	private WordProcess weekWordProcess;
 	
 	public <T extends Object> T getLists() throws Exception {
 		return (T) weekWordProcess.getLists();
@@ -27,7 +27,7 @@ public class WeekWordService {
 	}
 	
 	public <T extends Object> T inWord(WeekWordVO vo) throws Exception {
-		WeekWord word = ObjectUtil.toObject(vo, new WeekWord());
+		Word word = ObjectUtil.toObject(vo, new Word());
 		
 		word.setIdx(UUID.randomUUID().toString());
 		word.setInsertDate(DateUtil.now());
@@ -40,7 +40,7 @@ public class WeekWordService {
 		return (T) weekWordProcess.inWord(word);
 	}
 	public <T extends Object> T upWord(WeekWordVO vo) throws Exception {
-		WeekWord word = ObjectUtil.toObject(vo, new WeekWord());
+		Word word = ObjectUtil.toObject(vo, new Word());
 
 //		word.setIdx(vo.getIdx());
 //		word.setInsert_date(vo.getInsert_date());
@@ -54,7 +54,7 @@ public class WeekWordService {
 	}
 	public <T extends Object> T deWord(WeekWordVO vo) throws Exception {
 		try {
-			WeekWord word = ObjectUtil.toObject(vo, new WeekWord());
+			Word word = ObjectUtil.toObject(vo, new Word());
 
 //			word.setIdx(vo.getIdx());
 //			word.setInsert_date(vo.getInsert_date());

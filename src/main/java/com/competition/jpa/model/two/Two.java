@@ -1,4 +1,4 @@
-package com.competition.jpa.model.three;
+package com.competition.jpa.model.two;
 
 import java.io.Serializable;
 
@@ -15,8 +15,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "WORDTHREE")
-public class WordThree implements Serializable {
+@Table(name = "TWO")
+public class Two implements Serializable {
 
 	private static final long serialVersionUID = -8570162283978145091L;
 
@@ -34,10 +34,8 @@ public class WordThree implements Serializable {
 	private String contentTwo;
 	
 	@Column
-	private String contentThree;
-
-	@Column
 	private String userName;
+	
 	@Column
 	private String userIdx;
 
