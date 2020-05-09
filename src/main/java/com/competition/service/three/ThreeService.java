@@ -35,7 +35,6 @@ public class ThreeService {
 		three.setIdx(UUID.randomUUID().toString());
 		three.setInsertDate(DateUtil.now());
 		three.setWordIdx(word.getIdx());
-		// username 어떻게 넣을것인지 
 		
 		return (T) threeProcess.inThree(three);
 	}

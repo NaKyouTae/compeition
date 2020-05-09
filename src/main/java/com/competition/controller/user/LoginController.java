@@ -56,7 +56,7 @@ public class LoginController {
 
 		try {
 			user.setInsertDate(DateUtil.now());
-			user.setPw(passwordEncoder.encode(user.getPw()));
+			user.setPassWord(passwordEncoder.encode(user.getPassWord()));
 			
 			response.setResultCode(HttpStatus.OK);
 			response.setMessage("Sing Up Success :)");
@@ -98,6 +98,7 @@ public class LoginController {
 				RefreshToken refreshToken = new RefreshToken();
 				refreshToken.setUserName(custom.getUsername());
 				refreshToken.setToken(refreshJWT);
+				refreshToken.setInsertDate(DateUtil.now());
 				
 				refreshTokenService.inRefreshToken(refreshToken);
 			}
@@ -125,11 +126,11 @@ public class LoginController {
 //				new SecurityContextLogoutHandler().logout(request, response, auth);
 //			}
 			
-			String Access = response.getHeader("Refresh-JWT");
+			String refresh = request.getHeader("Refresh-JWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("LogOut Success :)");
-			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(Access)));
+			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(refresh)));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());

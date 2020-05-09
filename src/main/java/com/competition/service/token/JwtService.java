@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,7 @@ public class JwtService {
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", authList);
 		
-		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT").setSubject(user.getUsername()).setClaims(claims)
+		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user.getUsername()).setClaims(claims)
 				.setExpiration(expriation).signWith(accessSignatureAlgorithm, accessKey).compact();
 		
 		return (T) jwt;
@@ -61,7 +62,7 @@ public class JwtService {
 		Claims claims = Jwts.claims().setSubject(user);
 		claims.put("roles", user);
 		
-		String jwt = Jwts.builder().setHeaderParam("typ", "REFRESHJWT").setSubject(user).setClaims(claims)
+		String jwt = Jwts.builder().setHeaderParam("typ", "REFRESHJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user).setClaims(claims)
 				.setExpiration(expriation).signWith(refreshSignatureAlgorithm, refreshKey).compact();
 		
 		return (T) jwt;

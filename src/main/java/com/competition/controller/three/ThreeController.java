@@ -57,7 +57,7 @@ public class ThreeController {
 	
 	@PostMapping("")
 	public ControllerResponse<Three> inThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+		ControllerResponse<Three> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Insert Three :) "); 
@@ -72,7 +72,7 @@ public class ThreeController {
 	}
 	@PutMapping("/{idx}")
 	public ControllerResponse<Three> upThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+		ControllerResponse<Three> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update Three :) "); 
@@ -86,8 +86,8 @@ public class ThreeController {
 		return res;
 	}
 	@DeleteMapping("/{idx}")
-	public ControllerResponse<Three> deThree(@RequestBody Three word) throws Exception {
-		ControllerResponse<Three> res = new ControllerResponse<Three>();
+	public ControllerResponse<Boolean> deThree(@RequestBody Three word) throws Exception {
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Three Word :) "); 

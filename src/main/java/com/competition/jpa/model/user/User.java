@@ -27,9 +27,12 @@ public class User implements Serializable {
 	
 	@Column
 	private String userName;
+	
+	@Column
+	private String email;
 
 	@Column
-	private String pw;
+	private String passWord;
 		
 	@Column
 	private String insertDate;
