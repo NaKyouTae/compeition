@@ -26,14 +26,14 @@ public class User implements Serializable {
 	private String idx;
 	
 	@Column
-	private String userName;
+	private String username;
 	
 	@Column
 	private String email;
 
 	@Column
-	private String passWord;
-		
+	private String password;
+	
 	@Column
 	private String insertDate;
 

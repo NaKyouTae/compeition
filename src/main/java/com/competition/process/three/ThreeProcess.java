@@ -65,7 +65,7 @@ public class ThreeProcess {
 			love.setInsertDate(DateUtil.now());
 			love.setContentIdx(three.getIdx());
 			
-			User user = userRepository.findByUserName(three.getLoveName());
+			User user = userRepository.findByUsername(three.getLoveName());
 			
 			love.setUserIdx(user.getIdx());
 			

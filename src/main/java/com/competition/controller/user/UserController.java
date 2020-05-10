@@ -55,7 +55,7 @@ public class UserController {
 		ControllerResponse<User> res = new ControllerResponse<User>();
 
 		try {
-			res.setResult(userRepository.findByUserName(username));
+			res.setResult(userRepository.findByUsername(username));
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get User Info :) ");
 		} catch (Exception e) {

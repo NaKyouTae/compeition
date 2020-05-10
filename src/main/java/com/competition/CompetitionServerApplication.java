@@ -61,18 +61,20 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 
 				User u = new User();
 				u.setIdx(UUID.randomUUID().toString());
-				u.setUserName("admin");
-				u.setPw(passwordEncoder.encode("skrbxo12!@"));
+				u.setUsername("admin");
+				u.setPassword(passwordEncoder.encode("skrbxo12!@"));
 				u.setInsertDate(DateUtil.now());
 				u.setChangeDate(null);
+				u.setEmail("kyoutae_93@naver.com");
 				user.save(u);
 
 				User u1 = new User();
 				u1.setIdx(UUID.randomUUID().toString());
-				u1.setUserName("test");
-				u1.setPw(passwordEncoder.encode("test"));
+				u1.setUsername("test");
+				u1.setPassword(passwordEncoder.encode("test"));
 				u1.setInsertDate(DateUtil.now());
 				u1.setChangeDate(null);
+				u1.setEmail("qppk@naver.com");
 				user.save(u1);
 			}
 
@@ -90,7 +92,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 			{
 				mapping_role.deleteAll();
 
-				User userInfo = user.findByUserName("admin");
+				User userInfo = user.findByUsername("admin");
 				UserRole mapping = new UserRole();
 
 				Role roleInfo = role.findByRoleName("ROLE_ADMIN");

@@ -63,7 +63,7 @@ public class TwoProcess {
 			love.setInsertDate(DateUtil.now());
 			love.setContentIdx(two.getIdx());
 			
-			User user = userRepository.findByUserName(two.getLoveName());
+			User user = userRepository.findByUsername(two.getLoveName());
 			
 			love.setUserIdx(user.getIdx());
 			

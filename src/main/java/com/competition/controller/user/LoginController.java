@@ -56,7 +56,7 @@ public class LoginController {
 
 		try {
 			user.setInsertDate(DateUtil.now());
-			user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			
 			response.setResultCode(HttpStatus.OK);
 			response.setMessage("Sing Up Success :)");

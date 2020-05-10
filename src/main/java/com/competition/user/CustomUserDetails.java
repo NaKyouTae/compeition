@@ -36,12 +36,12 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {
 		if(user == null) return null;
-		return user.getPw();
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		return user.getUsername();
 	}
 
 	@Override

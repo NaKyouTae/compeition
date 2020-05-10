@@ -7,5 +7,5 @@ import com.competition.jpa.model.user.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	User findByUserName(String username);
+	User findByUsername(String username);
 }

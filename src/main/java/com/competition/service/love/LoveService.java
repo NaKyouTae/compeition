@@ -23,7 +23,7 @@ public class LoveService {
 		try {
 			Boolean result = Boolean.FALSE;
 			
-			User user = userRepository.findByUserName(username);
+			User user = userRepository.findByUsername(username);
 			
 			Love love = loveProcess.seLove(contentIdx);
 			
