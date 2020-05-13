@@ -19,7 +19,7 @@ import com.competition.vo.menu.MenuVO;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/menu")
+@RequestMapping("/service/menus")
 public class MenuController {
 
 	@Autowired
@@ -74,7 +74,7 @@ public class MenuController {
 		return (T) res;
 	}
 	
-	@GetMapping("/menus/{idx}")
+	@GetMapping("/{idx}")
 	public <T extends Object> T seMenu(String idx) throws Exception {
 		ControllerResponse<List<MenuVO>> res = new ControllerResponse<>();
 		try {
@@ -90,7 +90,7 @@ public class MenuController {
 		return (T) res;
 	}
 	
-	@PostMapping("/menus")
+	@PostMapping("")
 	public <T extends Object> T inMenu(@RequestBody MenuVO menu) throws Exception {
 		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
 		try {
@@ -106,7 +106,7 @@ public class MenuController {
 		return (T) res;
 	}
 	
-	@PutMapping("/menus/{idx}")
+	@PutMapping("/{idx}")
 	public <T extends Object> T upMenu(@RequestBody MenuVO menu) throws Exception {
 		ControllerResponse<Menu> res = new ControllerResponse<Menu>();
 		try {
@@ -122,7 +122,7 @@ public class MenuController {
 		return (T) res;
 	}
 	
-	@DeleteMapping("/menus/{idx}")
+	@DeleteMapping("/{idx}")
 	public <T extends Object> T deMenu(@RequestBody MenuVO menu) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
