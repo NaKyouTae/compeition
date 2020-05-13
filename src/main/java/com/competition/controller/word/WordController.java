@@ -44,12 +44,28 @@ public class WordController {
 	}
 	
 	@GetMapping("/group")
-	public <T extends Object> T geWeekWords(@Param(value = "group") String group) throws Exception {
+	public <T extends Object> T getWeekWords(@Param(value = "group") String group) throws Exception {
 		ControllerResponse<WeekWordDto> res = new ControllerResponse<WeekWordDto>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Week Word :) "); 
 			res.setResult(weekWordService.getWeekWords(group));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
+	@GetMapping("/{wordIdx}")
+	public <T extends Object> T seWord(String wordIdx) throws Exception {
+		ControllerResponse<Word> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search Week Word :) "); 
+			res.setResult(weekWordService.seWord(wordIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 

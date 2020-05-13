@@ -1,7 +1,5 @@
 package com.competition;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,15 +11,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.competition.config.interceptor.JwtInterceptor;
-import com.competition.jpa.model.role.Role;
-import com.competition.jpa.model.user.User;
-import com.competition.jpa.model.user.UserRole;
 import com.competition.jpa.repository.menu.MenuRepository;
 import com.competition.jpa.repository.role.RoleRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
-import com.competition.util.DateUtil;
 
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
@@ -56,54 +50,54 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
 			MenuRepository menu) {
 		return (args) -> {
-			{
-				user.deleteAll();
+//			{
+//				user.deleteAll();
+//
+//				User u = new User();
+//				u.setIdx(UUID.randomUUID().toString());
+//				u.setUsername("admin");
+//				u.setPassword(passwordEncoder.encode("skrbxo12!@"));
+//				u.setInsertDate(DateUtil.now());
+//				u.setChangeDate(null);
+//				u.setEmail("kyoutae_93@naver.com");
+//				user.save(u);
+//
+//				User u1 = new User();
+//				u1.setIdx(UUID.randomUUID().toString());
+//				u1.setUsername("test");
+//				u1.setPassword(passwordEncoder.encode("test"));
+//				u1.setInsertDate(DateUtil.now());
+//				u1.setChangeDate(null);
+//				u1.setEmail("qppk@naver.com");
+//				user.save(u1);
+//			}
 
-				User u = new User();
-				u.setIdx(UUID.randomUUID().toString());
-				u.setUsername("admin");
-				u.setPassword(passwordEncoder.encode("skrbxo12!@"));
-				u.setInsertDate(DateUtil.now());
-				u.setChangeDate(null);
-				u.setEmail("kyoutae_93@naver.com");
-				user.save(u);
+//			{
+//				role.deleteAll();
+//
+//				Role admin_role = new Role();
+//				admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
+//				admin_role.setRoleName("ROLE_ADMIN");
+//				admin_role.setInsertDate(DateUtil.now());
+//				admin_role.setChangeDate(null);
+//				role.save(admin_role);
+//			}
 
-				User u1 = new User();
-				u1.setIdx(UUID.randomUUID().toString());
-				u1.setUsername("test");
-				u1.setPassword(passwordEncoder.encode("test"));
-				u1.setInsertDate(DateUtil.now());
-				u1.setChangeDate(null);
-				u1.setEmail("qppk@naver.com");
-				user.save(u1);
-			}
-
-			{
-				role.deleteAll();
-
-				Role admin_role = new Role();
-				admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
-				admin_role.setRoleName("ROLE_ADMIN");
-				admin_role.setInsertDate(DateUtil.now());
-				admin_role.setChangeDate(null);
-				role.save(admin_role);
-			}
-
-			{
-				mapping_role.deleteAll();
-
-				User userInfo = user.findByUsername("admin");
-				UserRole mapping = new UserRole();
-
-				Role roleInfo = role.findByRoleName("ROLE_ADMIN");
-
-				mapping.setRoleIdx(roleInfo.getIdx());
-				mapping.setRoleName("ROLE_ADMIN");
-				mapping.setUserIdx(userInfo.getIdx());
-				mapping.setUserName("admin");
-
-				mapping_role.save(mapping);
-			}
+//			{
+//				mapping_role.deleteAll();
+//
+//				User userInfo = user.findByUsername("admin");
+//				UserRole mapping = new UserRole();
+//
+//				Role roleInfo = role.findByRoleName("ROLE_ADMIN");
+//
+//				mapping.setRoleIdx(roleInfo.getIdx());
+//				mapping.setRoleName("ROLE_ADMIN");
+//				mapping.setUserIdx(userInfo.getIdx());
+//				mapping.setUserName("admin");
+//
+//				mapping_role.save(mapping);
+//			}
 
 //			{
 //

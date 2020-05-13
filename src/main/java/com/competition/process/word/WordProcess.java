@@ -36,6 +36,14 @@ public class WordProcess {
 		return (T) word;
 	}
 	
+	public <T extends Object> T seWord(String wordIdx) throws Exception {
+		try {
+			return (T) weekWordRepository.findByIdx(wordIdx);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T inWord(Word word) throws Exception {
 		return (T) weekWordRepository.save(word);
 	}

@@ -22,4 +22,6 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 		String getEndDate();
 		String getDescription();
 	}
+	
+	Word findByIdx(String wordIdx);
 }

@@ -25,6 +25,9 @@ public class WordService {
 	public <T extends Object> T getWeekWords(String group) throws Exception {
 		return (T) weekWordProcess.getWeekWords(group);
 	}
+	public <T extends Object> T seWord(String wordIdx) throws Exception {
+		return (T) weekWordProcess.seWord(wordIdx);
+	}
 	
 	public <T extends Object> T inWord(WeekWordVO vo) throws Exception {
 		Word word = ObjectUtil.toObject(vo, new Word());
