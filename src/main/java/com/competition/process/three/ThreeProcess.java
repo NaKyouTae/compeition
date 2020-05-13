@@ -44,6 +44,16 @@ public class ThreeProcess {
 	}
 	
 	public <T extends Object> T getList() throws Exception {
+		return (T) threeRepository.findAll();
+	}
+	
+	public <T extends Object> T seByUser(String userIdx) throws Exception {
+		List<Three> three = threeRepository.findByUserIdx(userIdx, Sort.by(Sort.Direction.DESC, "insertDate"));
+		
+		return (T) three;
+	}
+	
+	public <T extends Object> T seByWord() throws Exception {
 		WordInter dto = weekWordRepository.findByWord("THREE");
 		
 		List<Three> three = threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));

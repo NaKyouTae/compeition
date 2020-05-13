@@ -40,7 +40,18 @@ public class TwoProcess {
 		
 		return (T) two;
 	}
+	
 	public <T extends Object> T getList() throws Exception {
+		return (T) twoRepository.findAll();
+	}
+	
+	public <T extends Object> T seByUser(String userIdx) throws Exception {
+		List<Two> two = twoRepository.findByUserIdx(userIdx, Sort.by(Sort.Direction.DESC, "insertDate"));
+		
+		return (T) two;
+	}
+	
+	public <T extends Object> T seByWord() throws Exception {
 		WordInter dto = weekWordRepository.findByWord("TWO");
 		
 		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));

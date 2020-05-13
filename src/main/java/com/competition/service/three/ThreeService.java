@@ -28,6 +28,14 @@ public class ThreeService {
 	public <T extends Object> T getList() throws Exception {
 		return (T) threeProcess.getList();
 	}
+
+	public <T extends Object> T seByUser(String userIdx) throws Exception {
+		return (T) threeProcess.seByUser(userIdx);
+	}
+	
+	public <T extends Object> T seByWord() throws Exception {
+		return (T) threeProcess.seByWord();
+	}
 	
 	public <T extends Object> T inThree(Three three) throws Exception {
 		WeekWordDto word = weekWordService.getWeekWords("THREE");

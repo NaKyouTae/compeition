@@ -29,6 +29,14 @@ public class TwoService {
 		return (T) twoProcess.getList();
 	}
 	
+	public <T extends Object> T seByUser(String userIdx) throws Exception {
+		return (T) twoProcess.seByUser(userIdx);
+	}
+	
+	public <T extends Object> T seByWord() throws Exception {
+		return (T) twoProcess.seByWord();
+	}
+	
 	public <T extends Object> T inTwo(Two two) throws Exception {
 		WeekWordDto word = weekWordService.getWeekWords("TWO");
 		

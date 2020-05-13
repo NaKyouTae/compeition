@@ -12,4 +12,5 @@ import com.competition.jpa.model.three.Three;
 public interface ThreeRepository extends JpaRepository<Three, Long> {
 	Three findByIdx(String idx);
 	List<Three> findByWordIdx(String idx, Sort sort);
+	List<Three> findByUserIdx(String idx, Sort sort);
 }

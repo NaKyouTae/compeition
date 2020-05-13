@@ -55,6 +55,38 @@ public class ThreeController {
 		return res;
 	}
 	
+	@GetMapping("/{userIdx}")
+	public ControllerResponse<List<Three>> seByUser(String userIdx) throws Exception {
+		ControllerResponse<List<Three>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search By User Lists :) "); 
+			res.setResult(threeService.seByUser(userIdx));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/words")
+	public ControllerResponse<List<Three>> seByWord() throws Exception {
+		ControllerResponse<List<Three>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Searh Three List By Word :) "); 
+			res.setResult(threeService.seByWord());
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return res;
+	}
+	
 	@PostMapping("")
 	public ControllerResponse<Three> inThree(@RequestBody Three word) throws Exception {
 		ControllerResponse<Three> res = new ControllerResponse<>();

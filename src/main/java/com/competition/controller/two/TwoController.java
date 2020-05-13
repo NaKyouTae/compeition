@@ -54,6 +54,39 @@ public class TwoController {
 		
 		return res;
 	}
+	
+	@GetMapping("/{userIdx}")
+	public ControllerResponse<List<Two>> seByUser(String userIdx) throws Exception {
+		ControllerResponse<List<Two>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search By User List :) "); 
+			res.setResult(twoService.seByUser(userIdx));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/words")
+	public ControllerResponse<List<Two>> seByWord() throws Exception {
+		ControllerResponse<List<Two>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search Two By Word List :) "); 
+			res.setResult(twoService.seByWord());
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return res;
+	}
+	
 	@PostMapping("")
 	public ControllerResponse<Two> inTwo(@RequestBody Two two) throws Exception {
 		ControllerResponse<Two> res = new ControllerResponse<>();

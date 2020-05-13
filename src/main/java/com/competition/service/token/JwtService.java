@@ -51,6 +51,7 @@ public class JwtService {
 		
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", authList);
+		claims.put("user", user.getUser());
 		
 		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user.getUsername()).setClaims(claims)
 				.setExpiration(expriation).signWith(accessSignatureAlgorithm, accessKey).compact();
@@ -60,7 +61,7 @@ public class JwtService {
 	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String user, Date expriation) {
 		
 		Claims claims = Jwts.claims().setSubject(user);
-		claims.put("roles", user);
+		claims.put("user", user);
 		
 		String jwt = Jwts.builder().setHeaderParam("typ", "REFRESHJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user).setClaims(claims)
 				.setExpiration(expriation).signWith(refreshSignatureAlgorithm, refreshKey).compact();
@@ -74,7 +75,7 @@ public class JwtService {
 			
 			if(type.equals("Access")) {
 				claims = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token);
-			}else if(type.equals("Refresh")) {
+			} else if(type.equals("Refresh")) {
 				claims = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token);
 			}
 				
