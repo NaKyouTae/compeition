@@ -21,6 +21,21 @@ public class LoveController {
 	@Autowired
 	private LoveService loveService;
 	
+	@GetMapping("/totals")
+	public <T extends Object> T seTotalLove(String userName) throws Exception {
+		ControllerResponse<Integer> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Serach My Total Love Count :) "); 
+			res.setResult(loveService.seTotalLove(userName));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		return (T) res;
+	}
+	
 	@GetMapping("/loves")
 	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();

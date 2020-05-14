@@ -21,6 +21,14 @@ public class TwoService {
 	@Autowired
 	private WordService weekWordService;
 	
+	public <T extends Object> T getTotalPoint(String userIdx) throws Exception {
+		try {
+			return (T) twoProcess.getTotalPoint(userIdx);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T getPopular() throws Exception {
 		return (T) twoProcess.getPopular();
 	}

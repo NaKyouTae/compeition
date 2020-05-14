@@ -33,6 +33,14 @@ public class ThreeProcess {
 	@Autowired
 	private UserRepository userRepository;
 	
+	public <T extends Object> T getTotalPoint(String userIdx) throws Exception {
+		try {
+			return (T) threeRepository.getTotalPoint(userIdx);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T getPopular() throws Exception {
 		try {
 			WordInter dto = weekWordRepository.findByWord("THREE");

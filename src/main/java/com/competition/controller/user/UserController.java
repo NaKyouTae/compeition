@@ -33,9 +33,25 @@ public class UserController {
 	@Autowired
 	private UserRoleRepository userMappingRoleRepository;
 	
+	@GetMapping("/duplicate")
+	public ControllerResponse<Boolean> checkUserName(String userName) throws Exception {
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Check User Name :) ");
+			res.setResult(userService.checkUserName(userName));
+		} catch (Exception e) {
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		
+		return res;
+	}
+	
 	@GetMapping("")
 	public ControllerResponse<List<User>> getLists() throws Exception {
-		ControllerResponse<List<User>> res = new ControllerResponse<List<User>>();
+		ControllerResponse<List<User>> res = new ControllerResponse<>();
 
 		try {
 			res.setResultCode(HttpStatus.OK);

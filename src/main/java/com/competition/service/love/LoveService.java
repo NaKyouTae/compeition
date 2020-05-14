@@ -7,6 +7,8 @@ import com.competition.jpa.model.love.Love;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.process.love.LoveProcess;
+import com.competition.service.three.ThreeService;
+import com.competition.service.two.TwoService;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -16,8 +18,24 @@ public class LoveService {
 	private LoveProcess loveProcess;
 	
 	@Autowired
+	private ThreeService threeService;
+	
+	@Autowired
+	private TwoService twoService;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
+	public <T extends Object> T seTotalLove(String userIdx) throws Exception{
+		try {
+			Integer three = threeService.getTotalPoint(userIdx);
+			Integer two = twoService.getTotalPoint(userIdx);
+			Integer result = three + two;
+			return (T) result;
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
 	
 	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
 		try {

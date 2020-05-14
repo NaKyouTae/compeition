@@ -30,6 +30,20 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRoleRepository userMappingRoleRepository; 
 	
+	
+	public <T extends Object> T checkUserName(String userName) throws Exception {
+		try {
+			
+			CustomUserDetails user = (CustomUserDetails) loadUserByUsername(userName);
+			
+			if(user != null) return (T) Boolean.TRUE;
+			
+			return (T) Boolean.FALSE;
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
