@@ -14,9 +14,9 @@ spring:
           port: 587
           socketFactory:
             port: 587
-          auth: true
+          auth: false
           starttls:
-            enable: true
+            enable: false
   data:
     maria:
       jdbc-url: jdbc:mariadb://localhost:3306/competition?useUnicode=yes&characterEncoding=UTF-8

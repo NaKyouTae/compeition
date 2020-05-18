@@ -25,6 +25,9 @@ public class Two implements Serializable {
 	private String idx;
 	
 	@Column
+	private String word;
+	
+	@Column
 	private String wordIdx;
 
 	@Column
@@ -50,6 +53,7 @@ public class Two implements Serializable {
 	
 	@Column
 	private boolean love = false;
+	
 	@Column
 	private String loveName;
 

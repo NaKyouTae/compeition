@@ -29,7 +29,7 @@ public class MenuTest {
     	props.put("mail.smtp.auth", "false");
 
 		
-		mailService.mailSend();
+//		mailService.mailSend();
 	}
 	
 }

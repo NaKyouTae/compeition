@@ -25,6 +25,9 @@ public class Three implements Serializable {
 	private String idx;
 	
 	@Column
+	private String word;
+	
+	@Column
 	private String wordIdx;
 
 	@Column
@@ -38,6 +41,7 @@ public class Three implements Serializable {
 
 	@Column
 	private String userName;
+	
 	@Column
 	private String userIdx;
 

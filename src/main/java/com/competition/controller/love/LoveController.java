@@ -15,19 +15,19 @@ import com.competition.service.love.LoveService;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service")
+@RequestMapping("/service/loves")
 public class LoveController {
 
 	@Autowired
 	private LoveService loveService;
 	
 	@GetMapping("/totals")
-	public <T extends Object> T seTotalLove(String userName) throws Exception {
+	public <T extends Object> T seTotalLove(String userIdx) throws Exception {
 		ControllerResponse<Integer> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Serach My Total Love Count :) "); 
-			res.setResult(loveService.seTotalLove(userName));
+			res.setResult(loveService.seTotalLove(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -36,7 +36,7 @@ public class LoveController {
 		return (T) res;
 	}
 	
-	@GetMapping("/loves")
+	@GetMapping("")
 	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		
@@ -60,7 +60,7 @@ public class LoveController {
 		return (T) res;
 	}
 	
-	@PostMapping("/loves")
+	@PostMapping("")
 	public <T extends Object> T inLove(@RequestBody Love love) throws Exception {
 		ControllerResponse<Love> res = new ControllerResponse<Love>();
 		try {
@@ -76,7 +76,7 @@ public class LoveController {
 		return (T) res;
 	}
 	
-	@DeleteMapping("/loves/{idx}")
+	@DeleteMapping("/{idx}")
 	public <T extends Object> T deLove(@RequestBody Love love) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {

@@ -51,6 +51,7 @@ public class ThreeService {
 		three.setIdx(UUID.randomUUID().toString());
 		three.setInsertDate(DateUtil.now());
 		three.setWordIdx(word.getIdx());
+		three.setWord(word.getWord());
 		
 		return (T) threeProcess.inThree(three);
 	}

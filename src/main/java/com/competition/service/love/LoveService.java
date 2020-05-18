@@ -28,9 +28,9 @@ public class LoveService {
 	
 	public <T extends Object> T seTotalLove(String userIdx) throws Exception{
 		try {
-			Integer three = threeService.getTotalPoint(userIdx);
-			Integer two = twoService.getTotalPoint(userIdx);
-			Integer result = three + two;
+			Long three = (Long) threeService.getTotalPoint(userIdx);
+			Long two = (Long) twoService.getTotalPoint(userIdx);
+			Long result = three + two;
 			return (T) result;
 		} catch (Exception e) {
 			return (T) e;

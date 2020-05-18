@@ -51,7 +51,7 @@ public class TwoService {
 		two.setIdx(UUID.randomUUID().toString());
 		two.setInsertDate(DateUtil.now());
 		two.setWordIdx(word.getIdx());
-		// username 어떻게 넣을것인지 
+		two.setWord(word.getWord());
 		
 		return (T) twoProcess.inTwo(two);
 	}

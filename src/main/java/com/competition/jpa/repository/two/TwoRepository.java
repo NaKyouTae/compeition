@@ -14,6 +14,6 @@ public interface TwoRepository extends JpaRepository<Two, Long> {
 	Two findByIdx(String idx);
 	List<Two> findByWordIdx(String idx, Sort sort);
 	List<Two> findByUserIdx(String idx, Sort sort);
-	@Query(value="select SUM(point) from two where userIdx = :userIdx", nativeQuery = true)
-	Integer getTotalPoint(String userIdx);
+	@Query(value="select sum(w.point) from two w where userIdx = :userIdx", nativeQuery = true)
+	Object getTotalPoint(String userIdx);
 }
