@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.competition.jpa.model.three.Three;
@@ -15,6 +16,6 @@ public interface ThreeRepository extends JpaRepository<Three, Long> {
 	List<Three> findByWordIdx(String idx, Sort sort);
 	List<Three> findByUserIdx(String idx, Sort sort);
 	
-	@Query(value="select sum(t.point) from three t where userIdx = :userIdx", nativeQuery=true)
-	Object getTotalPoint(String userIdx);
+	@Query(value="select sum(t.point) as point from three t where userIdx = :userIdx", nativeQuery=true)
+	Integer getTotalPoint(@Param("userIdx") String userIdx);
 }
