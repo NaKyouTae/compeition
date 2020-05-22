@@ -6,6 +6,7 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.competition.service.mail.MailService;
 
@@ -22,14 +23,21 @@ public class MenuTest {
 	@Test
 	public void test() throws Exception {
 		
-		Properties props = System.getProperties();
-    	props.put("mail.transport.protocol", "smtp");
-    	props.put("mail.smtp.port", 587); 
-    	props.put("mail.smtp.starttls.enable", "false");
-    	props.put("mail.smtp.auth", "false");
-
+		JavaMailSenderImpl sender = new JavaMailSenderImpl();
+		sender.setHost("smtp.gmail.com");
+		sender.setPort(587);
 		
-//		mailService.mailSend();
+		sender.setUsername("qppk123@gmail.com");
+		sender.setPassword("skrbxo12");
+		
+		Properties props = sender.getJavaMailProperties();
+		props.put("mail.trasport.protocol", "smtp");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.debug", "true");
+		
+		
+		mailService.mailSend("qppk123@gmail.com", "kyoutae_93@gmail.com", "test");
 	}
 	
 }

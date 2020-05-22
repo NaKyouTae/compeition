@@ -16,20 +16,28 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	compile "com.sun.mail:javax.mail"
 	
+	// DataBase
 	implementation 'com.h2database:h2'
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.5.4'
+	
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
 	
+	// Auth
 	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	
+	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 	
+	// For Junit error 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

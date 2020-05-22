@@ -6,17 +6,15 @@ spring:
   mail:
     host: smtp.gmail.com 
     port: 587
+    protocol: smtp
     username: qppk123@gmail.com
     password: skrbxo12
     properties:
       mail:
         smtp:
-          port: 587
-          socketFactory:
-            port: 587
-          auth: false
+          auth: true
           starttls:
-            enable: false
+            enable: true
   data:
     maria:
       jdbc-url: jdbc:mariadb://localhost:3306/competition?useUnicode=yes&characterEncoding=UTF-8
