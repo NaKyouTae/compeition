@@ -1,5 +1,7 @@
 package com.competition.controller.grade;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +26,7 @@ public class GradeController {
 	
 	@GetMapping("")
 	public <T extends Object> T seGrades(String idx) throws Exception {
-		ControllerResponse<Grade> res = new ControllerResponse<>();
+		ControllerResponse<List<Grade>> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);

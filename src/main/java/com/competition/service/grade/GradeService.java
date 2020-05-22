@@ -1,10 +1,13 @@
 package com.competition.service.grade;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.grade.Grade;
 import com.competition.process.grade.GradeProcess;
+import com.competition.util.DateUtil;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -31,6 +34,8 @@ public class GradeService {
 	
 	public <T extends Object> T inGrade(Grade grade) throws Exception {
 		try {
+			grade.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			grade.setInsertDate(DateUtil.now());
 			return (T) gradeProcess.inGrade(grade);
 		}catch(Exception e) {
 			return (T) e;

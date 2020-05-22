@@ -60,12 +60,12 @@ public class UserService implements UserDetailsService {
 		User user = userRepository.findByUsername(username);
 		
 		List<UserRole> roles = userRoleRepository.findByUserName(username);
-		List<UserGrade> grades = userGradeRepository.findByUserName(username);
+		UserGrade grade = userGradeRepository.findByUserName(username);
 		
 		CustomUserDetails ud = new CustomUserDetails();
 		ud.setUser(user);
 		ud.setRoles(roles);
-		ud.setGrades(grades);
+		ud.setGrade(grade);
 		return ud;
 	}
 	

@@ -37,7 +37,7 @@ public class MenuTest {
 		props.put("mail.debug", "true");
 		
 		
-		mailService.mailSend("qppk123@gmail.com", "kyoutae_93@gmail.com", "test");
+		mailService.mailSend("qppk@naver.com");
 	}
 	
 }

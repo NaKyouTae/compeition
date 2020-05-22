@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.competition.jpa.model.user.UserGrade;
+import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 
@@ -31,6 +33,9 @@ public class JwtService {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private UserGradeRepository userGradeRepository;
+	
 	private String accessSecretKey = "CompetitionAccessjwt";
 	private byte[] accessSecretBytes = DatatypeConverter.parseBase64Binary(accessSecretKey);
 	private SignatureAlgorithm accessSignatureAlgorithm = SignatureAlgorithm.HS256;
@@ -44,14 +49,15 @@ public class JwtService {
 	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		List<String> authList = new ArrayList<>();
-
+		UserGrade grade = userGradeRepository.findByUserName(user.getUsername());
+		
 		user.getAuthorities().stream().forEach(item -> {
 			authList.add(item.getAuthority());
 		});
 		
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", authList);
-		claims.put("grades", user.getGrades());
+		claims.put("grade", grade);
 		claims.put("user", user.getUser());
 		
 		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user.getUsername()).setClaims(claims)

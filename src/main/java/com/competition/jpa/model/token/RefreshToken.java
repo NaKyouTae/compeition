@@ -25,7 +25,7 @@ public class RefreshToken implements Serializable {
 	@Column
 	private String userName;
 
-	@Column
+	@Column(name="token", length=5000)
 	private String token;
 	
 	@Column

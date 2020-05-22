@@ -3,7 +3,6 @@ package com.competition.config.mail;
 import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -27,11 +26,4 @@ public class MailConfig {
 		return sender;
 	}
 	
-	@Bean
-	public SimpleMailMessage tempSimpleMessage() {
-		SimpleMailMessage m = new SimpleMailMessage();
-		m.setText("test");
-		return m;
-	}
-
 }
