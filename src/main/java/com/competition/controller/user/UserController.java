@@ -101,10 +101,10 @@ public class UserController {
 	}
 	
 	@PutMapping("/{idx}")
-	public ControllerResponse<User> updateUser(@RequestBody User user) throws Exception{
+	public ControllerResponse<User> upUser(@RequestBody User user, @RequestBody(required = false) UserRole role) throws Exception{
 		ControllerResponse<User> res = new ControllerResponse<User>();
 		try {
-			res.setResult(userService.updateUser(user));
+			res.setResult(userService.upUser(user, role));
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update User :) ");
 		} catch (Exception e) {

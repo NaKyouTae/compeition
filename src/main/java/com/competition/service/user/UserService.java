@@ -9,13 +9,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.competition.jpa.model.grade.Grade;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.model.user.UserRole;
+import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.process.user.UserProcess;
+import com.competition.service.grade.GradeService;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
+import com.competition.util.ObjectUtil;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -28,7 +33,13 @@ public class UserService implements UserDetailsService {
 	private UserProcess userProcess;
 	
 	@Autowired
-	private UserRoleRepository userMappingRoleRepository; 
+	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+	private UserGradeRepository userGradeRepository;
+	
+	@Autowired
+	private GradeService gradeService;
 	
 	
 	public <T extends Object> T checkUserName(String userName) throws Exception {
@@ -48,11 +59,13 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
 		
-		List<UserRole> roles = userMappingRoleRepository.findByUserName(username);
+		List<UserRole> roles = userRoleRepository.findByUserName(username);
+		List<UserGrade> grades = userGradeRepository.findByUserName(username);
 		
 		CustomUserDetails ud = new CustomUserDetails();
 		ud.setUser(user);
 		ud.setRoles(roles);
+		ud.setGrades(grades);
 		return ud;
 	}
 	
@@ -61,16 +74,48 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public <T extends Object> T signUp(User user) throws Exception {
+		try {
+			String userIdx = UUID.randomUUID().toString().replace("-", ""); 
+			user.setIdx(userIdx);
+			user.setInsertDate(DateUtil.now());
+			
+			
+			UserRole userRole = new UserRole();
+			userRole.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			userRole.setUserIdx(userIdx);
+			userRole.setUserName(user.getUsername());
+			userRole.setRoleIdx(null);
+			userRole.setRoleName(null);
+			
+			Grade gradeInfo = gradeService.seGrade("RED");
+			
+			UserGrade userGrade = new UserGrade();
+			userGrade.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			userGrade.setUserIdx(userIdx);
+			userGrade.setUserName(user.getUsername());
+			userGrade.setGradeIdx(gradeInfo.getIdx());
+			userGrade.setGradeName(gradeInfo.getGradeName());
+			
+			userRoleRepository.save(userRole);
+			userGradeRepository.save(userGrade);
+			
+			return (T) userProcess.signUp(user);
+		} catch (Exception e) {
+			return (T) e;
+		}
 		
-		user.setIdx(UUID.randomUUID().toString().replace("-", ""));
-		user.setInsertDate(DateUtil.now());
-		
-		return (T) userProcess.signUp(user);
 	}
-	public <T extends Object> T updateUser(User user) throws Exception {
+	public <T extends Object> T upUser(User user, UserRole role) throws Exception {
 		try {
 			user.setChangeDate(DateUtil.now());
-			return (T) userProcess.updateUser(user); 
+			
+			if(role != null) {				
+				UserRole userRole = userRoleRepository.findByRoleName(role.getRoleName());
+				UserRole sumRole = ObjectUtil.toObject(role, userRole);
+				userRoleRepository.save(sumRole);
+			}
+			
+			return (T) userProcess.upUser(user); 
 		}catch(Exception e) {
 			return (T) e;
 		}

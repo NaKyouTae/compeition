@@ -20,7 +20,7 @@ public class UserProcess {
 		return (T) userRepository.save(user);
 	}
 	
-	public <T extends Object> T updateUser(User user) throws Exception {
+	public <T extends Object> T upUser(User user) throws Exception {
 		return (T) userRepository.save(user);
 	}
 	
