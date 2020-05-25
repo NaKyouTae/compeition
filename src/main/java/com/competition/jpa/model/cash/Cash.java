@@ -34,6 +34,9 @@ public class Cash implements Serializable {
 	private String afterCash;
 	
 	@Column
+	private String paymentDate;
+	
+	@Column
 	private String approval; 
 	
 }
