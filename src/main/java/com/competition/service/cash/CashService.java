@@ -1,10 +1,13 @@
 package com.competition.service.cash;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.cash.Cash;
 import com.competition.process.cash.CashProcess;
+import com.competition.util.DateUtil;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -31,6 +34,8 @@ public class CashService {
 	
 	public <T extends Object> T inCash(Cash cash) throws Exception {
 		try {
+			cash.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			cash.setWithDrawDate(DateUtil.now());
 			return cashProcess.inCash(cash);
 		} catch (Exception e) {
 			return (T) e;

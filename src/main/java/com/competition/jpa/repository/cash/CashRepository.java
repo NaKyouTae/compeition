@@ -12,3 +12,5 @@ public interface CashRepository extends JpaRepository<Cash, Long>{
 	List<Cash> findByUserName(String userName);
 	List<Cash> findByAppoval(String yn);
 }
+
+
