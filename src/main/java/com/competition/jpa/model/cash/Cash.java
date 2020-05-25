@@ -3,12 +3,19 @@ package com.competition.jpa.model.cash;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "CASH")
 public class Cash implements Serializable {
 	
 	private static final long serialVersionUID = 429492698367141650L;

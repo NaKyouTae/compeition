@@ -10,7 +10,7 @@ import com.competition.jpa.model.cash.Cash;
 public interface CashRepository extends JpaRepository<Cash, Long>{
 	Cash findByIdx(String idx);
 	List<Cash> findByUserName(String userName);
-	List<Cash> findByAppoval(String yn);
+	List<Cash> findByApproval(String yn);
 }
 
 
