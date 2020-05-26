@@ -32,4 +32,7 @@ public class Notice implements Serializable {
 	
 	@Column
 	private String insertDate;
+	
+	@Column
+	private String type;
 }

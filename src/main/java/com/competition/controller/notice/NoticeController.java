@@ -24,6 +24,24 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@GetMapping("/pop")
+	public <T extends Object> T seNoticePop(String type) throws Exception{
+		ControllerResponse<List<Notice>> res = new ControllerResponse<>();
+
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Get Notice PopUp List :) "); 
+			res.setResult(noticeService.seNoticePop(type));
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
 	@GetMapping("")
 	public <T extends Object> T seNotices() throws Exception{
 		ControllerResponse<List<Notice>> res = new ControllerResponse<>();

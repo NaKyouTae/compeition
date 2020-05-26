@@ -16,6 +16,15 @@ public class NoticeService {
 	@Autowired
 	private NoticeProcess noticeProcess;
 
+	public <T extends Object> T seNoticePop(String type) throws Exception {
+		try {
+			return (T) noticeProcess.seNoticePop(type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seNotices() throws Exception {
 		try {
 			return (T) noticeProcess.seNotices();

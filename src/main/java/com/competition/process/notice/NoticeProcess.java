@@ -13,6 +13,15 @@ public class NoticeProcess {
 	@Autowired
 	private NoticeRepository noticeRepository;
 
+	public <T extends Object> T seNoticePop(String type) throws Exception {
+		try {
+			return (T) noticeRepository.findByType(type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seNotices() throws Exception {
 		try {
 			return (T) noticeRepository.findAll();
