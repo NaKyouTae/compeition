@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
 			
 			CustomUserDetails user = (CustomUserDetails) loadUserByUsername(userName);
 			
-			if(user != null) return (T) Boolean.TRUE;
+			if(user.getUser() != null) return (T) Boolean.TRUE;
 			
 			return (T) Boolean.FALSE;
 		} catch (Exception e) {
