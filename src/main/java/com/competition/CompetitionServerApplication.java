@@ -54,7 +54,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 //				user.deleteAll();
 //
 //				User u = new User();
-//				u.setIdx(UUID.randomUUID().toString());
+//				u.setIdx(UUID.randomUUID().toString().toString().replace("-", ""));
 //				u.setUsername("admin");
 //				u.setPassword(passwordEncoder.encode("skrbxo12!@"));
 //				u.setInsertDate(DateUtil.now());
@@ -63,7 +63,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 //				user.save(u);
 //
 //				User u1 = new User();
-//				u1.setIdx(UUID.randomUUID().toString());
+//				u1.setIdx(UUID.randomUUID().toString().toString().replace("-", ""));
 //				u1.setUsername("test");
 //				u1.setPassword(passwordEncoder.encode("test"));
 //				u1.setInsertDate(DateUtil.now());

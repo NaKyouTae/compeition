@@ -48,7 +48,7 @@ public class TwoService {
 	public <T extends Object> T inTwo(Two two) throws Exception {
 		WeekWordDto word = weekWordService.getWeekWords("TWO");
 		
-		two.setIdx(UUID.randomUUID().toString());
+		two.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		two.setInsertDate(DateUtil.now());
 		two.setWordIdx(word.getIdx());
 		two.setWord(word.getWord());

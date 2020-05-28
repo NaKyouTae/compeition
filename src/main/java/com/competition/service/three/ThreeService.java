@@ -48,7 +48,7 @@ public class ThreeService {
 	public <T extends Object> T inThree(Three three) throws Exception {
 		WeekWordDto word = weekWordService.getWeekWords("THREE");
 		
-		three.setIdx(UUID.randomUUID().toString());
+		three.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		three.setInsertDate(DateUtil.now());
 		three.setWordIdx(word.getIdx());
 		three.setWord(word.getWord());

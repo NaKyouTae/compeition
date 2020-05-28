@@ -32,7 +32,7 @@ public class WordService {
 	public <T extends Object> T inWord(WeekWordVO vo) throws Exception {
 		Word word = ObjectUtil.toObject(vo, new Word());
 		
-		word.setIdx(UUID.randomUUID().toString());
+		word.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		word.setInsertDate(DateUtil.now());
 //		word.setWord(vo.getWord());
 //		word.setWord_group(vo.getWord_group());
