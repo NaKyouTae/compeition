@@ -2,6 +2,7 @@ package com.competition.controller.user;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
+import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
+import com.competition.service.history.LoginHistoryService;
 import com.competition.service.token.JwtService;
 import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
@@ -40,12 +43,19 @@ public class LoginController {
 
 	@Autowired
 	private AuthenticationManager am;
+	
 	@Autowired
 	private UserService	userService;
+	
+	@Autowired
+	private LoginHistoryService loginHistoryService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private JwtService jwtUtill;
+	
 	@Autowired
 	private RefreshTokenService refreshTokenService;
 	
@@ -89,18 +99,38 @@ public class LoginController {
 			CustomUserDetails custom =  (CustomUserDetails) auth.getPrincipal();		
 			
 			if(custom != null) {
-				String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
-				String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
 				
-				headers.add("Access-JWT", accessJWT);
-				headers.add("Refresh-JWT", refreshJWT);
-				
-				RefreshToken refreshToken = new RefreshToken();
-				refreshToken.setUserName(custom.getUsername());
-				refreshToken.setToken(refreshJWT);
-				refreshToken.setInsertDate(DateUtil.now());
-				
-				refreshTokenService.inRefreshToken(refreshToken);
+				// RefreshToken, Access Token 생성 후 DB에 입력
+				{
+					// Refresh Token, Access Token 생성
+					String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
+					
+					// Refresh Token & Access Token Header에 입력
+					headers.add("Access-JWT", accessJWT);
+					headers.add("Refresh-JWT", refreshJWT);
+					
+					// Refresh Token DB에 입력
+					RefreshToken refreshToken = new RefreshToken();
+					refreshToken.setUserName(custom.getUsername());
+					refreshToken.setToken(refreshJWT);
+					refreshToken.setInsertDate(DateUtil.now());
+					
+					refreshTokenService.inRefreshToken(refreshToken);
+				}
+
+				// 로그인 이력 DB에 입력
+				{
+					LoginHistory his = new LoginHistory();
+	
+					his.setIdx(UUID.randomUUID().toString().replace("-", ""));
+					his.setUserIdx(custom.getUser().getIdx());
+					his.setUserName(custom.getUser().getUsername());
+					his.setAccessDate(DateUtil.now());
+					his.setBrowser(request.getHeader("User-Agent"));
+					
+					loginHistoryService.inLoginHistory(his);
+				}
 			}
 			
 			res.setMessage("Success Login :)");
