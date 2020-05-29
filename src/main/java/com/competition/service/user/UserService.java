@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.competition.jpa.model.cash.Cash;
 import com.competition.jpa.model.grade.Grade;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.model.user.UserGrade;
@@ -17,6 +18,7 @@ import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.process.user.UserProcess;
+import com.competition.service.cash.CashService;
 import com.competition.service.grade.GradeService;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
@@ -25,22 +27,24 @@ import com.competition.util.ObjectUtil;
 @Service
 @SuppressWarnings("unchecked")
 public class UserService implements UserDetailsService {
-
-	@Autowired
-	private UserRepository userRepository; 
 	
 	@Autowired
 	private UserProcess userProcess;
+	
+	@Autowired
+	private GradeService gradeService;
+	
+	@Autowired
+	private CashService cashService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
 	
 	@Autowired
 	private UserGradeRepository userGradeRepository;
-	
-	@Autowired
-	private GradeService gradeService;
-	
 	
 	public <T extends Object> T checkUserName(String userName) throws Exception {
 		try {
@@ -78,6 +82,21 @@ public class UserService implements UserDetailsService {
 			String userIdx = UUID.randomUUID().toString().replace("-", ""); 
 			user.setIdx(userIdx);
 			user.setInsertDate(DateUtil.now());
+			user.setMileage(1000);
+			
+			Cash cash = new Cash();
+
+			cash.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			cash.setUserName(user.getUsername());
+			cash.setWithDrawCash(0);
+			cash.setWithDrawDate(DateUtil.now());
+			cash.setPrevCash(0);
+			cash.setAfterCash(1000);
+			cash.setPaymentDate(null);
+			cash.setApproval("N");
+			cash.setWhy("가입 축하 1000 포인트 지급");
+			
+			cashService.inCash(cash);
 			
 			
 			UserRole userRole = new UserRole();
@@ -95,6 +114,8 @@ public class UserService implements UserDetailsService {
 			userGrade.setUserName(user.getUsername());
 			userGrade.setGradeIdx(gradeInfo.getIdx());
 			userGrade.setGradeName(gradeInfo.getGradeName());
+			
+			
 			
 			userRoleRepository.save(userRole);
 			userGradeRepository.save(userGrade);

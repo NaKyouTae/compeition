@@ -28,17 +28,20 @@ public class Cash implements Serializable {
 	@Column
 	private String userName;
 	
+	@Column
+	private String why;
+	
 	@Column 
 	private String withDrawDate;
 	
 	@Column
-	private String prevCash;
+	private Integer prevCash;
 	
 	@Column
-	private String widthDrawCash;
+	private Integer withDrawCash;
 	
 	@Column
-	private String afterCash;
+	private Integer afterCash;
 	
 	@Column
 	private String paymentDate;

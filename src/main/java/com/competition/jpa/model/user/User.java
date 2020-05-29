@@ -32,7 +32,7 @@ public class User implements Serializable {
 	private String email;
 	
 	@Column
-	private String mileage;
+	private Integer mileage;
 
 	@Column
 	private String password;
