@@ -1,4 +1,4 @@
-package com.competition.jpa.repository.newsletter;
+package com.competition.jpa.repository.mail;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

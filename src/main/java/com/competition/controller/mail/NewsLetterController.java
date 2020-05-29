@@ -1,4 +1,4 @@
-package com.competition.controller.newsletter;
+package com.competition.controller.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.jpa.model.newsletter.NewsLetter;
-import com.competition.service.newsletter.NewsLetterService;
+import com.competition.service.mail.NewsLetterService;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -79,10 +79,10 @@ public class NewsLetterController {
 		}
 	}
 	
-	@DeleteMapping("")
-	public <T extends Object> T deNewsLetter(NewsLetter news) throws Exception {
+	@DeleteMapping("/{username}")
+	public <T extends Object> T deNewsLetter(String username) throws Exception {
 		try {
-			return (T) newsLetterService.deNewsLetter(news);
+			return (T) newsLetterService.deNewsLetter(username);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

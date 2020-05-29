@@ -1,10 +1,10 @@
-package com.competition.service.newsletter;
+package com.competition.service.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.newsletter.NewsLetter;
-import com.competition.process.newsletter.NewsLetterProcess;
+import com.competition.process.mail.NewsLetterProcess;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -66,8 +66,9 @@ public class NewsLetterService {
 		}
 	}
 	
-	public <T extends Object> T deNewsLetter(NewsLetter news) throws Exception {
+	public <T extends Object> T deNewsLetter(String username) throws Exception {
 		try {
+			NewsLetter news = this.seNewsLetterByUserName(username);
 			return (T) newsLetterProcess.deNewsLetter(news);
 		} catch (Exception e) {
 			e.printStackTrace();
