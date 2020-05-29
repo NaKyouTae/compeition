@@ -15,7 +15,6 @@ import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 
-@SuppressWarnings("unchecked")
 public class JwtInterceptor extends HandlerInterceptorAdapter{
 
 	@Autowired
@@ -52,8 +51,6 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				
 				response.setHeader("Access-JWT", jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30))));
 			}
-				
-			
 		}
 		
 		return true;
