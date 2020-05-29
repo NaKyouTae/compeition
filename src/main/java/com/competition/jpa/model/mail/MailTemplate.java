@@ -28,6 +28,9 @@ public class MailTemplate implements Serializable{
 	private String type;
 	
 	@Column
+	private String title;
+	
+	@Column
 	private String content;
 	
 	@Column
