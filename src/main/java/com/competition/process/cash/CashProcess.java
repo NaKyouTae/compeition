@@ -21,6 +21,14 @@ public class CashProcess {
 		}
 	}
 	
+	public <T extends Object> T seCashs() throws Exception {
+		try {
+			return (T) cashRepository.findAll();
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seCash(String idx) throws Exception {
 		try {
 			return (T) cashRepository.findByIdx(idx);

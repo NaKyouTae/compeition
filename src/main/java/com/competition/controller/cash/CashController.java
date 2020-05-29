@@ -23,13 +23,28 @@ public class CashController {
 	@Autowired
 	private CashService cashService;
 	
+	@GetMapping("/{username}")
+	public <T extends Object> T seCashByUserName(String username) throws Exception{
+		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search Cash List By User Name :) ");
+			res.setResult(cashService.seCashByUserName(username));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
+		return (T) res;
+	}
+	
 	@GetMapping("")
-	public <T extends Object> T seCashByUserName(String userName) throws Exception{
+	public <T extends Object> T seCashs() throws Exception{
 		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Cash List :) ");
-			res.setResult(cashService.seCashByUserName(userName));
+			res.setResult(cashService.seCashs());
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
