@@ -1,5 +1,7 @@
 package com.competition.service.mail;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,7 @@ public class NewsLetterService {
 	public <T extends Object> T inNewsLetter(NewsLetter news) throws Exception {
 		try {
 			news.setSubscribeDate(DateUtil.now());
+			news.setIdx(UUID.randomUUID().toString().replace("-", ""));
 			return (T) newsLetterProcess.inNewsLetter(news);
 		} catch (Exception e) {
 			e.printStackTrace();
