@@ -28,8 +28,8 @@ public class LoveService {
 	
 	public <T extends Object> T seTotalLove(String userIdx) throws Exception{
 		try {
-			Integer three = threeService.getTotalPoint(userIdx);
-			Integer two = twoService.getTotalPoint(userIdx);
+			Integer three = threeService.getTotalPoint(userIdx) == null ?  0 : threeService.getTotalPoint(userIdx);
+			Integer two = twoService.getTotalPoint(userIdx) == null ?  0 : twoService.getTotalPoint(userIdx);
 			Integer result = three + two;
 			return (T) result;
 		} catch (Exception e) {

@@ -23,7 +23,7 @@ public class NewsLetterProcess {
 	
 	public <T extends Object> T seNewsLetterByUserIdx(String userIdx) throws Exception {
 		try {
-			return (T) newsLetterRepository.findByUserName(userIdx);
+			return (T) newsLetterRepository.findByUserIdx(userIdx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

@@ -23,7 +23,7 @@ public class CashController {
 	@Autowired
 	private CashService cashService;
 	
-	@GetMapping("/{username}")
+	@GetMapping("/users")
 	public <T extends Object> T seCashByUserName(String username) throws Exception{
 		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
 		try {
