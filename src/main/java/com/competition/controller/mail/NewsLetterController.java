@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class NewsLetterController {
 	@Autowired
 	private NewsLetterService newsLetterService;
 	
-	@GetMapping("/{username}")
+	@GetMapping("/users/names")
 	public <T extends Object> T seNewsLetterByUserName(String username) throws Exception {
 		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
 		
@@ -41,7 +42,7 @@ public class NewsLetterController {
 		return (T) res;
 	}
 	
-	@GetMapping("/{userIdx}")
+	@GetMapping("/users/idxs")
 	public <T extends Object> T seNewsLetterByUserIdx(String userIdx) throws Exception {
 		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
 		try {
@@ -74,7 +75,7 @@ public class NewsLetterController {
 		return (T) res;
 	}
 	
-	@GetMapping("/{idx}")
+	@GetMapping("/idxs")
 	public <T extends Object> T seNewsLetter(String idx) throws Exception {
 		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
 		try {
@@ -91,7 +92,7 @@ public class NewsLetterController {
 	}
 	
 	@PostMapping("")
-	public <T extends Object> T inNewsLetter(NewsLetter news) throws Exception {
+	public <T extends Object> T inNewsLetter(@RequestBody NewsLetter news) throws Exception {
 		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -107,7 +108,7 @@ public class NewsLetterController {
 	}
 	
 	@PutMapping("/{idx}")
-	public <T extends Object> T upNewsLetter(NewsLetter news) throws Exception {
+	public <T extends Object> T upNewsLetter(@RequestBody NewsLetter news) throws Exception {
 		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -122,8 +123,8 @@ public class NewsLetterController {
 		return (T) res;
 	}
 	
-	@DeleteMapping("/{username}")
-	public <T extends Object> T deNewsLetter(String username) throws Exception {
+	@DeleteMapping("")
+	public <T extends Object> T deNewsLetter(@RequestBody String username) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
