@@ -1,4 +1,4 @@
-package com.competition.jpa.model.newsletter;
+package com.competition.jpa.model.mail;
 
 import java.io.Serializable;
 

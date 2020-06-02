@@ -3,7 +3,7 @@ package com.competition.process.mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.newsletter.NewsLetter;
+import com.competition.jpa.model.mail.NewsLetter;
 import com.competition.jpa.repository.mail.NewsLetterRepository;
 
 @Component

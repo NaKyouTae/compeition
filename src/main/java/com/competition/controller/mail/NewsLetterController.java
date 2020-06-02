@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.competition.jpa.model.newsletter.NewsLetter;
+import com.competition.jpa.model.mail.NewsLetter;
 import com.competition.service.mail.NewsLetterService;
 
 @RestController

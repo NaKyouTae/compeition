@@ -3,8 +3,9 @@ package com.competition.service.mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.newsletter.NewsLetter;
+import com.competition.jpa.model.mail.NewsLetter;
 import com.competition.process.mail.NewsLetterProcess;
+import com.competition.util.DateUtil;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -50,6 +51,7 @@ public class NewsLetterService {
 	
 	public <T extends Object> T inNewsLetter(NewsLetter news) throws Exception {
 		try {
+			news.setSubscribeDate(DateUtil.now());
 			return (T) newsLetterProcess.inNewsLetter(news);
 		} catch (Exception e) {
 			e.printStackTrace();
