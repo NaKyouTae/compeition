@@ -88,7 +88,7 @@ public class LoginController {
 		String password = (String)map.get("password");
 		
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken (username, password);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {

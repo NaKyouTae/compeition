@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.cash.Cash;
 import com.competition.jpa.model.grade.Grade;
+import com.competition.jpa.model.role.Role;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.model.user.UserRole;
+import com.competition.jpa.repository.role.RoleRepository;
 import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
@@ -39,6 +41,9 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
@@ -99,12 +104,15 @@ public class UserService implements UserDetailsService {
 			cashService.inCash(cash);
 			
 			
+			Role role_user = roleRepository.findByRoleName("ROLE_USER");
+			
 			UserRole userRole = new UserRole();
 			userRole.setIdx(UUID.randomUUID().toString().replace("-", ""));
 			userRole.setUserIdx(userIdx);
 			userRole.setUserName(user.getUsername());
-			userRole.setRoleIdx(null);
-			userRole.setRoleName(null);
+			userRole.setRoleIdx(role_user.getIdx());
+			userRole.setRoleName(role_user.getRoleName());
+			
 			
 			Grade gradeInfo = gradeService.seGrade("RED");
 			
@@ -122,6 +130,7 @@ public class UserService implements UserDetailsService {
 			
 			return (T) userProcess.signUp(user);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 		
