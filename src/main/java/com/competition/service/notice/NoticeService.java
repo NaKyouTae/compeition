@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.notice.Notice;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserNotice;
 import com.competition.process.notice.NoticeProcess;
 import com.competition.util.DateUtil;
 
@@ -16,9 +18,26 @@ public class NoticeService {
 	@Autowired
 	private NoticeProcess noticeProcess;
 
-	public <T extends Object> T seNoticePop(String type) throws Exception {
+	public <T extends Object> T neverOpen(Notice notice, User user) throws Exception {
 		try {
-			return (T) noticeProcess.seNoticePop(type);
+			UserNotice un = new UserNotice();
+			
+			un.setIdx(UUID.randomUUID().toString().replace("-", ""));
+			un.setNoticeIdx(notice.getIdx());
+			un.setNoticeTitle(notice.getTitle());
+			un.setUserIdx(user.getIdx());
+			un.setUserName(user.getUsername());
+			
+			return (T) noticeProcess.neverOpen(un);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T seNoticePop(String type, String username) throws Exception {
+		try {
+			return (T) noticeProcess.seNoticePop(type, username);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

@@ -33,4 +33,7 @@ out/
 
 ### Class ###
 **/bin/
-bin/**
+/bin/**
+/bin/
+*.class
+

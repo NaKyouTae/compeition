@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.notice.Notice;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserNotice;
 import com.competition.service.notice.NoticeService;
 
 @RestController
@@ -24,14 +26,31 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@PostMapping("/never")
+	public <T extends Object> T neverOpen(@RequestBody Notice notice, @RequestBody User user) throws Exception {
+		ControllerResponse<UserNotice> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success, Never Announced :) "); 
+			res.setResult(noticeService.neverOpen(notice ,user));
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
 	@GetMapping("/pop")
-	public <T extends Object> T seNoticePop(String type) throws Exception{
+	public <T extends Object> T seNoticePop(String type, String username) throws Exception{
 		ControllerResponse<List<Notice>> res = new ControllerResponse<>();
 
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Notice PopUp List :) "); 
-			res.setResult(noticeService.seNoticePop(type));
+			res.setResult(noticeService.seNoticePop(type, username));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
