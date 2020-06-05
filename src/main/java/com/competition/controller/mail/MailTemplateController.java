@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -106,7 +107,7 @@ public class MailTemplateController {
 	}
 	
 	@PostMapping("")
-	public <T extends Object> T inMailTemplate(MailTemplate temp) throws Exception {
+	public <T extends Object> T inMailTemplate(@RequestBody MailTemplate temp) throws Exception {
 		ControllerResponse<MailTemplate> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Insert Template :) ");
@@ -122,7 +123,7 @@ public class MailTemplateController {
 	}
 	
 	@PutMapping("/{idx}")
-	public <T extends Object> T upMailTemplate(MailTemplate temp) throws Exception {
+	public <T extends Object> T upMailTemplate(@RequestBody MailTemplate temp) throws Exception {
 		ControllerResponse<MailTemplate> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Update Template :) ");
@@ -138,7 +139,7 @@ public class MailTemplateController {
 	}
 	
 	@DeleteMapping("/{idx}")
-	public <T extends Object> T deMailTemplate(MailTemplate temp) throws Exception {
+	public <T extends Object> T deMailTemplate(@RequestBody MailTemplate temp) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Delete Template :) ");

@@ -12,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.competition.config.mail.MailConfig;
+import com.competition.config.MailConfig;
 import com.competition.jpa.model.system.config.SystemConfig;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 

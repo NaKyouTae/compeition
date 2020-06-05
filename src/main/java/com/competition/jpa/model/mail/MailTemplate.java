@@ -30,7 +30,7 @@ public class MailTemplate implements Serializable{
 	@Column
 	private String title;
 	
-	@Column
+	@Column(name="content", length=5000)
 	private String content;
 	
 	@Column

@@ -1,4 +1,4 @@
-package com.competition.config.mail;
+package com.competition.config;
 
 import java.util.Properties;
 

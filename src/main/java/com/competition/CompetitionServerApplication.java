@@ -10,13 +10,14 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.config.interceptor.JwtInterceptor;
+import com.competition.interceptor.JwtInterceptor;
 import com.competition.jpa.repository.menu.MenuRepository;
 import com.competition.jpa.repository.role.RoleRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
 
+//@EnableBatchProcessing
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
 

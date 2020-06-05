@@ -1,4 +1,4 @@
-package com.competition.config.interceptor;
+package com.competition.interceptor;
 
 import java.util.Date;
 
