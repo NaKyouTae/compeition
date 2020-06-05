@@ -1,11 +1,13 @@
 package com.competition.controller.notice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.competition.jpa.model.notice.Notice;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.model.user.UserNotice;
 import com.competition.service.notice.NoticeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -27,8 +30,13 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@PostMapping("/never")
-	public <T extends Object> T neverOpen(@RequestBody Notice notice, @RequestBody User user) throws Exception {
+	public <T extends Object> T neverOpen(@RequestBody Map<Object, Object> map) throws Exception {
 		ControllerResponse<UserNotice> res = new ControllerResponse<>();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Notice notice = mapper.convertValue(map.get("notice"), Notice.class);
+		User user = mapper.convertValue(map.get("user"), User.class);
+		
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success, Never Announced :) "); 
@@ -79,7 +87,7 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/{idx}")
-	public <T extends Object> T seNotice(String idx) throws Exception{
+	public <T extends Object> T seNotice(@PathVariable String idx) throws Exception{
 		ControllerResponse<Notice> res = new ControllerResponse<>();
 		
 		try {

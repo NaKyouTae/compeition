@@ -1,5 +1,6 @@
 package com.competition.process.notice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,25 @@ public class NoticeProcess {
 			
 			List<UserNotice> un = userNoticeRepository.findByUserName(username);
 			List<Notice> notice = noticeRepository.findByType(type);
+			List<Notice> result = new ArrayList<Notice>();
 			
-			return (T) notice; 
+			for(int i = 0; i < notice.size(); i++) {
+				Notice n = notice.get(i);
+				if(un.size() == 0 ) {
+					result.add(n);
+				}else {					
+					for(int j = 0; j < un.size(); j++) {
+						UserNotice u = un.get(j);
+						
+						if(!n.getIdx().equals(u.getNoticeIdx())) {
+							result.add(n);
+						}
+						
+					}
+				}
+			}
+			
+			return (T) result; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

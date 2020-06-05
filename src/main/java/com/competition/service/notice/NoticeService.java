@@ -20,6 +20,9 @@ public class NoticeService {
 
 	public <T extends Object> T neverOpen(Notice notice, User user) throws Exception {
 		try {
+			
+			if(notice.getIdx() == null || notice.getTitle() == null || user.getIdx() == null || user.getUsername() == null) return (T) Boolean.FALSE;
+			
 			UserNotice un = new UserNotice();
 			
 			un.setIdx(UUID.randomUUID().toString().replace("-", ""));
