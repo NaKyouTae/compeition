@@ -32,7 +32,5 @@ out/
 .vscode/
 
 ### Class ###
-.class
-bin/
-/bin/
-**/bin/**
+**/bin/
+bin/**
