@@ -17,7 +17,6 @@ import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
 
-//@EnableBatchProcessing
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
 
