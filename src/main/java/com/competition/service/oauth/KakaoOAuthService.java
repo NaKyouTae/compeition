@@ -81,7 +81,7 @@ public class KakaoOAuthService {
 			
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 			
-			Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
+			Object rs = rest.postForEntity("https://kapi.kakao.com/v2/user/me", entity, Object.class);
 			
 			return (T) rs;
 		} catch (Exception e) {
