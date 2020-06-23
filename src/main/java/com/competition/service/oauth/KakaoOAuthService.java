@@ -31,6 +31,16 @@ public class KakaoOAuthService {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * Kakao Logout API Call
+	 * 
+	 * @param <T>
+	 * @param acess
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T kakaoLogOut(String acess) throws Exception {
 		try {
 			RestTemplate rest = new RestTemplate();
@@ -43,7 +53,36 @@ public class KakaoOAuthService {
 			
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 			
-			Object rs = rest.postForEntity("https://kauth.kakao.com/oauth/token", entity, Object.class);
+			Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
+			return (T) rs;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
+	/**
+	 * Kakao User Info API Call
+	 * 
+	 * @param <T>
+	 * @param acess
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Object> T getKakaoUserInfo(String acess) throws Exception {
+		try {
+			RestTemplate rest = new RestTemplate();
+			
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Authorization", "Bearer " + acess);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Context-type", "application/json");
+			
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+			
+			Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
+			
 			return (T) rs;
 		} catch (Exception e) {
 			 e.printStackTrace();
