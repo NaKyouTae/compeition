@@ -5,10 +5,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@SuppressWarnings("unchecked")
 public class KakaoOAuthService {
 	
 	public void getAuthCode() throws Exception{
@@ -26,6 +28,26 @@ public class KakaoOAuthService {
 			System.out.println(rs.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public <T extends Object> T kakaoLogOut(String acess) throws Exception {
+		try {
+			RestTemplate rest = new RestTemplate();
+			
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Authorization", "Bearer " + acess);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Context-type", "application/json");
+			
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+			
+			Object rs = rest.postForEntity("https://kauth.kakao.com/oauth/token", entity, Object.class);
+			return (T) rs;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
 		}
 	}
 }

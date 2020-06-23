@@ -1,5 +1,8 @@
 package com.competition.controller.oauth;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.competition.common.ControllerResponse;
+import com.competition.service.oauth.KakaoOAuthService;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/oauth")
+@RequestMapping("/oauth/kakao")
 public class KakaoOAuthController {
 	
-	@GetMapping("/kakao")
+	@Autowired
+	private KakaoOAuthService kakaoOAuthService;
+	
+	@GetMapping("")
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		
@@ -48,6 +55,26 @@ public class KakaoOAuthController {
 			res.setResult(null);
 		}
 		
+		return (T) res;
+	}
+	
+	@GetMapping("/logout")
+	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpSession session) throws Exception {
+		ControllerResponse<Object> res = new ControllerResponse<>();
+		try {
+			Object rs = kakaoOAuthService.kakaoLogOut(acess);
+			session.removeAttribute("access_Token");
+			session.removeAttribute("userId");
+			
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Log Out by Kakao :) ");
+			res.setResult(rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
 		return (T) res;
 	}
 }
