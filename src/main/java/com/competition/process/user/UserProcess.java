@@ -12,6 +12,15 @@ public class UserProcess {
 	@Autowired
 	private UserRepository userRepository;
 	
+	public <T extends Object> T seUserByIdx(String idx) throws Exception {
+		try {
+			return (T) userRepository.findByIdx(idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
 	public <T extends Object> T getLists() throws Exception {
 		return (T) userRepository.findAll();
 	}

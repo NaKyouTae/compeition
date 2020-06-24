@@ -1,5 +1,6 @@
 package com.competition.process.three;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Component;
 import com.competition.jpa.model.love.Love;
 import com.competition.jpa.model.three.Three;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.word.Word;
 import com.competition.jpa.repository.love.LoveRepository;
 import com.competition.jpa.repository.three.ThreeRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.word.WordRepository;
-import com.competition.jpa.repository.word.WordRepository.WordInter;
 import com.competition.util.DateUtil;
 
 @Component
@@ -43,9 +44,16 @@ public class ThreeProcess {
 	
 	public <T extends Object> T getPopular() throws Exception {
 		try {
-			WordInter dto = weekWordRepository.findByWord("THREE");
+			Word dto = weekWordRepository.findByWord("THREE");
 			
-			return (T) threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
+			List<Three> three = new ArrayList<>(); 
+			if(dto == null) {
+				three = null; 
+			}else {			
+				three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
+			}
+			
+			return (T) three;
 		} catch (Exception e) {
 			return(T) e;
 		}
@@ -62,9 +70,14 @@ public class ThreeProcess {
 	}
 	
 	public <T extends Object> T seByWord() throws Exception {
-		WordInter dto = weekWordRepository.findByWord("THREE");
+		Word dto = weekWordRepository.findByWord("THREE");
 		
-		List<Three> three = threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
+		List<Three> three = new ArrayList<>(); 
+		if(dto == null) {
+			three = null; 
+		}else {			
+			three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
+		}
 		
 		return (T) three;
 	}

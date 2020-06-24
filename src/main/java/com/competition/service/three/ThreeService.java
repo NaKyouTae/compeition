@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.model.three.Three;
+import com.competition.jpa.model.word.Word;
 import com.competition.process.three.ThreeProcess;
 import com.competition.service.word.WordService;
 import com.competition.util.DateUtil;
@@ -46,7 +46,7 @@ public class ThreeService {
 	}
 	
 	public <T extends Object> T inThree(Three three) throws Exception {
-		WeekWordDto word = weekWordService.getWeekWords("THREE");
+		Word word = weekWordService.getWeekWords("THREE");
 		
 		three.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		three.setInsertDate(DateUtil.now());

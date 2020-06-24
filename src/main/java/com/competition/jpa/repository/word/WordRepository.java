@@ -9,19 +9,7 @@ import com.competition.jpa.model.word.Word;
 
 @Repository
 public interface WordRepository extends JpaRepository<Word, Long> {
-	
-	@Query(value="select * from word where startDate <= date(now()) and endDate >= date(now()) and wordGroup = :group", nativeQuery = true)
-	WordInter findByWord(@Param("group") String group);
-	
-	public static interface WordInter{
-		String getIdx();
-		String getWordGroup();
-		String getWord();
-		String getInsertDate();
-		String getStartDate();
-		String getEndDate();
-		String getDescription();
-	}
-	
+	@Query(value="select idx, wordgroup, word, insertdate, startdate, enddate, description from word where startDate <= date(now()) and endDate >= date(now()) and wordGroup = :group", nativeQuery = true)
+	Word findByWord(@Param("group") String group);
 	Word findByIdx(String wordIdx);
 }

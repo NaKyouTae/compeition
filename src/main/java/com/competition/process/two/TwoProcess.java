@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import com.competition.jpa.model.love.Love;
 import com.competition.jpa.model.two.Two;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.word.Word;
 import com.competition.jpa.repository.love.LoveRepository;
 import com.competition.jpa.repository.two.TwoRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.word.WordRepository;
-import com.competition.jpa.repository.word.WordRepository.WordInter;
 import com.competition.util.DateUtil;
 
 @Component
@@ -42,7 +42,7 @@ public class TwoProcess {
 	}
 	
 	public <T extends Object> T getPopular() throws Exception {
-		WordInter dto = weekWordRepository.findByWord("TWO");
+		Word dto = weekWordRepository.findByWord("TWO");
 		
 		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
 		
@@ -60,7 +60,7 @@ public class TwoProcess {
 	}
 	
 	public <T extends Object> T seByWord() throws Exception {
-		WordInter dto = weekWordRepository.findByWord("TWO");
+		Word dto = weekWordRepository.findByWord("TWO");
 		
 		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
 		

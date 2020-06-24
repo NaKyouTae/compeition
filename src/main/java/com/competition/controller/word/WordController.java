@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.dto.weekword.WeekWordDto;
 import com.competition.jpa.model.word.Word;
 import com.competition.service.word.WordService;
 import com.competition.vo.weekword.WeekWordVO;
@@ -29,7 +28,7 @@ public class WordController {
 	
 	@GetMapping("")
 	public <T extends Object> T getLists() throws Exception {
-		ControllerResponse<List<Word>> res = new ControllerResponse<List<Word>>();
+		ControllerResponse<List<Word>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Week Word List :) "); 
@@ -45,7 +44,7 @@ public class WordController {
 	
 	@GetMapping("/group")
 	public <T extends Object> T getWeekWords(@Param(value = "group") String group) throws Exception {
-		ControllerResponse<WeekWordDto> res = new ControllerResponse<WeekWordDto>();
+		ControllerResponse<Word> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Week Word :) "); 
@@ -77,7 +76,7 @@ public class WordController {
 	
 	@PostMapping("")
 	public <T extends Object> T inWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<Word> res = new ControllerResponse<Word>();
+		ControllerResponse<Word> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Insert Week Word :) "); 
@@ -92,7 +91,7 @@ public class WordController {
 	}
 	@PutMapping("/{idx}")
 	public <T extends Object> T upWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<Word> res = new ControllerResponse<Word>();
+		ControllerResponse<Word> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update Week Word :) "); 
@@ -107,7 +106,7 @@ public class WordController {
 	}
 	@DeleteMapping("/{idx}")
 	public <T extends Object> T deWord(@RequestBody WeekWordVO vo) throws Exception {
-		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Week Word :) "); 

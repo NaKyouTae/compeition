@@ -9,6 +9,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.competition.vo.kakao.KaKaoUserVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 @SuppressWarnings("unchecked")
 public class KakaoOAuthService {
@@ -73,17 +76,16 @@ public class KakaoOAuthService {
 		try {
 			RestTemplate rest = new RestTemplate();
 			
-			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-			map.add("Authorization", "Bearer " + acess);
-			
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Context-type", "application/json");
+			headers.add("Authorization", "Bearer " + acess);
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(null, headers);
 			
-			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+			ResponseEntity<String> rs = rest.postForEntity("https://kapi.kakao.com/v2/user/me", entity, String.class);
+			ObjectMapper m = new ObjectMapper();
+			KaKaoUserVO r = m.readValue(rs.getBody(), KaKaoUserVO.class);
 			
-			Object rs = rest.postForEntity("https://kapi.kakao.com/v2/user/me", entity, Object.class);
-			
-			return (T) rs;
+			return (T) r;
 		} catch (Exception e) {
 			 e.printStackTrace();
 			 return (T) e;

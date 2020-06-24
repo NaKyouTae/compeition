@@ -82,9 +82,18 @@ public class UserService implements UserDetailsService {
 		return (T) userProcess.getLists();
 	}
 	
+	public <T extends Object> T seUserByIdx(String idx) throws Exception {
+		try {
+			return (T) userProcess.seUserByIdx(idx);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
 	public <T extends Object> T signUp(User user) throws Exception {
 		try {
-			String userIdx = UUID.randomUUID().toString().replace("-", ""); 
+			String userIdx = user.getIdx() == null ? UUID.randomUUID().toString().replace("-", ""):user.getIdx(); 
 			user.setIdx(userIdx);
 			user.setInsertDate(DateUtil.now());
 			user.setMileage(1000);
@@ -135,6 +144,7 @@ public class UserService implements UserDetailsService {
 		}
 		
 	}
+	
 	public <T extends Object> T upUser(User user, UserRole role) throws Exception {
 		try {
 			user.setChangeDate(DateUtil.now());

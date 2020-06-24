@@ -66,6 +66,21 @@ public class UserController {
 		return res;
 	}
 	
+	public <T extends Object> T seUserByIdx(String idx) throws Exception {
+		ControllerResponse<User> res = new ControllerResponse<User>();
+		try {
+			res.setResult(userService.seUserByIdx(idx));
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search User By IDX :) ");
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		return (T) res;
+	}
+	
 	@GetMapping("/{username}")
 	public ControllerResponse<User> UserInfo(@ModelAttribute("username") String username) throws Exception {
 		ControllerResponse<User> res = new ControllerResponse<User>();
