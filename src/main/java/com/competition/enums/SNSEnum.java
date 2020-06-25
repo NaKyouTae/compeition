@@ -8,6 +8,7 @@ public enum SNSEnum {
 	FACEBOOK;
 	
 	public static SNSEnum getTitle(String title) {
-		return Enum.valueOf(SNSEnum.class, title); 
+		SNSEnum result = Enum.valueOf(SNSEnum.class, title);
+		return result;
 	}
 }

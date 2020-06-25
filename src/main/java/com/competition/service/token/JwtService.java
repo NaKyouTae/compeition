@@ -72,7 +72,7 @@ public class JwtService {
 		claims.put("roles", authList);
 		claims.put("grade", grade);
 		claims.put("user", user.getUser());
-		claims.put("sns", type);
+		claims.put("sns", type.toString());
 		
 		String jwt = Jwts.builder()
 				.setHeaderParam("typ", "USERJWT")

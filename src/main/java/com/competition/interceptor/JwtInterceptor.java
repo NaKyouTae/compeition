@@ -47,10 +47,12 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 		String refreshToken = "";
 		String userToken = "";
 		
-		SNSEnum sns = jwtUtill.getSns(User);
 		
 		// login이 되었을 경우
 		if(Access != null && Refresh != null) {
+			
+			SNSEnum sns = jwtUtill.getSns(User);
+			
 			// 로그인 형태가 자체 로그인 일 경우
 			if(sns.equals(SNSEnum.DEFUALT)) {
 				// Refresh Token DB에 존재 하는지 체크
