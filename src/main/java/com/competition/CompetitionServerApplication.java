@@ -1,5 +1,8 @@
 package com.competition;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,11 +14,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.competition.interceptor.JwtInterceptor;
+import com.competition.jpa.model.grade.Grade;
+import com.competition.jpa.model.role.Role;
+import com.competition.jpa.repository.grade.GradeRepository;
 import com.competition.jpa.repository.menu.MenuRepository;
 import com.competition.jpa.repository.role.RoleRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
+import com.competition.util.DateUtil;
 
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
@@ -27,7 +34,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("http://localhost:4300", "http://localhost:8090", "http://127.0.0.1:4300", "http://127.0.0.1:8090")
-				.allowedMethods("GET", "POST", "PUT", "DELETE").exposedHeaders("Access-JWT", "Refresh-JWT")
+				.allowedMethods("GET", "POST", "PUT", "DELETE").exposedHeaders("AWT", "RWT")
 				.allowCredentials(true).maxAge(3600);
 	}
 
@@ -48,7 +55,7 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
-			MenuRepository menu) {
+			MenuRepository menu, GradeRepository grade) {
 		return (args) -> {
 //			{
 //				user.deleteAll();
@@ -72,16 +79,44 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 //				user.save(u1);
 //			}
 
-//			{
-//				role.deleteAll();
-//
-//				Role admin_role = new Role();
-//				admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				admin_role.setRoleName("ROLE_ADMIN");
-//				admin_role.setInsertDate(DateUtil.now());
-//				admin_role.setChangeDate(null);
-//				role.save(admin_role);
-//			}
+			{
+				List<Grade> grades = grade.findAll();
+				
+				if(grades.size() == 0) {
+					grade.deleteAll();
+					
+					Grade red = new Grade();
+					red.setIdx("RED");
+					red.setStartRange("0");
+					red.setEndRange("999");
+					red.setGradeName("빨강");
+					red.setInsertDate(DateUtil.now());
+					
+					grade.save(red);
+				}
+			}
+			
+			{
+				
+				List<Role> roles = role.findAll();
+				if(roles.size() == 0) {					
+					role.deleteAll();
+					
+					Role admin_role = new Role();
+					admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
+					admin_role.setRoleName("ROLE_ADMIN");
+					admin_role.setInsertDate(DateUtil.now());
+					admin_role.setChangeDate(null);
+					role.save(admin_role);
+					
+					Role user_role = new Role();
+					user_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
+					user_role.setRoleName("ROLE_USER");
+					user_role.setInsertDate(DateUtil.now());
+					user_role.setChangeDate(null);
+					role.save(user_role);
+				}
+			}
 
 //			{
 //				mapping_role.deleteAll();

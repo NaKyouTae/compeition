@@ -4,7 +4,6 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.service.user.UserService;
@@ -45,9 +45,23 @@ public class JwtService {
 	private byte[] refreshSecretBytes = DatatypeConverter.parseBase64Binary(refreshSecretKey);
 	private SignatureAlgorithm refreshSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key refreshKey = new SecretKeySpec(refreshSecretBytes, refreshSignatureAlgorithm.getJcaName());
+
+	private String userSecretKey = "CompetitionUserjwt";
+	private byte[] userSecretBytes = DatatypeConverter.parseBase64Binary(userSecretKey);
+	private SignatureAlgorithm userSignatureAlgorithm = SignatureAlgorithm.HS256;
+	private final Key userKey = new SecretKeySpec(userSecretBytes, userSignatureAlgorithm.getJcaName());
 	
-	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
+	private String issuer = "Competition";
+	
+	public <T extends Object> T createUserToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, SNSEnum type, Date expriation) {
 		
+		Claims claims = Jwts.claims()
+				.setSubject("user")
+				.setIssuer(this.issuer)
+				.setAudience(user.getUsername())
+				.setIssuedAt(new Date())
+				.setExpiration(expriation);
+
 		List<String> authList = new ArrayList<>();
 		UserGrade grade = userGradeRepository.findByUserName(user.getUsername());
 		
@@ -55,23 +69,52 @@ public class JwtService {
 			authList.add(item.getAuthority());
 		});
 		
-		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.put("roles", authList);
 		claims.put("grade", grade);
 		claims.put("user", user.getUser());
+		claims.put("sns", type);
 		
-		String jwt = Jwts.builder().setHeaderParam("typ", "ACCESSJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user.getUsername()).setClaims(claims)
-				.setExpiration(expriation).signWith(accessSignatureAlgorithm, accessKey).compact();
+		String jwt = Jwts.builder()
+				.setHeaderParam("typ", "USERJWT")
+				.setClaims(claims)
+				.signWith(userSignatureAlgorithm, userKey)
+				.compact();
 		
 		return (T) jwt;
 	}
+	
+	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
+		
+		Claims claims = Jwts.claims()
+				.setSubject("access")
+				.setIssuer(this.issuer)
+				.setAudience(user.getUsername())
+				.setIssuedAt(new Date())
+				.setExpiration(expriation);
+		
+		String jwt = Jwts.builder()
+				.setHeaderParam("typ", "ACCESSJWT")
+				.setClaims(claims)
+				.signWith(accessSignatureAlgorithm, accessKey)
+				.compact();
+		
+		return (T) jwt;
+	}
+	
 	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String user, Date expriation) {
 		
-		Claims claims = Jwts.claims().setSubject(user);
-		claims.put("body", UUID.randomUUID().toString().replace("-", "") + UUID.randomUUID().toString().replace("-", ""));
+		Claims claims = Jwts.claims()
+				.setSubject("refresh")
+				.setIssuer(this.issuer)
+				.setAudience(user)
+				.setIssuedAt(new Date())
+				.setExpiration(expriation);
 		
-		String jwt = Jwts.builder().setHeaderParam("typ", "REFRESHJWT" + UUID.randomUUID().toString().replace("-", "")).setSubject(user).setClaims(claims)
-				.setExpiration(expriation).signWith(refreshSignatureAlgorithm, refreshKey).compact();
+		String jwt = Jwts.builder()
+				.setHeaderParam("typ", "REFRESHJWT")
+				.setClaims(claims)
+				.signWith(refreshSignatureAlgorithm, refreshKey)
+				.compact();
 		
 		return (T) jwt;
 	}
@@ -84,6 +127,8 @@ public class JwtService {
 				claims = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token);
 			} else if(type.equals("Refresh")) {
 				claims = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token);
+			}else if(type.equals("User")) {
+				claims = Jwts.parser().setSigningKey(userKey).parseClaimsJws(token);
 			}
 				
 			return !claims.getBody().getExpiration().before(new Date());
@@ -92,19 +137,31 @@ public class JwtService {
 		}
 	}
 	
-	public String getUserInfo(String token, String type) {
+	public String getPayload(String token, String type) {
 		String result = "";
 		
 		if(type.equals("Access")) {
-			result = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token).getBody().getSubject();
+			result = Jwts.parser().setSigningKey(accessKey).parseClaimsJws(token).getBody().getAudience();
 		}else if(type.equals("Refresh")) {
-			result = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token).getBody().getSubject();
+			result = Jwts.parser().setSigningKey(refreshKey).parseClaimsJws(token).getBody().getAudience();
+		}else if(type.equals("User")) {
+			result = Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody().getAudience();
 		}
 		return result;
 	}
 	
 	public Authentication getAuthentication(String token, String type) {
-		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getUserInfo(token, type));
+		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getPayload(token, type));
 		return new UsernamePasswordAuthenticationToken(user,"",user.getAuthorities());
+	}
+	
+	public <T extends Object> T getSns(String token) throws Exception{
+		try {
+			String sns = Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody().get("sns").toString();
+			return (T) SNSEnum.getTitle(sns); 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
 	}
 }

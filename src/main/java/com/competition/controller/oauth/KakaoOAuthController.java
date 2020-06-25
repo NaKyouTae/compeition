@@ -1,6 +1,7 @@
 package com.competition.controller.oauth;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +28,15 @@ import com.competition.common.ControllerResponse;
 import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
-import com.competition.jpa.model.user.User;
 import com.competition.service.history.LoginHistoryService;
 import com.competition.service.oauth.KakaoOAuthService;
+import com.competition.service.oauth.OauthService;
+import com.competition.service.token.JwtService;
 import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
+import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
-import com.competition.vo.kakao.KaKaoUserVO;
+import com.competition.vo.kakao.KakaoUserVO;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -50,6 +54,15 @@ public class KakaoOAuthController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JwtService jwtUtill;
+	
+	@Autowired
+	private OauthService oauthService;
+	
+	@Autowired
+	private AuthenticationManager am;
 	
 	@GetMapping("/kakao")
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,38 +89,37 @@ public class KakaoOAuthController {
 			String Refresh = rs.getBody().get("refresh_token").toString();
 			
 			System.out.println(rs.toString());
-			Cookie accessCookie = new Cookie("Access-JWT", Access);
-			accessCookie.setPath("/");
-			Cookie refreshCookie = new Cookie("Refresh-JWT", Refresh);
-			refreshCookie.setPath("/");
+			Cookie accessCookie = new Cookie("AWT", Access);
+			accessCookie.setPath("http://localhost:4300");
+			Cookie refreshCookie = new Cookie("RWT", Refresh);
+			refreshCookie.setPath("http://localhost:4300");
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			
-			URI redirect = new URI("http://127.0.0.1:4300");
+			URI redirect = new URI("http://localhost:4300");
 			HttpHeaders reHeaders = new HttpHeaders();
 			reHeaders.setLocation(redirect);
-			reHeaders.add("Set-Cookie", "Access-JWT=" + Access);
-			reHeaders.add("Set-Cookie", "Refresh-JWT=" + Refresh);
+			reHeaders.add("Set-Cookie", "AWT=" + Access);
+			reHeaders.add("Set-Cookie", "RWT=" + Refresh);
 			
-			KaKaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
+			KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
 			
 			
-			User user = userService.seUserByIdx(kUser.getId());
+			Boolean userCheck = userService.checkUserName(kUser.getProperties().getNickname());
 			
-			if(user == null){
-			
-				// 회원 가입 프로세스 필요
-				// Sign Kakao User				
-				User SKU = new User();
-				
-				SKU.setIdx(kUser.getId());
-				if(kUser.getKakao_account().getEmail_needs_agreement()) {					
-					SKU.setEmail(kUser.getKakao_account().getEmail());
-				}
-				SKU.setSns(SNSEnum.KAKAO);
-				
-				userService.signUp(SKU);
+			if(userCheck == null){
+				// 회원 가입 프로세스			
+				kakaoOAuthService.kakaoSignUp(kUser);
 			}
+			
+			CustomUserDetails custom = (CustomUserDetails) userService.loadUserByUsername(kUser.getProperties().getNickname());
+			
+			String userJWT = jwtUtill.createUserToken(request, response, custom, SNSEnum.KAKAO, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+			
+			reHeaders.add("Set-Cookie", userJWT);
+			Cookie userCookie = new Cookie("UWT", userJWT);
+			userCookie.setPath("http://localhost:4300");
+			response.addCookie(userCookie);
 			
 			{
 				// Refresh Token DB에 입력
@@ -148,8 +160,8 @@ public class KakaoOAuthController {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		try {
 			Object rs = kakaoOAuthService.kakaoLogOut(acess);
-			session.removeAttribute("Access-JWT");
-			session.removeAttribute("Refresh-JWT");
+			session.removeAttribute("AWT");
+			session.removeAttribute("RWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Log Out by Kakao :) ");

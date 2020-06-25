@@ -3,7 +3,7 @@ package com.competition.vo.kakao;
 import lombok.Data;
 
 @Data
-public class KaKaoUserVO {
+public class KakaoUserVO {
 	
 	private String id;
 	private String connected_at;
