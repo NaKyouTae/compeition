@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
@@ -106,7 +105,7 @@ public class LoginController {
 					// Refresh Token, Access Token 생성
 					String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
 					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
-					String userJWT = jwtUtill.createUserToken(request, response, custom, SNSEnum.DEFUALT, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
 					
 					// Refresh Token & Access Token Header에 입력
 					headers.add("AWT", accessJWT);

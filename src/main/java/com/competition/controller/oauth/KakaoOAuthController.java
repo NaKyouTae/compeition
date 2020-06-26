@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.competition.common.ControllerResponse;
-import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.service.history.LoginHistoryService;
@@ -90,13 +89,13 @@ public class KakaoOAuthController {
 			
 			System.out.println(rs.toString());
 			Cookie accessCookie = new Cookie("AWT", Access);
-			accessCookie.setPath("http://localhost:4300");
+			accessCookie.setPath("http://127.0.0.1:4300");
 			Cookie refreshCookie = new Cookie("RWT", Refresh);
-			refreshCookie.setPath("http://localhost:4300");
+			refreshCookie.setPath("http://127.0.0.1:4300");
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			
-			URI redirect = new URI("http://localhost:4300");
+			URI redirect = new URI("http://127.0.0.1:4300");
 			HttpHeaders reHeaders = new HttpHeaders();
 			reHeaders.setLocation(redirect);
 			reHeaders.add("Set-Cookie", "AWT=" + Access);
@@ -107,18 +106,18 @@ public class KakaoOAuthController {
 			
 			Boolean userCheck = userService.checkUserName(kUser.getProperties().getNickname());
 			
-			if(userCheck == null){
+			if(!userCheck){
 				// 회원 가입 프로세스			
 				kakaoOAuthService.kakaoSignUp(kUser);
 			}
 			
 			CustomUserDetails custom = (CustomUserDetails) userService.loadUserByUsername(kUser.getProperties().getNickname());
 			
-			String userJWT = jwtUtill.createUserToken(request, response, custom, SNSEnum.KAKAO, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+			String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
 			
-			reHeaders.add("Set-Cookie", userJWT);
+			reHeaders.add("Set-Cookie", "UWT=" + userJWT);
 			Cookie userCookie = new Cookie("UWT", userJWT);
-			userCookie.setPath("http://localhost:4300");
+			userCookie.setPath("http://127.0.0.1:4300");
 			response.addCookie(userCookie);
 			
 			{

@@ -49,7 +49,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 		
 		
 		// login이 되었을 경우
-		if(Access != null && Refresh != null) {
+		if(Access != null && Refresh != null && User != null) {
 			
 			SNSEnum sns = jwtUtill.getSns(User);
 			
@@ -71,7 +71,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
 					
 					accessToken = jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
-					userToken = jwtUtill.createUserToken(request, response, user, jwtUtill.getSns(User), new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					userToken = jwtUtill.createUserToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
 				}
 				
 				return true;
@@ -90,7 +90,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					CustomUserDetails cUser = (CustomUserDetails) userSerivce.loadUserByUsername(user.getUsername());
 
 					accessToken = reissu.get("access_token");
-					userToken = jwtUtill.createUserToken(request, response, cUser, jwtUtill.getSns(User), new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					userToken = jwtUtill.createUserToken(request, response, cUser, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
 					
 					if(!Refresh.equals(reissu.get("refresh_token"))) {
 						refreshToken = reissu.get("refresh_token");

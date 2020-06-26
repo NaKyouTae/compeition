@@ -53,7 +53,7 @@ public class JwtService {
 	
 	private String issuer = "Competition";
 	
-	public <T extends Object> T createUserToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, SNSEnum type, Date expriation) {
+	public <T extends Object> T createUserToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject("user")
@@ -72,7 +72,6 @@ public class JwtService {
 		claims.put("roles", authList);
 		claims.put("grade", grade);
 		claims.put("user", user.getUser());
-		claims.put("sns", type.toString());
 		
 		String jwt = Jwts.builder()
 				.setHeaderParam("typ", "USERJWT")
@@ -157,8 +156,8 @@ public class JwtService {
 	
 	public <T extends Object> T getSns(String token) throws Exception{
 		try {
-			String sns = Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody().get("sns").toString();
-			return (T) SNSEnum.getTitle(sns); 
+			SNSEnum sns = (SNSEnum) Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody().get("sns");
+			return (T) sns;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

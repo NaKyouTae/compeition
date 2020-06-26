@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.cash.Cash;
 import com.competition.jpa.model.grade.Grade;
 import com.competition.jpa.model.role.Role;
@@ -97,7 +98,7 @@ public class UserService implements UserDetailsService {
 			user.setIdx(userIdx);
 			user.setInsertDate(DateUtil.now());
 			user.setMileage(1000);
-			
+			user.setSns(user.getSns() == null ? SNSEnum.DEFUALT : user.getSns());
 			Cash cash = new Cash();
 
 			cash.setIdx(UUID.randomUUID().toString().replace("-", ""));
