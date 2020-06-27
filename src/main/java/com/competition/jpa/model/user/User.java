@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.competition.enums.SNSEnum;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -46,6 +44,6 @@ public class User implements Serializable {
 	private String changeDate;
 	
 	@Column
-	private SNSEnum sns;	
+	private String sns;	
 		
 }

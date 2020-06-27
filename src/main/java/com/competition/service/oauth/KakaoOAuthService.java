@@ -13,7 +13,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.user.User;
 import com.competition.service.user.UserService;
 import com.competition.vo.kakao.KakaoUserVO;
@@ -53,7 +52,7 @@ public class KakaoOAuthService {
 			if(user.getKakao_account().getEmail_needs_agreement()) {					
 				u.setEmail(user.getKakao_account().getEmail());
 			}
-			u.setSns(SNSEnum.KAKAO);
+			u.setSns("KAKAO");
 			
 			return (T) userService.upUser(u, null);
 		} catch (Exception e) {
@@ -81,7 +80,7 @@ public class KakaoOAuthService {
 			if(user.getKakao_account().getEmail_needs_agreement()) {					
 				SKU.setEmail(user.getKakao_account().getEmail());
 			}
-			SKU.setSns(SNSEnum.KAKAO);
+			SKU.setSns("KAKAO");
 			
 			userService.signUp(SKU);
 			
