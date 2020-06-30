@@ -51,6 +51,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 		if(Access != null && Refresh != null && User != null) {
 			
 			// ValidateToken을 이용해서  유효성 확인 필요
+			// io.jsonwebtoken.ExpiredJwtException: JWT expired at 2020-06-30T22:25:28Z. 
+			// Current time: 2020-07-01T00:05:36Z, a difference of 6008353 milliseconds.  
+			// Allowed clock skew: 0 milliseconds.
 			String sns = jwtUtill.getSns(User);
 			
 			// 로그인 형태가 자체 로그인 일 경우
