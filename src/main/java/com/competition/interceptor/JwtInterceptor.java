@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
 import com.competition.service.oauth.KakaoOAuthService;
@@ -51,10 +50,11 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 		// login이 되었을 경우
 		if(Access != null && Refresh != null && User != null) {
 			
-			SNSEnum sns = jwtUtill.getSns(User);
+			// ValidateToken을 이용해서  유효성 확인 필요
+			String sns = jwtUtill.getSns(User);
 			
 			// 로그인 형태가 자체 로그인 일 경우
-			if(sns.equals(SNSEnum.DEFUALT)) {
+			if(sns.equals("DEFUALT")) {
 				// Refresh Token DB에 존재 하는지 체크
 				// Refresh Token이 Black List에 등록 되어있는지 체크
 				if(jwtService.validateToken(Refresh, "Refresh")) {
@@ -76,7 +76,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				
 				return true;
 			// 로그인 형태가 KAKAO 로그인 일 경우
-			}else if(sns.equals(SNSEnum.KAKAO)) {
+			}else if(sns.equals("KAKAO")) {
 				// Access Token 유효 기간 체크 
 				// KAKAO API CALL
 				if(kakaoOAuthService.checkAccessExpires(Access) == Boolean.FALSE) {
