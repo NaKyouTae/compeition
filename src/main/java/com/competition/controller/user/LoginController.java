@@ -30,6 +30,7 @@ import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.history.LoginHistoryService;
 import com.competition.service.token.JwtService;
 import com.competition.service.token.refresh.RefreshTokenService;
@@ -58,6 +59,9 @@ public class LoginController {
 	
 	@Autowired
 	private RefreshTokenService refreshTokenService;
+	
+	@Autowired
+	private SystemConfigRepository systemConfigRepository;
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
@@ -102,10 +106,15 @@ public class LoginController {
 				
 				// RefreshToken, Access Token 생성 후 DB에 입력
 				{
+					
+					Long r_exp = Long.parseLong(systemConfigRepository.findByConfigName("RWT_EXPRIATION").getConfigValue());
+					Long a_exp = Long.parseLong(systemConfigRepository.findByConfigName("AWT_EXPRIATION").getConfigValue());
+					Long u_exp = Long.parseLong(systemConfigRepository.findByConfigName("UWT_EXPRIATION").getConfigValue());
+					
 					// Refresh Token, Access Token 생성
-					String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
-					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + 7 * (1000 * 60 * 60 * 24)));
-					String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + r_exp));
+					String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + a_exp));
+					String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + u_exp));
 					
 					// Refresh Token & Access Token Header에 입력
 					headers.add("AWT", accessJWT);

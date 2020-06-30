@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.competition.enums.SNSEnum;
 import com.competition.jpa.model.user.UserGrade;
+import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
@@ -34,29 +35,32 @@ public class JwtService {
 	private UserService userService;
 	
 	@Autowired
+	private SystemConfigRepository systemConfigRepository;
+	
+	@Autowired
 	private UserGradeRepository userGradeRepository;
 	
-	private String accessSecretKey = "CompetitionAccessjwt";
-	private byte[] accessSecretBytes = DatatypeConverter.parseBase64Binary(accessSecretKey);
-	private SignatureAlgorithm accessSignatureAlgorithm = SignatureAlgorithm.HS256;
-	private final Key accessKey = new SecretKeySpec(accessSecretBytes, accessSignatureAlgorithm.getJcaName());
-
-	private String refreshSecretKey = "CompetitionRefreshjwt";
+	private String refreshSecretKey = systemConfigRepository.findByConfigName("RWT_SECRET").getConfigValue();
 	private byte[] refreshSecretBytes = DatatypeConverter.parseBase64Binary(refreshSecretKey);
 	private SignatureAlgorithm refreshSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key refreshKey = new SecretKeySpec(refreshSecretBytes, refreshSignatureAlgorithm.getJcaName());
 
-	private String userSecretKey = "CompetitionUserjwt";
+	private String accessSecretKey = systemConfigRepository.findByConfigName("AWT_SECRET").getConfigValue();
+	private byte[] accessSecretBytes = DatatypeConverter.parseBase64Binary(accessSecretKey);
+	private SignatureAlgorithm accessSignatureAlgorithm = SignatureAlgorithm.HS256;
+	private final Key accessKey = new SecretKeySpec(accessSecretBytes, accessSignatureAlgorithm.getJcaName());
+
+	private String userSecretKey = systemConfigRepository.findByConfigName("UWT_SECRET").getConfigValue();
 	private byte[] userSecretBytes = DatatypeConverter.parseBase64Binary(userSecretKey);
 	private SignatureAlgorithm userSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key userKey = new SecretKeySpec(userSecretBytes, userSignatureAlgorithm.getJcaName());
 	
-	private String issuer = "Competition";
+	private String issuer = systemConfigRepository.findByConfigName("ISSUER").getConfigValue();
 	
 	public <T extends Object> T createUserToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims()
-				.setSubject("user")
+				.setSubject(systemConfigRepository.findByConfigName("UWT_SUBJECT").getConfigValue())
 				.setIssuer(this.issuer)
 				.setAudience(user.getUsername())
 				.setIssuedAt(new Date())
@@ -74,7 +78,7 @@ public class JwtService {
 		claims.put("user", user.getUser());
 		
 		String jwt = Jwts.builder()
-				.setHeaderParam("typ", "USERJWT")
+				.setHeaderParam("typ", systemConfigRepository.findByConfigName("UWT_TYPE").getConfigValue())
 				.setClaims(claims)
 				.signWith(userSignatureAlgorithm, userKey)
 				.compact();
@@ -85,14 +89,14 @@ public class JwtService {
 	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims()
-				.setSubject("access")
+				.setSubject(systemConfigRepository.findByConfigName("AWT_SUBJECT").getConfigValue())
 				.setIssuer(this.issuer)
 				.setAudience(user.getUsername())
 				.setIssuedAt(new Date())
 				.setExpiration(expriation);
 		
 		String jwt = Jwts.builder()
-				.setHeaderParam("typ", "ACCESSJWT")
+				.setHeaderParam("typ", systemConfigRepository.findByConfigName("AWT_TYPE").getConfigValue())
 				.setClaims(claims)
 				.signWith(accessSignatureAlgorithm, accessKey)
 				.compact();
@@ -103,14 +107,14 @@ public class JwtService {
 	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String user, Date expriation) {
 		
 		Claims claims = Jwts.claims()
-				.setSubject("refresh")
+				.setSubject(systemConfigRepository.findByConfigName("RWT_SUBJECT").getConfigValue())
 				.setIssuer(this.issuer)
 				.setAudience(user)
 				.setIssuedAt(new Date())
 				.setExpiration(expriation);
 		
 		String jwt = Jwts.builder()
-				.setHeaderParam("typ", "REFRESHJWT")
+				.setHeaderParam("typ", systemConfigRepository.findByConfigName("RWT_TYPE").getConfigValue())
 				.setClaims(claims)
 				.signWith(refreshSignatureAlgorithm, refreshKey)
 				.compact();

@@ -1,7 +1,7 @@
 package com.competition;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,14 +15,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.competition.interceptor.JwtInterceptor;
 import com.competition.jpa.model.grade.Grade;
+import com.competition.jpa.model.menu.Menu;
 import com.competition.jpa.model.role.Role;
+import com.competition.jpa.model.system.config.SystemConfig;
+import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserRole;
 import com.competition.jpa.repository.grade.GradeRepository;
 import com.competition.jpa.repository.menu.MenuRepository;
 import com.competition.jpa.repository.role.RoleRepository;
+import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
-import com.competition.service.user.UserService;
 import com.competition.util.DateUtil;
+import com.competition.util.UUIDUtil;
 
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
@@ -50,220 +55,127 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private UserService userService;
 
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
-			MenuRepository menu, GradeRepository grade) {
+			MenuRepository menu, GradeRepository grade, SystemConfigRepository sysconf) {
 		return (args) -> {
-//			{
-//				user.deleteAll();
-//
-//				User u = new User();
-//				u.setIdx(UUID.randomUUID().toString().toString().replace("-", ""));
-//				u.setUsername("admin");
-//				u.setPassword(passwordEncoder.encode("skrbxo12!@"));
-//				u.setInsertDate(DateUtil.now());
-//				u.setChangeDate(null);
-//				u.setEmail("kyoutae_93@naver.com");
-//				user.save(u);
-//
-//				User u1 = new User();
-//				u1.setIdx(UUID.randomUUID().toString().toString().replace("-", ""));
-//				u1.setUsername("test");
-//				u1.setPassword(passwordEncoder.encode("test"));
-//				u1.setInsertDate(DateUtil.now());
-//				u1.setChangeDate(null);
-//				u1.setEmail("qppk@naver.com");
-//				user.save(u1);
-//			}
+			{
+				List<SystemConfig> syslist = sysconf.findAll();
+				if(syslist.size() == 0) {
+					
+					
+					long rwtExp = 7 * (1000 * 60 * 60 * 24);
+					long jwtExp = 1 * (1000 * 60 * 5);
+					
+					sysconf.saveAll(Arrays.asList(
+							// JWT SECRET
+							SystemConfig.builder().configType("JWT").configName("RWT_SECRET").configValue("CompetitionRefreshjwt").build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_SECRET").configValue("CompetitionAccessjwt").build(),
+							SystemConfig.builder().configType("JWT").configName("UWT_SECRET").configValue("CompetitionUserjwt").build(),
+							// JWT ISSUER
+							SystemConfig.builder().configType("JWT").configName("ISSUER").configValue("Competition").build(),
+							// JWT SUBJECT
+							SystemConfig.builder().configType("JWT").configName("RWT_SUBJECT").configValue("REFRESH").build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_SUBJECT").configValue("ACCESS").build(),
+							SystemConfig.builder().configType("JWT").configName("UWT_SUBJECT").configValue("USER").build(),
+							// JWT TYPE
+							SystemConfig.builder().configType("JWT").configName("RWT_TYPE").configValue("REFRESHJWT").build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_TYPE").configValue("ACCESSJWT").build(),
+							SystemConfig.builder().configType("JWT").configName("UWT_TYPE").configValue("USERJWT").build(),
+							// JWT EXPRIATION
+							SystemConfig.builder().configType("JWT").configName("RWT_EXPRIATION").configValue(String.valueOf(rwtExp)).build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_EXPRIATION").configValue(String.valueOf(jwtExp)).build(),
+							SystemConfig.builder().configType("JWT").configName("UWT_EXPRIATION").configValue(String.valueOf(jwtExp)).build(),
+							// MAIL INFOMATION
+							SystemConfig.builder().configType("MAIL").configName("MAIL_ADDRESS").configValue("qppk123@gmail.com").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_PASSWORD").configValue("skrbxo12").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_PORT").configValue("587").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_HOST").configValue("smtp.gmail.com").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_PROTOCOL").configValue("smtp").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_AUTH").configValue("true").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_STARTTLS_ENABLE").configValue("true").build(),
+							SystemConfig.builder().configType("MAIL").configName("MAIL_DEBUG").configValue("true").build()
+							// MAIL TEMPLATE REQURIED
+					));
+					
+				}
+				
+				
+			}
+			
+			{
+				List<User> users = user.findAll();
+				if(users.size() == 0) {
+					
+					
+					String a = UUIDUtil.randomString();
+					String t = UUIDUtil.randomString();
+					
+					user.saveAll(Arrays.asList(
+						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).username("admin").password(passwordEncoder.encode("skrbxo12!@")).email("qppk123@gmail.com").build(),
+						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).username("test").password(passwordEncoder.encode("test")).email("qppk123@gmail.com").build()
+					));
+					
+					String a_idx = UUIDUtil.randomString();
+					String u_idx = UUIDUtil.randomString();
+					
+					role.saveAll(Arrays.asList(
+						Role.builder().idx(a_idx).insertDate(DateUtil.now()).changeDate(null).roleName("ROLE_ADMIN").build(),
+						Role.builder().idx(u_idx).insertDate(DateUtil.now()).changeDate(null).roleName("ROLE_USER").build()
+					));
+					
+					mapping_role.saveAll(Arrays.asList(
+						UserRole.builder().idx(UUIDUtil.randomString()).roleIdx(a_idx).userIdx(a).roleName("ROLE_ADMIN").userName("admin").build(),
+						UserRole.builder().idx(UUIDUtil.randomString()).roleIdx(a_idx).userIdx(t).roleName("ROLE_USER").userName("test").build()
+					));
+				}
+			}
 
 			{
 				List<Grade> grades = grade.findAll();
 				
 				if(grades.size() == 0) {
-					grade.deleteAll();
 					
-					Grade red = new Grade();
-					red.setIdx("RED");
-					red.setStartRange("0");
-					red.setEndRange("999");
-					red.setGradeName("빨강");
-					red.setInsertDate(DateUtil.now());
-					
-					grade.save(red);
+					grade.saveAll(Arrays.asList(
+						Grade.builder().insertDate(DateUtil.now()).startRange("0").endRange("999").idx("RED").gradeName("빨강색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("1000").endRange("2999").idx("ORANGE").gradeName("주황색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("2000").endRange("3999").idx("YELLOW").gradeName("노랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("3000").endRange("4999").idx("GREEN").gradeName("초록색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("4000").endRange("5999").idx("BLUE").gradeName("파랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("5000").endRange("6999").idx("NAVY").gradeName("남색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("6000").endRange("7000").idx("PUPLE").gradeName("보라색").build()
+					));
 				}
 			}
-			
+
 			{
+				List<Menu> menus = menu.findAll();
 				
-				List<Role> roles = role.findAll();
-				if(roles.size() == 0) {					
-					role.deleteAll();
+				if(menus.size() == 0) {
 					
-					Role admin_role = new Role();
-					admin_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
-					admin_role.setRoleName("ROLE_ADMIN");
-					admin_role.setInsertDate(DateUtil.now());
-					admin_role.setChangeDate(null);
-					role.save(admin_role);
+					String m_admin = UUIDUtil.randomString();
 					
-					Role user_role = new Role();
-					user_role.setIdx(UUID.randomUUID().toString().replace("-", ""));
-					user_role.setRoleName("ROLE_USER");
-					user_role.setInsertDate(DateUtil.now());
-					user_role.setChangeDate(null);
-					role.save(user_role);
+					Role r_admin = role.findByRoleName("ROLE_ADMIN");
+					
+					menu.saveAll(Arrays.asList(
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(1).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("삼행시").menuGroup("three").url("/three").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(2).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("이행시").menuGroup("two").url("/two").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(3).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("명예의 전당").menuGroup("honor").url("/honor").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(4).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("공지 사항").menuGroup("notice").url("/notice").build(),
+						Menu.builder().idx(m_admin).menuOrder(5).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("관리자").menuGroup("admin").url("/admin").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(1).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("메뉴").menuGroup("menu").url("/admin/menu").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(2).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("사용자").menuGroup("user").url("/admin/user").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(3).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("제시어").menuGroup("weekword").url("/admin/weekword").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(4).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("권한").menuGroup("role").url("/admin/role").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(5).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("등급").menuGroup("grade").url("/admin/grade").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(6).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("메일").menuGroup("mail").url("/admin/mail").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(7).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("접속 이력").menuGroup("login").url("/admin/login").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(8).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("설정").menuGroup("config").url("/admin/config").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(9).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("공지사항").menuGroup("notice").url("/admin/notice").build()
+					));
 				}
 			}
-
-//			{
-//				mapping_role.deleteAll();
-//
-//				User userInfo = user.findByUsername("admin");
-//				UserRole mapping = new UserRole();
-//
-//				Role roleInfo = role.findByRoleName("ROLE_ADMIN");
-//
-//				mapping.setRoleIdx(roleInfo.getIdx());
-//				mapping.setRoleName("ROLE_ADMIN");
-//				mapping.setUserIdx(userInfo.getIdx());
-//				mapping.setUserName("admin");
-//
-//				mapping_role.save(mapping);
-//			}
-
-//			{
-//
-//				List<Menu> m_list = new ArrayList<>();
-//
-//				Menu m1 = new Menu();
-//
-//				m1.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m1.setTitle("삼행시");
-//				m1.setMenuGroup("three");
-//				m1.setUrl("/three");
-//				m1.setMenuOrder(1);
-//				m1.setLevel(1);
-//				m1.setChild(Boolean.FALSE);
-//				m1.setInsertDate(DateUtil.now());
-//				m1.setParent("null");
-//				m1.setRoleIdx(null);
-//				m1.setRoleIdx(null);
-//
-//				Menu m2 = new Menu();
-//
-//				m2.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m2.setTitle("이행시");
-//				m2.setMenuGroup("two");
-//				m2.setUrl("/two");
-//				m2.setMenuOrder(2);
-//				m2.setLevel(1);
-//				m2.setChild(Boolean.FALSE);
-//				m2.setInsertDate(DateUtil.now());
-//				m2.setParent("null");
-//				m2.setRoleIdx(null);
-//				m2.setRoleIdx(null);
-//
-//				Menu m3 = new Menu();
-//
-//				m3.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m3.setTitle("명예의 전당");
-//				m3.setMenuGroup("honor");
-//				m3.setUrl("/honor");
-//				m3.setMenuOrder(3);
-//				m3.setLevel(1);
-//				m3.setChild(Boolean.FALSE);
-//				m3.setInsertDate(DateUtil.now());
-//				m3.setParent("null");
-//				m3.setRoleIdx(null);
-//				m3.setRoleIdx(null);
-//
-//				Menu m4 = new Menu();
-//
-//				m4.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m4.setTitle("공지 사항");
-//				m4.setMenuGroup("honor");
-//				m4.setUrl("/honor");
-//				m4.setMenuOrder(4);
-//				m4.setLevel(1);
-//				m4.setChild(Boolean.FALSE);
-//				m4.setInsertDate(DateUtil.now());
-//				m4.setParent("null");
-//				m4.setRoleIdx(null);
-//				m4.setRoleIdx(null);
-//
-//				Menu m5 = new Menu();
-//
-//				m5.setIdx("adminIdx");
-//				m5.setTitle("관리자");
-//				m5.setMenuGroup("admin");
-//				m5.setUrl("/admin");
-//				m5.setMenuOrder(5);
-//				m5.setLevel(1);
-//				m5.setChild(Boolean.FALSE);
-//				m5.setInsertDate(DateUtil.now());
-//				m5.setParent("null");
-//				m5.setRoleIdx(null);
-//				m5.setRoleIdx(null);
-//
-//				Menu m5_1 = new Menu();
-//
-//				m5_1.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m5_1.setTitle("메뉴");
-//				m5_1.setMenuGroup("menu");
-//				m5_1.setUrl("/admin/menu");
-//				m5_1.setMenuOrder(1);
-//				m5_1.setLevel(2);
-//				m5_1.setChild(Boolean.FALSE);
-//				m5_1.setInsertDate(DateUtil.now());
-//				m5_1.setParent("adminIdx");
-//				m5_1.setRoleIdx(null);
-//				m5_1.setRoleIdx(null);
-//
-//				Menu m5_2 = new Menu();
-//
-//				m5_2.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m5_2.setTitle("사용자");
-//				m5_2.setMenuGroup("user");
-//				m5_2.setUrl("/admin/user");
-//				m5_2.setMenuOrder(2);
-//				m5_2.setLevel(2);
-//				m5_2.setChild(Boolean.FALSE);
-//				m5_2.setInsertDate(DateUtil.now());
-//				m5_2.setParent("adminIdx");
-//				m5_2.setRoleIdx(null);
-//				m5_2.setRoleIdx(null);
-//
-//				Menu m5_3 = new Menu();
-//
-//				m5_3.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m5_3.setTitle("제시어");
-//				m5_3.setMenuGroup("weekword");
-//				m5_3.setUrl("/admin/weekword");
-//				m5_3.setMenuOrder(3);
-//				m5_3.setLevel(2);
-//				m5_3.setChild(Boolean.FALSE);
-//				m5_3.setInsertDate(DateUtil.now());
-//				m5_3.setParent("adminIdx");
-//				m5_3.setRoleIdx(null);
-//				m5_3.setRoleIdx(null);
-//
-//				Menu m5_4 = new Menu();
-//
-//				m5_4.setIdx(UUID.randomUUID().toString().replace("-", ""));
-//				m5_4.setTitle("권한");
-//				m5_4.setMenuGroup("role");
-//				m5_4.setUrl("/admin/role");
-//				m5_4.setMenuOrder(4);
-//				m5_4.setLevel(2);
-//				m5_4.setChild(Boolean.FALSE);
-//				m5_4.setInsertDate(DateUtil.now());
-//				m5_4.setParent("adminIdx");
-//				m5_4.setRoleIdx(null);
-//				m5_4.setRoleIdx(null);
-//			}
 		};
 	}
 }

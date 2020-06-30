@@ -3,7 +3,6 @@ package com.competition.controller.oauth;
 import java.net.URI;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.history.LoginHistoryService;
 import com.competition.service.oauth.KakaoOAuthService;
 import com.competition.service.oauth.OauthService;
@@ -35,6 +35,7 @@ import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
+import com.competition.util.UUIDUtil;
 import com.competition.vo.kakao.KakaoUserVO;
 
 @RestController
@@ -62,6 +63,9 @@ public class KakaoOAuthController {
 	
 	@Autowired
 	private AuthenticationManager am;
+	
+	@Autowired
+	private SystemConfigRepository systemConfigRepository;
 	
 	@GetMapping("/kakao")
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -112,8 +116,9 @@ public class KakaoOAuthController {
 			}
 			
 			CustomUserDetails custom = (CustomUserDetails) userService.loadUserByUsername(kUser.getProperties().getNickname());
+			Long exp = Long.parseLong(systemConfigRepository.findByConfigName("UWT_EXPRIATION").getConfigValue());
 			
-			String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+			String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + exp));
 			
 			reHeaders.add("Set-Cookie", "UWT=" + userJWT);
 			Cookie userCookie = new Cookie("UWT", userJWT);
@@ -134,7 +139,7 @@ public class KakaoOAuthController {
 			{
 				LoginHistory his = new LoginHistory();
 				
-				his.setIdx(UUID.randomUUID().toString().replace("-", ""));
+				his.setIdx(UUIDUtil.randomString());
 				his.setUserIdx(kUser.getId());
 				his.setUserName(kUser.getKakao_account().getProfile().getNickname());
 				his.setAccessDate(DateUtil.now());
@@ -161,6 +166,7 @@ public class KakaoOAuthController {
 			Object rs = kakaoOAuthService.kakaoLogOut(acess);
 			session.removeAttribute("AWT");
 			session.removeAttribute("RWT");
+			session.removeAttribute("UWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Log Out by Kakao :) ");
