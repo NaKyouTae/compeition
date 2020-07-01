@@ -106,7 +106,24 @@ public class ThreeProcess {
 		
 		return (T) threeRepository.save(three);
 	}
-	public void deThree(Three three) throws Exception {
-		threeRepository.delete(three);
+	
+	public <T extends Object> T deThree(Three three) throws Exception {
+		try {
+			threeRepository.delete(three);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
+	public <T extends Object> T deThreeAllEntities(List<Three> threes) throws Exception {
+		try {
+			threeRepository.deleteAll(threes);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
 	}
 }

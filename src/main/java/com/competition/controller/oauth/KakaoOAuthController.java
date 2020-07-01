@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import com.competition.common.ControllerResponse;
 import com.competition.jpa.model.history.LoginHistory;
 import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.history.LoginHistoryService;
 import com.competition.service.oauth.KakaoOAuthService;
@@ -171,6 +174,22 @@ public class KakaoOAuthController {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Log Out by Kakao :) ");
 			res.setResult(rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
+		return (T) res;
+	}
+	
+	@DeleteMapping("/kakao/withdrawal")
+	public <T extends Object> T withdrawal(@RequestBody User user) throws Exception {
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Withdrawal by Kakao :) ");
+			res.setResult(kakaoOAuthService.kakaoWithdrawal(user));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);

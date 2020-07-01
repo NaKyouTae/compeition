@@ -1,5 +1,7 @@
 package com.competition.process.token;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,13 @@ public class RefreshTokenProcess {
 		}
 	}
 	
+	public <T extends Object> T seRefreshTokenByUsername(String username) throws Exception {
+		try {
+			return (T) refreshTokenRepository.findByUserName(username);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
 	public <T extends Object> T seRefreshTokens() throws Exception {
 		try {
 			return (T) refreshTokenRepository.findAll();
@@ -61,15 +70,18 @@ public class RefreshTokenProcess {
 	}
 	public <T extends Object> T deRefreshToken(RefreshToken token) throws Exception {
 		try {
-			
 			refreshTokenRepository.delete(token);
-			
 			return (T) Boolean.TRUE; 
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	
-	
-	
+	public <T extends Object> T deRefreshTokenAllEntities(List<RefreshToken> tokens) throws Exception {
+		try {
+			refreshTokenRepository.deleteAll(tokens);
+			return (T) Boolean.TRUE; 
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
 }

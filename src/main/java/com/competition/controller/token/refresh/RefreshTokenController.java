@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
@@ -51,6 +52,21 @@ public class RefreshTokenController {
 //		}
 //		return (T) res;
 //	}
+	
+	@GetMapping("/{username}")
+	public <T extends Object> T seRefreshTokenByUsername(@RequestParam String username) throws Exception{
+		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+		try {
+			res.setMessage("Success Search Refresh Tokens by User Name :) ");
+			res.setResultCode(HttpStatus.OK);
+			res.setResult(refreshTokenService.seRefreshTokenByUsername(username));
+		} catch (Exception e) {
+			res.setMessage(e.getMessage());
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setResult(null);
+		}
+		return (T) res;
+	}
 	
 	@GetMapping("")
 	public <T extends Object> T seRefreshTokens() throws Exception{

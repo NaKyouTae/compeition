@@ -11,6 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.competition.jpa.model.token.RefreshToken;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.oauth.KakaoOAuthService;
 import com.competition.service.token.JwtService;
 import com.competition.service.token.black.BlackTokenService;
@@ -18,6 +19,8 @@ import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
 import com.competition.user.CustomUserDetails;
 import com.competition.vo.kakao.KakaoUserVO;
+
+import io.jsonwebtoken.Claims;
 
 public class JwtInterceptor extends HandlerInterceptorAdapter{
 
@@ -33,6 +36,8 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 	private UserService userSerivce;
 	@Autowired
 	private KakaoOAuthService kakaoOAuthService;
+	@Autowired
+	private SystemConfigRepository systemConfigRepository;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handle) throws Exception {
@@ -50,14 +55,14 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 		// login이 되었을 경우
 		if(Access != null && Refresh != null && User != null) {
 			
+			Long a_exp = Long.valueOf(systemConfigRepository.findByConfigName("AWT_EXPRIATION").getConfigValue());
+			
 			// ValidateToken을 이용해서  유효성 확인 필요
-			// io.jsonwebtoken.ExpiredJwtException: JWT expired at 2020-06-30T22:25:28Z. 
-			// Current time: 2020-07-01T00:05:36Z, a difference of 6008353 milliseconds.  
-			// Allowed clock skew: 0 milliseconds.
-			String sns = jwtUtill.getSns(User);
+			Claims u_body = jwtUtill.getUserPayLoad(User);
+			Map u = (Map) u_body.get("user");
 			
 			// 로그인 형태가 자체 로그인 일 경우
-			if(sns.equals("DEFUALT")) {
+			if(u.get("sns").equals("DEFUALT")) {
 				// Refresh Token DB에 존재 하는지 체크
 				// Refresh Token이 Black List에 등록 되어있는지 체크
 				if(jwtService.validateToken(Refresh, "Refresh")) {
@@ -73,13 +78,15 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					RefreshToken reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
 					CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
 					
-					accessToken = jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
-					userToken = jwtUtill.createUserToken(request, response, user, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					accessToken = jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + a_exp));
+					userToken = jwtUtill.createUserToken(request, response, user, u_body.getExpiration());
+					
+					response.setHeader("AWT", accessToken);
+					response.setHeader("UWT", userToken);
 				}
 				
-				return true;
 			// 로그인 형태가 KAKAO 로그인 일 경우
-			}else if(sns.equals("KAKAO")) {
+			}else if(u.get("sns").equals("KAKAO")) {
 				// Access Token 유효 기간 체크 
 				// KAKAO API CALL
 				if(kakaoOAuthService.checkAccessExpires(Access) == Boolean.FALSE) {
@@ -93,16 +100,17 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					CustomUserDetails cUser = (CustomUserDetails) userSerivce.loadUserByUsername(user.getUsername());
 
 					accessToken = reissu.get("access_token");
-					userToken = jwtUtill.createUserToken(request, response, cUser, new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 30)));
+					userToken = jwtUtill.createUserToken(request, response, cUser, u_body.getExpiration());
 					
 					if(!Refresh.equals(reissu.get("refresh_token"))) {
 						refreshToken = reissu.get("refresh_token");
 						response.setHeader("RWT", refreshToken);
 					}
+					
+					response.setHeader("AWT", accessToken);
+					response.setHeader("UWT", userToken);
 				}
 			}
-			response.setHeader("AWT", accessToken);
-			response.setHeader("UWT", userToken);
 		}
 		return true;
 	}

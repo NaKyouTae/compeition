@@ -1,5 +1,6 @@
 package com.competition.service.three;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,14 +56,24 @@ public class ThreeService {
 		
 		return (T) threeProcess.inThree(three);
 	}
+	
 	public <T extends Object> T upThree(Three three) throws Exception {
 		three.setUpdateDate(DateUtil.now());
 		return (T) threeProcess.upThree(three);
 	}
+	
 	public <T extends Object> T deThree(Three three) throws Exception {
 		try {
 			threeProcess.deThree(three);
 			return (T) Boolean.TRUE;
+		}catch(Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T deThreeAllEntities(List<Three> threes) throws Exception {
+		try {
+			return (T) threeProcess.deThreeAllEntities(threes); 
 		}catch(Exception e) {
 			return (T) e;
 		}

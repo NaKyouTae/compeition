@@ -33,6 +33,16 @@ public class KakaoOAuthService {
 	@Autowired
 	private UserService userService;
 	
+	
+	public <T extends Object> T kakaoWithdrawal(User user) throws Exception{
+		try {
+			return (T) userService.destoryUser(user);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
 	/**
 	 * 
 	 * KAKAO USER UPDATE COMPETITION

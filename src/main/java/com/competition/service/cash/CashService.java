@@ -1,5 +1,6 @@
 package com.competition.service.cash;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,14 @@ public class CashService {
 	public <T extends Object> T deCash(Cash cash) throws Exception {
 		try {
 			return cashProcess.deCash(cash);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T deCashAllEntities(List<Cash> cashs) throws Exception {
+		try {
+			return cashProcess.deCashAllEntities(cashs);
 		} catch (Exception e) {
 			return (T) e;
 		}

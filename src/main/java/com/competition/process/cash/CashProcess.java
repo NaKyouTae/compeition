@@ -1,5 +1,7 @@
 package com.competition.process.cash;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -56,6 +58,15 @@ public class CashProcess {
 	public <T extends Object> T deCash(Cash cash) throws Exception {
 		try {
 			cashRepository.delete(cash);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T deCashAllEntities(List<Cash> cashs) throws Exception {
+		try {
+			cashRepository.deleteAll(cashs);
 			return (T) Boolean.TRUE;
 		} catch (Exception e) {
 			return (T) e;

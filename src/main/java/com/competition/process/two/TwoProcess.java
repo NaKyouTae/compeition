@@ -93,7 +93,23 @@ public class TwoProcess {
 		return (T) twoRepository.save(two);
 	}
 	
-	public void deTwo(Two two) throws Exception {
-		twoRepository.delete(two);
+	public <T extends Object> T deTwo(Two two) throws Exception {
+		try {
+			twoRepository.delete(two);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+	}
+	
+	public <T extends Object> T deTwoAllEntities(List<Two> twos) throws Exception {
+		try {
+			twoRepository.deleteAll(twos);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
 	}
 }

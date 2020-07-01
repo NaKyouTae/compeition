@@ -1,5 +1,6 @@
 package com.competition.service.two;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,15 @@ public class TwoService {
 	
 	public <T extends Object> T deTwo(Two two) throws Exception {
 		try {
-			twoProcess.deTwo(two);
-			return (T) Boolean.TRUE;
+			return (T) twoProcess.deTwo(two); 
+		}catch(Exception e) {
+			return (T) e;
+		}
+	}
+	public <T extends Object> T deTwoAllEntities(List<Two> twos) throws Exception {
+		try {
+			
+			return (T) twoProcess.deTwoAllEntities(twos);
 		}catch(Exception e) {
 			return (T) e;
 		}

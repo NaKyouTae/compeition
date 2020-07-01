@@ -15,7 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.user.User;
 import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.jpa.repository.user.UserGradeRepository;
@@ -141,7 +140,7 @@ public class JwtService {
 		}
 	}
 	
-	public String getPayload(String token, String type) {
+	public String getUserName(String token, String type) {
 		String result = "";
 		
 		if(type.equals("Access")) {
@@ -155,14 +154,13 @@ public class JwtService {
 	}
 	
 	public Authentication getAuthentication(String token, String type) {
-		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getPayload(token, type));
+		CustomUserDetails user = (CustomUserDetails) userService.loadUserByUsername(this.getUserName(token, type));
 		return new UsernamePasswordAuthenticationToken(user,"",user.getAuthorities());
 	}
 	
-	public <T extends Object> T getSns(String token) throws Exception{
+	public <T extends Object> T getUserPayLoad(String token) throws Exception{
 		try {
-			User user = (User) Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody().get("user");
-			return (T) user.getSns();
+			return (T) Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

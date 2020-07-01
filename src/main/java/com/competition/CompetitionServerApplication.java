@@ -19,11 +19,13 @@ import com.competition.jpa.model.menu.Menu;
 import com.competition.jpa.model.role.Role;
 import com.competition.jpa.model.system.config.SystemConfig;
 import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.model.user.UserRole;
 import com.competition.jpa.repository.grade.GradeRepository;
 import com.competition.jpa.repository.menu.MenuRepository;
 import com.competition.jpa.repository.role.RoleRepository;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
+import com.competition.jpa.repository.user.UserGradeRepository;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.util.DateUtil;
@@ -58,15 +60,15 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
-			MenuRepository menu, GradeRepository grade, SystemConfigRepository sysconf) {
+			MenuRepository menu, GradeRepository grade, UserGradeRepository user_grade, SystemConfigRepository sysconf) {
 		return (args) -> {
 			{
 				List<SystemConfig> syslist = sysconf.findAll();
 				if(syslist.size() == 0) {
 					
 					
-					long rwtExp = 7 * (1000 * 60 * 60 * 24);
-					long jwtExp = 1 * (1000 * 60 * 5);
+					long awtExp = 1 * (1000 * 60 * 5);
+					long jwtExp = 7 * (1000 * 60 * 60 * 24);
 					
 					sysconf.saveAll(Arrays.asList(
 							// JWT SECRET
@@ -84,8 +86,8 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 							SystemConfig.builder().configType("JWT").configName("AWT_TYPE").configValue("ACCESSJWT").build(),
 							SystemConfig.builder().configType("JWT").configName("UWT_TYPE").configValue("USERJWT").build(),
 							// JWT EXPRIATION
-							SystemConfig.builder().configType("JWT").configName("RWT_EXPRIATION").configValue(String.valueOf(rwtExp)).build(),
-							SystemConfig.builder().configType("JWT").configName("AWT_EXPRIATION").configValue(String.valueOf(jwtExp)).build(),
+							SystemConfig.builder().configType("JWT").configName("RWT_EXPRIATION").configValue(String.valueOf(jwtExp)).build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_EXPRIATION").configValue(String.valueOf(awtExp)).build(),
 							SystemConfig.builder().configType("JWT").configName("UWT_EXPRIATION").configValue(String.valueOf(jwtExp)).build(),
 							// MAIL INFOMATION
 							SystemConfig.builder().configType("MAIL").configName("MAIL_ADDRESS").configValue("qppk123@gmail.com").build(),
@@ -105,16 +107,31 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 			}
 			
 			{
+				List<Grade> grades = grade.findAll();
+				
+				if(grades.size() == 0) {
+					
+					grade.saveAll(Arrays.asList(
+						Grade.builder().insertDate(DateUtil.now()).startRange("0").endRange("999").idx("RED").gradeName("빨강색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("1000").endRange("2999").idx("ORANGE").gradeName("주황색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("2000").endRange("3999").idx("YELLOW").gradeName("노랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("3000").endRange("4999").idx("GREEN").gradeName("초록색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("4000").endRange("5999").idx("BLUE").gradeName("파랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("5000").endRange("6999").idx("NAVY").gradeName("남색").build(),
+						Grade.builder().insertDate(DateUtil.now()).startRange("6000").endRange("7000").idx("PUPLE").gradeName("보라색").build()
+					));
+				}
+			}
+			
+			{
 				List<User> users = user.findAll();
 				if(users.size() == 0) {
-					
-					
 					String a = UUIDUtil.randomString();
 					String t = UUIDUtil.randomString();
 					
 					user.saveAll(Arrays.asList(
-						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).username("admin").password(passwordEncoder.encode("skrbxo12!@")).email("qppk123@gmail.com").build(),
-						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).username("test").password(passwordEncoder.encode("test")).email("qppk123@gmail.com").build()
+						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("admin").password(passwordEncoder.encode("skrbxo12!@")).email("qppk123@gmail.com").build(),
+						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("test").password(passwordEncoder.encode("test")).email("qppk123@gmail.com").build()
 					));
 					
 					String a_idx = UUIDUtil.randomString();
@@ -129,23 +146,14 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 						UserRole.builder().idx(UUIDUtil.randomString()).roleIdx(a_idx).userIdx(a).roleName("ROLE_ADMIN").userName("admin").build(),
 						UserRole.builder().idx(UUIDUtil.randomString()).roleIdx(a_idx).userIdx(t).roleName("ROLE_USER").userName("test").build()
 					));
-				}
-			}
-
-			{
-				List<Grade> grades = grade.findAll();
-				
-				if(grades.size() == 0) {
 					
-					grade.saveAll(Arrays.asList(
-						Grade.builder().insertDate(DateUtil.now()).startRange("0").endRange("999").idx("RED").gradeName("빨강색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("1000").endRange("2999").idx("ORANGE").gradeName("주황색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("2000").endRange("3999").idx("YELLOW").gradeName("노랑색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("3000").endRange("4999").idx("GREEN").gradeName("초록색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("4000").endRange("5999").idx("BLUE").gradeName("파랑색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("5000").endRange("6999").idx("NAVY").gradeName("남색").build(),
-						Grade.builder().insertDate(DateUtil.now()).startRange("6000").endRange("7000").idx("PUPLE").gradeName("보라색").build()
+					Grade red = grade.findByIdx("RED");
+					
+					user_grade.saveAll(Arrays.asList(
+						UserGrade.builder().idx(UUIDUtil.randomString()).userIdx(a).userName("admin").gradeIdx(red.getIdx()).gradeName(red.getGradeName()).build(),
+						UserGrade.builder().idx(UUIDUtil.randomString()).userIdx(t).userName("test").gradeIdx(red.getIdx()).gradeName(red.getGradeName()).build()
 					));
+					
 				}
 			}
 
