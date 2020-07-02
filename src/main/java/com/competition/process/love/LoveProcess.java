@@ -14,14 +14,31 @@ public class LoveProcess {
 	private LoveRepository loveRepository;
 
 	public <T extends Object> T seLove(String contentIdx) throws Exception {
-		return (T) loveRepository.findByContentIdx(contentIdx);
+		try {
+			return (T) loveRepository.findByContentIdx(contentIdx);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
 	}
 	public <T extends Object> T inLove(Love love) throws Exception {
-		return (T) loveRepository.save(love);
+		try {
+			return (T) loveRepository.save(love);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
 	}
 
-	public void deLove(Love love) throws Exception {
-		loveRepository.delete(love);
+	public <T extends Object> T deLove(Love love) throws Exception {
+		try {
+			loveRepository.delete(love);
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return (T) e;
+		}
+		
 	}
 	
 }

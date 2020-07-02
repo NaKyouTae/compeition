@@ -65,7 +65,7 @@ public class LoveService {
 	
 	public <T extends Object> T deLove(Love love) throws Exception{
 		try {
-			return (T) Boolean.TRUE;
+			return (T) loveProcess.deLove(love);
 		}catch(Exception e) {
 			return (T) e;
 		}
