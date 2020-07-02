@@ -69,6 +69,14 @@ public class ThreeProcess {
 		return (T) three;
 	}
 	
+	public <T extends Object> T seThreeByIdx(String idx) throws Exception {
+		try {
+			return (T) threeRepository.findByIdx(idx); 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
 	public <T extends Object> T seByWord() throws Exception {
 		Word dto = weekWordRepository.findByWord("THREE");
 		

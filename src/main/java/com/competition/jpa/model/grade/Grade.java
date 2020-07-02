@@ -33,6 +33,9 @@ public class Grade implements Serializable {
 	private String gradeName;
 		
 	@Column
+	private Integer gradeOrder;
+	
+	@Column
 	private String startRange;
 
 	@Column

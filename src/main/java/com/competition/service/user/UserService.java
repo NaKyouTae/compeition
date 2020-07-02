@@ -150,7 +150,6 @@ public class UserService implements UserDetailsService {
 	
 	public <T extends Object> T upUser(User user, UserRole role) throws Exception {
 		try {
-			user.setChangeDate(DateUtil.now());
 			
 			if(role != null) {				
 				UserRole userRole = userRoleRepository.findByRoleName(role.getRoleName());
@@ -158,10 +157,14 @@ public class UserService implements UserDetailsService {
 				userRoleRepository.save(sumRole);
 			}
 			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
-			User nu = ObjectUtil.toObject(user, cu.getUser());
+			User nu = cu.getUser();
+
+			nu.setEmail(user.getEmail());
+			nu.setChangeDate(DateUtil.now());
 			
 			return (T) userProcess.upUser(nu); 
 		}catch(Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}

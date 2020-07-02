@@ -13,6 +13,14 @@ public class LoveProcess {
 	@Autowired
 	private LoveRepository loveRepository;
 
+	public <T extends Object> T seUserLove(String userIdx, String contentIdx) throws Exception {
+		try {
+			return (T) loveRepository.findByUserLove(userIdx, contentIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
 	public <T extends Object> T seLove(String contentIdx) throws Exception {
 		try {
 			return (T) loveRepository.findByContentIdx(contentIdx);
@@ -21,6 +29,7 @@ public class LoveProcess {
 			 return (T) e;
 		}
 	}
+	
 	public <T extends Object> T inLove(Love love) throws Exception {
 		try {
 			return (T) loveRepository.save(love);

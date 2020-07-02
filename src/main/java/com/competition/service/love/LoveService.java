@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.competition.jpa.model.love.Love;
-import com.competition.jpa.model.user.User;
+import com.competition.jpa.model.three.Three;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.process.love.LoveProcess;
 import com.competition.service.three.ThreeService;
@@ -37,18 +37,23 @@ public class LoveService {
 		}
 	}
 	
-	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
+	public <T extends Object> T seLove(String idx) throws Exception {
+		try {
+			return (T) loveProcess.seLove(idx);
+		}catch(Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T checkLove(String contentIdx, String userIdx) throws Exception {
 		try {
 			Boolean result = Boolean.FALSE;
 			
-			User user = userRepository.findByUsername(username);
-			
-			Love love = loveProcess.seLove(contentIdx);
-			
-			if(user != null && love != null) {
-				result = love.getUserIdx().equals(user.getIdx());
+			Love love = loveProcess.seUserLove(userIdx, contentIdx);
+			if(love != null) {
+				result = Boolean.TRUE;
 			}
-			
+
 			return (T) result;
 		}catch(Exception e) {
 			return (T) e;
@@ -63,8 +68,19 @@ public class LoveService {
 		}
 	}
 	
-	public <T extends Object> T deLove(Love love) throws Exception{
+	public <T extends Object> T deLove(String userIdx, String contentIdx) throws Exception{
 		try {
+			Love love = loveProcess.seUserLove(userIdx, contentIdx);
+			
+			Three three = threeService.seThreeByIdx(contentIdx);
+			three.setPoint(three.getPoint() - 1);
+			
+			if(three.getPoint() == 0) {
+				three.setLove(Boolean.FALSE);
+			}
+			
+			threeService.upThree(three);
+			
 			return (T) loveProcess.deLove(love);
 		}catch(Exception e) {
 			return (T) e;

@@ -55,7 +55,7 @@ public class TwoController {
 		return res;
 	}
 	
-	@GetMapping("/{userIdx}")
+	@GetMapping("/user")
 	public ControllerResponse<List<Two>> seByUser(String userIdx) throws Exception {
 		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {

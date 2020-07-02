@@ -42,6 +42,15 @@ public class ThreeService {
 		return (T) threeProcess.seByUser(userIdx);
 	}
 	
+	public <T extends Object> T seThreeByIdx(String idx) throws Exception {
+		try {
+			return (T) threeProcess.seThreeByIdx(idx);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seByWord() throws Exception {
 		return (T) threeProcess.seByWord();
 	}

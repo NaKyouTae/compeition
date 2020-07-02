@@ -1,5 +1,7 @@
 package com.competition.controller.love;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,11 +38,28 @@ public class LoveController {
 		return (T) res;
 	}
 	
-	@GetMapping("")
-	public <T extends Object> T seLove(String contentIdx, String username) throws Exception {
+	@GetMapping("/{idx}")
+	public <T extends Object> T seLove(String idx) throws Exception {
+		ControllerResponse<Love> res = new ControllerResponse<>();
+		
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search Love History :) ");
+			res.setResult(loveService.seLove(idx));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
+	@GetMapping("/check")
+	public <T extends Object> T checkLove(String contentIdx, String userIdx) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		
-		if(username == null) {
+		if(userIdx == null) {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("User Name is null...");
 			res.setResult(Boolean.FALSE);
@@ -50,7 +69,7 @@ public class LoveController {
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Love History :) ");
-			res.setResult(loveService.seLove(contentIdx, username));
+			res.setResult(loveService.checkLove(contentIdx, userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -76,13 +95,13 @@ public class LoveController {
 		return (T) res;
 	}
 	
-	@DeleteMapping("/{idx}")
-	public <T extends Object> T deLove(@RequestBody Love love) throws Exception{
+	@DeleteMapping("")
+	public <T extends Object> T deLove(@RequestBody Map<String, String> idx) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<Boolean>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Delete Love :) "); 
-			res.setResult(loveService.deLove(love));
+			res.setResult(loveService.deLove(idx.get("userIdx"), idx.get("contentIdx")));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 

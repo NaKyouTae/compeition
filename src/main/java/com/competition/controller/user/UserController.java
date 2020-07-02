@@ -1,6 +1,7 @@
 package com.competition.controller.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import com.competition.jpa.model.user.UserRole;
 import com.competition.jpa.repository.user.UserRepository;
 import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.service.user.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -116,9 +118,14 @@ public class UserController {
 	}
 	
 	@PutMapping("/{idx}")
-	public ControllerResponse<User> upUser(@RequestBody User user, UserRole role) throws Exception{
+	public ControllerResponse<User> upUser(@RequestBody Map<String, Object> body) throws Exception{
 		ControllerResponse<User> res = new ControllerResponse<User>();
 		try {
+			ObjectMapper m = new ObjectMapper();
+			
+			User user = m.convertValue(body.get("user"), User.class);
+			UserRole role = m.convertValue(body.get("role"), UserRole.class);
+			
 			res.setResult(userService.upUser(user, role));
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Update User :) ");

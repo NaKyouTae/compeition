@@ -15,7 +15,7 @@ public class GradeProcess {
 	private GradeRepository gradeRepository;
 
 	public <T extends Object> T seGrades() throws Exception {
-		return (T) gradeRepository.findAll(Sort.by(Sort.Direction.ASC, "insertDate"));
+		return (T) gradeRepository.findAll(Sort.by(Sort.Direction.ASC, "gradeOrder"));
 	}
 	
 	public <T extends Object> T seGrade(String idx) throws Exception {

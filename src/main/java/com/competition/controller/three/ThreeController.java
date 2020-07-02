@@ -55,13 +55,29 @@ public class ThreeController {
 		return res;
 	}
 	
-	@GetMapping("/{userIdx}")
+	@GetMapping("/user")
 	public ControllerResponse<List<Three>> seByUser(String userIdx) throws Exception {
 		ControllerResponse<List<Three>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search By User Lists :) "); 
 			res.setResult(threeService.seByUser(userIdx));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage()); 
+			res.setResult(null);
+		}
+		
+		return res;
+	}
+	
+	@GetMapping("/{idx}")
+	public ControllerResponse<List<Three>> seThreeByIdx(String idx) throws Exception {
+		ControllerResponse<List<Three>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Searh Three One :) "); 
+			res.setResult(threeService.seThreeByIdx(idx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
