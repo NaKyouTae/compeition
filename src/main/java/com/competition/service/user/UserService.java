@@ -157,8 +157,10 @@ public class UserService implements UserDetailsService {
 				UserRole sumRole = ObjectUtil.toObject(role, userRole);
 				userRoleRepository.save(sumRole);
 			}
+			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
+			User nu = ObjectUtil.toObject(user, cu.getUser());
 			
-			return (T) userProcess.upUser(user); 
+			return (T) userProcess.upUser(nu); 
 		}catch(Exception e) {
 			return (T) e;
 		}

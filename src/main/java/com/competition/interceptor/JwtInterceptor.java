@@ -62,7 +62,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 			Map u = (Map) u_body.get("user");
 			
 			// 로그인 형태가 자체 로그인 일 경우
-			if(u.get("sns").equals("DEFUALT")) {
+			if(u.get("sns").equals("DEFAULT")) {
 				// Refresh Token DB에 존재 하는지 체크
 				// Refresh Token이 Black List에 등록 되어있는지 체크
 				if(jwtService.validateToken(Refresh, "Refresh")) {

@@ -116,7 +116,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{idx}")
-	public ControllerResponse<User> upUser(@RequestBody User user, @RequestBody(required = false) UserRole role) throws Exception{
+	public ControllerResponse<User> upUser(@RequestBody User user, UserRole role) throws Exception{
 		ControllerResponse<User> res = new ControllerResponse<User>();
 		try {
 			res.setResult(userService.upUser(user, role));
