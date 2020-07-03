@@ -2,6 +2,8 @@ package com.competition.controller.cash;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,8 @@ import com.competition.service.cash.CashService;
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/cashs")
 public class CashController {
+	
+	Logger log = LogManager.getLogger(CashController.class);
 	
 	@Autowired
 	private CashService cashService;
