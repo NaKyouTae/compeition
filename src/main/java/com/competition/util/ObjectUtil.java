@@ -10,19 +10,17 @@ public class ObjectUtil {
 	 * en) Convert Source Object to Target Object.
 	 * kr) Source Object를 Target Object로 변환한다.
 	 * 
-	 * 변수 명이 같아야 들어간다.
+	 * 변수 명이 같고 Null이 아닌 변수가 Target Object의 변수로 입력된다.
 	 * 
 	 * @param <T> Target Object
 	 * @param <S> Source Object
 	 * @param source
 	 * @param target
-	 * @return Target Object Type
+	 * @return Target Object Type new Instance
 	 * @throws Exception
 	 */
-	public static <T, S extends Object> T toObject(S source, T target) throws Exception {
+	public static <T, S extends Object> T toObj(S source, T target) throws Exception {
 		try {
-			T tObj = (T) target.getClass().getDeclaredConstructor().newInstance();
-			
 			Field[] sField = source.getClass().getDeclaredFields();
 			Field[] tField = target.getClass().getDeclaredFields();
 			
@@ -36,15 +34,16 @@ public class ObjectUtil {
 						
 						Object value = s.get(source);
 						
-						t.set(tObj, value);
+						if(value != null) {
+							t.set(target, value);
+						}
 					}
 				}
 			}
-			return (T) tObj;
+			return (T) target;
 		} catch (Exception e) {
 			 e.printStackTrace();
 			 return (T) e;
 		}
 	}
-	
-}
+} 

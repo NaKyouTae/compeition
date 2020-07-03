@@ -32,10 +32,10 @@ public class MenuService {
 		List<Menu> allMenu = getList();
 		
 		for(Menu a : allMenu) {
-			MenuVO routeMenu = ObjectUtil.toObject(a, new MenuVO());
+			MenuVO routeMenu = ObjectUtil.toObj(a, new MenuVO());
 				
-				routeMenu.setChild(true);
-				routeMenu.setChildren(menuProcess.getListByLevel(a.getIdx()));
+			routeMenu.setChild(true);
+			routeMenu.setChildren(menuProcess.getListByLevel(a.getIdx()));
 				
 			result.add(routeMenu);
 		}
@@ -64,7 +64,7 @@ public class MenuService {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String now = LocalDateTime.now().format(format);
 		
-		Menu dto = ObjectUtil.toObject(vo, new Menu());
+		Menu dto = ObjectUtil.toObj(vo, new Menu());
 		
 		dto.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		dto.setInsertDate(now);
@@ -75,7 +75,7 @@ public class MenuService {
 			
 			Menu parentMenu = seMenu(vo.getParent());
 			
-			MenuVO parentVO = ObjectUtil.toObject(parentMenu, new MenuVO());
+			MenuVO parentVO = ObjectUtil.toObj(parentMenu, new MenuVO());
 			
 			parentVO.setChild(true);
 			
@@ -90,7 +90,7 @@ public class MenuService {
 	
 	public <T extends Object> T upMenu(MenuVO vo) throws Exception {
 		
-		Menu dto = ObjectUtil.toObject(vo, new Menu());
+		Menu dto = ObjectUtil.toObj(vo, new Menu());
 		
 		return (T) menuProcess.inMenu(dto);
 	}
@@ -98,7 +98,7 @@ public class MenuService {
 	public <T extends Object> T deMenu(MenuVO vo) throws Exception{
 		try {
 			
-			Menu dto = ObjectUtil.toObject(vo, new Menu());
+			Menu dto = ObjectUtil.toObj(vo, new Menu());
 			
 			menuProcess.deMenu(dto);
 
@@ -107,7 +107,7 @@ public class MenuService {
 			if(children.size() == 0) {
 				
 				Menu parentMenu = seMenu(vo.getParent());
-				MenuVO parentVO = ObjectUtil.toObject(parentMenu, new MenuVO());
+				MenuVO parentVO = ObjectUtil.toObj(parentMenu, new MenuVO());
 				
 				parentVO.setChild(false);
 				

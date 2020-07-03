@@ -153,7 +153,7 @@ public class UserService implements UserDetailsService {
 			
 			if(role != null) {				
 				UserRole userRole = userRoleRepository.findByRoleName(role.getRoleName());
-				UserRole sumRole = ObjectUtil.toObject(role, userRole);
+				UserRole sumRole = ObjectUtil.toObj(role, userRole);
 				userRoleRepository.save(sumRole);
 			}
 			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());

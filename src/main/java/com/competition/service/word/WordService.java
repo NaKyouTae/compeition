@@ -30,43 +30,22 @@ public class WordService {
 	}
 	
 	public <T extends Object> T inWord(WeekWordVO vo) throws Exception {
-		Word word = ObjectUtil.toObject(vo, new Word());
+		Word word = ObjectUtil.toObj(vo, new Word());
 		
 		word.setIdx(UUID.randomUUID().toString().replace("-", ""));
 		word.setInsertDate(DateUtil.now());
-//		word.setWord(vo.getWord());
-//		word.setWord_group(vo.getWord_group());
-//		word.setStart_date(vo.getStart_date());
-//		word.setEnd_date(vo.getEnd_date());		
-//		word.setDescription(vo.getDescription());
 		
 		return (T) weekWordProcess.inWord(word);
 	}
 	public <T extends Object> T upWord(WeekWordVO vo) throws Exception {
-		Word word = ObjectUtil.toObject(vo, new Word());
-
-//		word.setIdx(vo.getIdx());
-//		word.setInsert_date(vo.getInsert_date());
-//		word.setWord(vo.getWord());
-//		word.setWord_group(vo.getWord_group());
-//		word.setStart_date(vo.getStart_date());
-//		word.setEnd_date(vo.getEnd_date());
-//		word.setDescription(vo.getDescription());
+		Word word = ObjectUtil.toObj(vo, new Word());
 		
 		return (T) weekWordProcess.upWord(word);
 	}
 	public <T extends Object> T deWord(WeekWordVO vo) throws Exception {
 		try {
-			Word word = ObjectUtil.toObject(vo, new Word());
+			Word word = ObjectUtil.toObj(vo, new Word());
 
-//			word.setIdx(vo.getIdx());
-//			word.setInsert_date(vo.getInsert_date());
-//			word.setWord(vo.getWord());
-//			word.setWord_group(vo.getWord_group());
-//			word.setStart_date(vo.getStart_date());
-//			word.setEnd_date(vo.getEnd_date());
-//			word.setDescription(vo.getDescription());
-			
 			weekWordProcess.deWord(word);
 			return (T) Boolean.TRUE;
 		}catch(Exception e) {
