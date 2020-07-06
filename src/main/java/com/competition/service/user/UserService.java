@@ -64,6 +64,10 @@ public class UserService implements UserDetailsService {
 			
 			CustomUserDetails user = (CustomUserDetails) loadUserByUsername(username);
 			
+			if(user == null) {
+				return (T) Boolean.FALSE;
+			}
+			
 			return (T) mailService.findPW(user.getUser(), email);
 		} catch (Exception e) {
 			return (T) e;
@@ -73,6 +77,14 @@ public class UserService implements UserDetailsService {
 	public <T extends Object> T findId(String email) throws Exception {
 		try {
 			return (T) mailService.findId(email);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T seUserByEmail(String email) throws Exception {
+		try {
+			return (T) userProcess.seUserByEmail(email);
 		} catch (Exception e) {
 			return (T) e;
 		}

@@ -46,15 +46,27 @@ public class MailService {
 	
 	public <T extends Object> T findId(String target) throws Exception {
 		try {
+			
+			// 이메일이 존재 한다면 false;
+			Boolean check = userService.checkUserEmail(target);
+			if(!check) return (T) Boolean.FALSE;
+						
+			User user = userService.seUserByEmail(target);
+			
+			
 			VelocityEngine velocity = new VelocityEngine();
-			Integer authNumber = (int)(Math.random() * 100000);
 			
 			MimeMessage sm = this.mailSender.createMimeMessage();			
 			
 			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_ID");
 			
+			String path = System.getProperty("user.dir");
+			
+			System.out.println(path);
+			
 			HashMap<String, Object> model = new HashMap<>();
-			model.put("auth", authNumber);
+			model.put("user", user.getUsername());
+			velocity.init();
 			Template velo = velocity.getTemplate(temp.getContent());
 			
 			VelocityContext context = new VelocityContext();
@@ -69,14 +81,20 @@ public class MailService {
 			
 			mailSender.send(sm);
 			
-			return (T) authNumber.toString();
+			return (T) Boolean.TRUE;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
 	
 	public <T extends Object> T findPW(User user, String target) throws Exception {
 		try {
+			
+			// 이메일이 존재 한다면 false;
+			Boolean check = userService.checkUserEmail(target);
+			if(check) return (T) Boolean.FALSE;
+			
 			VelocityEngine velocity = new VelocityEngine();
 			
 			// 임시 비밀번호 생성 및 적용
