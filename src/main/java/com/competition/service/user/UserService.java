@@ -25,6 +25,7 @@ import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.process.user.UserProcess;
 import com.competition.service.cash.CashService;
 import com.competition.service.grade.GradeService;
+import com.competition.service.mail.MailService;
 import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.user.CustomUserDetails;
 import com.competition.util.DateUtil;
@@ -42,7 +43,11 @@ public class UserService implements UserDetailsService {
 	private CashService cashService;
 	@Autowired
 	private RefreshTokenService refreshTokenService;
+	@Autowired
+	private MailService mailService;
 	
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -53,6 +58,36 @@ public class UserService implements UserDetailsService {
 	private UserGradeRepository userGradeRepository;
 	@Autowired
 	private UserNoticeRepository userNoticeRepository;
+	
+	public <T extends Object> T findPW(String username, String email) throws Exception {
+		try {
+			
+			CustomUserDetails user = (CustomUserDetails) loadUserByUsername(username);
+			
+			return (T) mailService.findPW(user.getUser(), email);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T findId(String email) throws Exception {
+		try {
+			return (T) mailService.findId(email);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T checkUserEmail(String email) throws Exception {
+		try {
+			User user = userProcess.seUserByEmail(email);
+			if(user != null) return (T) Boolean.TRUE;
+			
+			return (T) Boolean.FALSE;
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
 	
 	public <T extends Object> T checkUserName(String userName) throws Exception {
 		try {
@@ -135,8 +170,6 @@ public class UserService implements UserDetailsService {
 			userGrade.setGradeIdx(gradeInfo.getIdx());
 			userGrade.setGradeName(gradeInfo.getGradeName());
 			
-			
-			
 			userRoleRepository.save(userRole);
 			userGradeRepository.save(userGrade);
 			
@@ -151,16 +184,21 @@ public class UserService implements UserDetailsService {
 	public <T extends Object> T upUser(User user, UserRole role) throws Exception {
 		try {
 			
-			if(role != null) {				
+			user.setChangeDate(DateUtil.now());
+			
+			if(role != null) {
 				UserRole userRole = userRoleRepository.findByRoleName(role.getRoleName());
 				UserRole sumRole = ObjectUtil.toObj(role, userRole);
 				userRoleRepository.save(sumRole);
 			}
-			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
-			User nu = cu.getUser();
 
-			nu.setEmail(user.getEmail());
-			nu.setChangeDate(DateUtil.now());
+			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
+			
+			if(!user.getPassword().equals(cu.getUser().getPassword())) {
+//				user.setPassword(PasswordEncoder.encode(user.getPassword()));
+			}
+			
+			User nu =  ObjectUtil.toObj(user, cu.getUser());
 			
 			return (T) userProcess.upUser(nu); 
 		}catch(Exception e) {
@@ -168,6 +206,7 @@ public class UserService implements UserDetailsService {
 			return (T) e;
 		}
 	}
+	
 	/**
 	 * 
 	 * Three, Two는 제외 평생 기록 남겨 놓는다.

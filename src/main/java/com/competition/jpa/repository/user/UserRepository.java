@@ -9,4 +9,5 @@ import com.competition.jpa.model.user.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByIdx(String idx);
 	User findByUsername(String username);
+	User findByEmail(String email);
 }

@@ -22,6 +22,8 @@ dependencies {
 
 	// Logger log4j2
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	// Logger log4j2 JPA
+	compile group: 'org.apache.logging.log4j', name: 'log4j-jpa', version: '2.13.3'
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 	
 

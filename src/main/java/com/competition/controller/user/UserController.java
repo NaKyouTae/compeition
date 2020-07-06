@@ -35,6 +35,36 @@ public class UserController {
 	@Autowired
 	private UserRoleRepository userMappingRoleRepository;
 	
+	@GetMapping("/pws")
+	public <T extends Object> T findPW(String username, String email) throws Exception {
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Send User PW to Email :) ");
+			res.setResult(userService.findPW(username, email));
+		} catch (Exception e) {
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		return (T) res;
+	}
+	
+	@GetMapping("/ids")
+	public <T extends Object> T findId(String email) throws Exception {
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Send User ID to Email :) ");
+			res.setResult(userService.findId(email));
+		} catch (Exception e) {
+			res.setResult(null);
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+		}
+		return (T) res;
+	}
+	
 	@GetMapping("/duplicate")
 	public ControllerResponse<Boolean> checkUserName(String userName) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();

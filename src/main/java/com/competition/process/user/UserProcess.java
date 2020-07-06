@@ -21,6 +21,14 @@ public class UserProcess {
 		}
 	}
 	
+	public <T extends Object> T seUserByEmail(String email) throws Exception {
+		try {
+			return (T) userRepository.findByEmail(email);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T getLists() throws Exception {
 		return (T) userRepository.findAll();
 	}

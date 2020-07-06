@@ -23,7 +23,7 @@ public class MailController {
 		
 		try {
 			res.setMessage("Success Send Mail :) "); 
-			res.setResult(mailService.mailSend(target));
+			res.setResult(mailService.certiNumber(target));
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage()); 
