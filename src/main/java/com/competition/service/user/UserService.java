@@ -46,8 +46,6 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private MailService mailService;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -205,10 +203,6 @@ public class UserService implements UserDetailsService {
 			}
 
 			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
-			
-			if(!user.getPassword().equals(cu.getUser().getPassword())) {
-//				user.setPassword(PasswordEncoder.encode(user.getPassword()));
-			}
 			
 			User nu =  ObjectUtil.toObj(user, cu.getUser());
 			

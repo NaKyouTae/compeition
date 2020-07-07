@@ -1,6 +1,7 @@
 package com.competition.process.history;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.competition.jpa.model.history.LoginHistory;
@@ -23,7 +24,7 @@ public class LoginHistoryProcess {
 	
 	public <T extends Object> T seLoginHistorys() throws Exception{
 		try {
-			return (T) loginHistoryRepository.findAll();
+			return (T) loginHistoryRepository.findAll(Sort.by(Sort.Direction.DESC, "accessDate"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

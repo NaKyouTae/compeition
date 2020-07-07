@@ -12,6 +12,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.FileSystemResource;
@@ -23,7 +25,16 @@ import com.competition.config.MailConfig;
 import com.competition.jpa.model.mail.MailTemplate;
 import com.competition.jpa.model.user.User;
 import com.competition.service.user.UserService;
+import com.competition.util.EncodingUtil;
 
+/**
+ * 
+ * Template Location
+ * Ex) /bin/main/mailTemplate/username.html 
+ * DataBase에 파일명과 확장자만 입력
+ * @author nkt
+ *	
+ */
 @Service
 @SuppressWarnings("unchecked")
 public class MailService {
@@ -36,50 +47,65 @@ public class MailService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-//	@Autowired
-//	private VelocityEngine velocity;
+	private String tempLocation = "/bin/main/mailTemplate/";
 	
 	public MailService() {
 		AnnotationConfigApplicationContext ct = new AnnotationConfigApplicationContext(MailConfig.class);
 		this.mailSender = ct.getBean(JavaMailSender.class);
 	}
 	
+	public void sendTempMail(String target, String title, String text) throws Exception {
+		try {
+			MimeMessage sm = this.mailSender.createMimeMessage();
+			
+			sm.setRecipient(RecipientType.TO, new InternetAddress(target));
+			sm.setSubject(title);
+			sm.setText(text, "UTF-8", "html");
+			
+			this.mailSender.send(sm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 
+	public <T extends Object> T veloTemp(String temp) throws Exception {
+		try {
+			VelocityEngine velocity = new VelocityEngine();
+			
+			velocity.init();
+			velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+			velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+			
+			return (T) velocity.getTemplate(tempLocation + temp, "UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T findId(String target) throws Exception {
 		try {
 			
-			// 이메일이 존재 한다면 false;
+			// Email이 없다면 False를 Return
 			Boolean check = userService.checkUserEmail(target);
 			if(!check) return (T) Boolean.FALSE;
-						
+			
 			User user = userService.seUserByEmail(target);
-			
-			
-			VelocityEngine velocity = new VelocityEngine();
-			
-			MimeMessage sm = this.mailSender.createMimeMessage();			
-			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_ID");
-			
-			String path = System.getProperty("user.dir");
-			
-			System.out.println(path);
-			
+			// Template에서 사용될 Data
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("user", user.getUsername());
-			velocity.init();
-			Template velo = velocity.getTemplate(temp.getContent());
 			
+			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_ID");
+				
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
+			
 			StringWriter sw = new StringWriter();
+			Template t = veloTemp(temp.getContent());
+			t.merge(context, sw);
 			
-			velo.merge(context, sw);
-			
-			sm.setRecipient(RecipientType.TO, new InternetAddress(target));
-			sm.setSubject(temp.getTitle());
-			sm.setText(sw.toString(), "UTF-8", "html");
-			
-			mailSender.send(sm);
+			// Send Mail Html Template
+			sendTempMail(target, temp.getTitle(), sw.toString());
 			
 			return (T) Boolean.TRUE;
 		} catch (Exception e) {
@@ -91,35 +117,28 @@ public class MailService {
 	public <T extends Object> T findPW(User user, String target) throws Exception {
 		try {
 			
-			// 이메일이 존재 한다면 false;
+			// Email이 없다면 False를 Return
 			Boolean check = userService.checkUserEmail(target);
-			if(check) return (T) Boolean.FALSE;
-			
-			VelocityEngine velocity = new VelocityEngine();
+			if(!check) return (T) Boolean.FALSE;
 			
 			// 임시 비밀번호 생성 및 적용
 			String pw = UUID.randomUUID().toString().subSequence(0, 8).toString();
-			user.setPassword(pw);
-			
-			MimeMessage sm = this.mailSender.createMimeMessage();			
-			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_PW");
+			user.setPassword(EncodingUtil.encodingPW(pw));
 			
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("pw", pw);
-			Template velo = velocity.getTemplate(temp.getContent());
+			
+			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_PW");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
+			
 			StringWriter sw = new StringWriter();
+			Template t = veloTemp(temp.getContent());
+			t.merge(context, sw);
 			
-			velo.merge(context, sw);
-			
-			sm.setRecipient(RecipientType.TO, new InternetAddress(target));
-			sm.setSubject(temp.getTitle());
-			sm.setText(sw.toString(), "UTF-8", "html");
-			
-			mailSender.send(sm);
+			// Send Mail Html Template
+			sendTempMail(target, temp.getTitle(), sw.toString());
 			
 			userService.upUser(user, null);
 			
@@ -132,33 +151,26 @@ public class MailService {
 	public <T extends Object> T certiNumber(String target) throws Exception {
 		try {
 			
-			// 이메일이 존재 한다면 false;
+			// Email이 없다면 False를 Return
 			Boolean check = userService.checkUserEmail(target);
-			if(check) return (T) Boolean.FALSE;
+			if(!check) return (T) Boolean.FALSE;
 			
-			
-			VelocityEngine velocity = new VelocityEngine();
 			Integer authNumber = (int)(Math.random() * 100000);
-			
-			MimeMessage sm = this.mailSender.createMimeMessage();			
+
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("auth", authNumber);
 			
 			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("Certification");
 			
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("auth", authNumber);
-			Template velo = velocity.getTemplate(temp.getContent());
-			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
+			
+			Template t = veloTemp(temp.getContent());
 			StringWriter sw = new StringWriter();
+			t.merge(context, sw);
 			
-			velo.merge(context, sw);
-			
-			sm.setRecipient(RecipientType.TO, new InternetAddress(target));
-			sm.setSubject(temp.getTitle());
-			sm.setText(sw.toString(), "UTF-8", "html");
-			
-			mailSender.send(sm);
+			// Send Mail Html Template
+			sendTempMail(target, temp.getTitle(), sw.toString());
 			
 			return (T) authNumber.toString();
 		} catch (Exception e) {
@@ -170,30 +182,28 @@ public class MailService {
 	public <T extends Object> T drawals(String target) throws Exception {
 		try {
 			
-			VelocityEngine velocity = new VelocityEngine();
+			// Email이 없다면 False를 Return
+			Boolean check = userService.checkUserEmail(target);
+			if(!check) return (T) Boolean.FALSE;
+			
 			Integer authNumber = (int)(Math.random() * 100000);
-			
-			MimeMessage sm = this.mailSender.createMimeMessage();			
-			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("Drawals");
 			
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("auth", authNumber);
-			Template velo = velocity.getTemplate(temp.getContent());
+			
+			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("Drawals");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
+			
 			StringWriter sw = new StringWriter();
+			Template t = veloTemp(temp.getContent());
+			t.merge(context, sw);
 			
-			velo.merge(context, sw);
+			// Send Mail Html Template
+			sendTempMail(target, temp.getTitle(), sw.toString());
 			
-			sm.setRecipient(RecipientType.TO, new InternetAddress(target));
-			sm.setSubject(temp.getTitle());
-			sm.setText(sw.toString(), "UTF-8", "html");
-			
-			mailSender.send(sm);
-			
-			return (T) authNumber.toString();
+			return (T) Boolean.TRUE;
 		} catch (Exception e) {
 			return (T) e;
 		}

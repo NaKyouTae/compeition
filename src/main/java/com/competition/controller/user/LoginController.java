@@ -43,23 +43,18 @@ import com.competition.util.DateUtil;
 public class LoginController {
 
 	@Autowired
-	private AuthenticationManager am;
-	
-	@Autowired
 	private UserService	userService;
-	
 	@Autowired
 	private LoginHistoryService loginHistoryService;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
 	@Autowired
 	private JwtService jwtUtill;
-	
 	@Autowired
 	private RefreshTokenService refreshTokenService;
 	
+	@Autowired
+	private AuthenticationManager am;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private SystemConfigRepository systemConfigRepository;
 	
