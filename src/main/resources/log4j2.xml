@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration packages="com.competition.config" status="WARN">
+<Configuration status="debug">
 	<Appenders>
 		<!-- 
 		<Appender name="DataBase" class="org.apache.log4j.jdbc.JDBCAppender">
@@ -10,13 +10,13 @@
 			<param name="sql" value="insert into logger (id, insertDate, logger, level, message) values('%p', now(), '%p', '%C', '%m')" />
 		</Appender>
 		 -->
-		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
+		 <JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:SSS} %p %c{1.} [%t] %m%n" />
 		</Console>
 	</Appenders>
 	<Loggers>
-		<Root level="warn">
+		<Root level="debug">
 		 	<AppenderRef ref="Console" />
 		 	<AppenderRef ref="DataBase" />
 		</Root>
