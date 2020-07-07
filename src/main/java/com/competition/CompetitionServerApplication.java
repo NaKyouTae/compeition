@@ -3,6 +3,8 @@ package com.competition;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,8 +36,14 @@ import com.competition.util.UUIDUtil;
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
 
+	private static final Logger LOGGER = LogManager.getLogger(CompetitionServerApplication.class);
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CompetitionServerApplication.class, args);
+		
+		LOGGER.info("Info level log message");
+        LOGGER.debug("Debug level log message");
+        LOGGER.error("Error level log message");
 	}
 
 	@Override

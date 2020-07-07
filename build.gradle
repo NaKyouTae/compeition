@@ -25,7 +25,8 @@ dependencies {
 	// Logger log4j2 JPA
 	compile group: 'org.apache.logging.log4j', name: 'log4j-jpa', version: '2.13.3'
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-	
+	compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.7.0'
 
 	// Velocity
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-velocity', version: '1.4.7.RELEASE'

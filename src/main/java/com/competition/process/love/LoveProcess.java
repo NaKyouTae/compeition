@@ -1,5 +1,7 @@
 package com.competition.process.love;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +12,14 @@ import com.competition.jpa.repository.love.LoveRepository;
 @SuppressWarnings("unchecked")
 public class LoveProcess {
 
+	Logger log = LogManager.getLogger(LoveProcess.class);
+	
 	@Autowired
 	private LoveRepository loveRepository;
 
 	public <T extends Object> T seUserLove(String userIdx, String contentIdx) throws Exception {
 		try {
+			log.info("LOVE PROCESS TEST");
 			return (T) loveRepository.findByUserLove(userIdx, contentIdx);
 		} catch (Exception e) {
 			e.printStackTrace();
