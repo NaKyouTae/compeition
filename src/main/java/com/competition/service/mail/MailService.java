@@ -101,7 +101,7 @@ public class MailService {
 			context.put("data", model);
 			
 			StringWriter sw = new StringWriter();
-			Template t = veloTemp(temp.getContent());
+			Template t = veloTemp(temp.getTempName());
 			t.merge(context, sw);
 			
 			// Send Mail Html Template
@@ -134,7 +134,7 @@ public class MailService {
 			context.put("data", model);
 			
 			StringWriter sw = new StringWriter();
-			Template t = veloTemp(temp.getContent());
+			Template t = veloTemp(temp.getTempName());
 			t.merge(context, sw);
 			
 			// Send Mail Html Template
@@ -165,7 +165,7 @@ public class MailService {
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
 			
-			Template t = veloTemp(temp.getContent());
+			Template t = veloTemp(temp.getTempName());
 			StringWriter sw = new StringWriter();
 			t.merge(context, sw);
 			
@@ -197,7 +197,7 @@ public class MailService {
 			context.put("data", model);
 			
 			StringWriter sw = new StringWriter();
-			Template t = veloTemp(temp.getContent());
+			Template t = veloTemp(temp.getTempName());
 			t.merge(context, sw);
 			
 			// Send Mail Html Template
