@@ -11,7 +11,7 @@ import javax.persistence.Table;
 //@ToString
 @Entity
 @Table(name = "LOGGER")
-public class JpaLogger {
+public class Logger {
 	
 	private static final long serialVersionUID = 9190376302469353485L;
 
