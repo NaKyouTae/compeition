@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug">
+<Configuration status="INFO">
 	<Appenders>
 		<!-- 
 		<Appender name="DataBase" class="org.apache.log4j.jdbc.JDBCAppender">
@@ -9,16 +9,33 @@
 			<param name="password" value="skrbxo12!@" />
 			<param name="sql" value="insert into logger (id, insertDate, logger, level, message) values('%p', now(), '%p', '%C', '%m')" />
 		</Appender>
+		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
 		 -->
-		 <JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
+		<JDBC name="DataBase" tableName="Competition.logger">
+		    <ConnectionFactory class="com.competition.config.ConnectionFactory" method="getDatabaseConnection" />
+		    <Column name="LOGGER" pattern="%logger" />
+		    <Column name="INSERTDATE" isEventTimestamp="true" />
+		    <Column name="LEVEL" pattern="%level" />
+		    <Column name="MESSAGE" pattern="%message" />
+		    <!-- <Column name="THROWABLE" pattern="%ex{full}" /> -->
+	    </JDBC>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:SSS} %p %c{1.} [%t] %m%n" />
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n" />
 		</Console>
 	</Appenders>
 	<Loggers>
-		<Root level="debug">
-		 	<AppenderRef ref="Console" />
-		 	<AppenderRef ref="DataBase" />
+		
+		<Root level="INFO">
+			<AppenderRef ref="Console" />
+		    <AppenderRef ref="DataBase" />
 		</Root>
+		
+		<!-- 
+		<Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
+			<MarkerFilter marker="LOG4JDBC_OTHER" onMatch="DENY" onMismatch="NEUTRAL"/>
+			<AppenderRef ref="Console" />
+		</Logger>
+		 -->
+		
 	</Loggers>
 </Configuration>

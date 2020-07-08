@@ -30,16 +30,10 @@ public class MailTemplate implements Serializable{
 	@Column
 	private String title;
 	
-	@Column(name="content", length=5000)
-	private String content;
+	@Column
+	private String tempName;
 	
 	@Column
 	private String insertDate;
-	
-	@Column
-	private String used;
-	
-	@Column
-	private String batchId;	
 	
 }

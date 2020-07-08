@@ -16,15 +16,12 @@ public class JpaLogger {
 	private static final long serialVersionUID = 9190376302469353485L;
 
 	@Id
-    @Column
-    private long id;
+	@Column
+	private String logger;
 	
 	@Column
 	private Date insertDate;
 
-	@Column
-	private String logger;	
-	
 	@Column
 	private String level;
 	
