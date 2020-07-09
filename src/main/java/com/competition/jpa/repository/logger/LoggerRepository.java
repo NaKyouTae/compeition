@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.competition.jpa.model.logger.Logger;
+import com.competition.jpa.model.logger.LoggerEntity;
 
 @Repository
-public interface LoggerRepository extends JpaRepository<Logger, Long> {
-	List<Logger> findByLevel(String level);
-	List<Logger> findByLogger(String logger);
+public interface LoggerRepository extends JpaRepository<LoggerEntity, Long> {
+	List<LoggerEntity> findByLevel(String level);
+	List<LoggerEntity> findByLogger(String logger);
 }

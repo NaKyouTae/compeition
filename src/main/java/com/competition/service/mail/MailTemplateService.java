@@ -16,18 +16,18 @@ public class MailTemplateService {
 	@Autowired
 	private MailTemplateProcess mailTemplateProcess;
 	
-	public <T extends Object> T seMailTemplateByBatchId(String batch) throws Exception {
+	public <T extends Object> T seMailTemplateByTempName(String temp) throws Exception {
 		try {
-			return (T) mailTemplateProcess.seMailTemplateByBatchId(batch);
+			return (T) mailTemplateProcess.seMailTemplateByTempName(temp);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
 		}
 	}
 	
-	public <T extends Object> T seMailTemplateByUsed(String use) throws Exception {
+	public <T extends Object> T seMailTemplateByTitle(String title) throws Exception {
 		try {
-			return (T) mailTemplateProcess.seMailTemplateByUsed(use);
+			return (T) mailTemplateProcess.seMailTemplateByTitle(title);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

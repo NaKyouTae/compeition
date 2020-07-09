@@ -12,14 +12,14 @@ import com.competition.jpa.repository.love.LoveRepository;
 @SuppressWarnings("unchecked")
 public class LoveProcess {
 
-	Logger log = LogManager.getLogger(LoveProcess.class);
+	private static final Logger LOGGER = LogManager.getLogger(LoveProcess.class);
 	
 	@Autowired
 	private LoveRepository loveRepository;
 
 	public <T extends Object> T seUserLove(String userIdx, String contentIdx) throws Exception {
 		try {
-			log.info("LOVE PROCESS TEST");
+			LOGGER.info("LOVE PROCESS TEST");
 			return (T) loveRepository.findByUserLove(userIdx, contentIdx);
 		} catch (Exception e) {
 			e.printStackTrace();

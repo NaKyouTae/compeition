@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,8 @@ import com.competition.util.DateUtil;
 @Component
 @SuppressWarnings("unchecked")
 public class ThreeProcess {
-
+	private static final Logger LOGGER = LogManager.getLogger(ThreeProcess.class);
+	
 	@Autowired
 	private ThreeRepository threeRepository;
 

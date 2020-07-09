@@ -95,7 +95,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("user", user.getUsername());
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_ID");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("FIND_ID");
 				
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
@@ -128,7 +128,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("pw", pw);
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("FIND_PW");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("FIND_PW");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
@@ -160,7 +160,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("auth", authNumber);
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("Certification");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("Certification");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
@@ -191,7 +191,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("auth", authNumber);
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByBatchId("Drawals");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("Drawals");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);

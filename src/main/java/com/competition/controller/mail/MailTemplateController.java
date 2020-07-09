@@ -25,12 +25,12 @@ public class MailTemplateController {
 	private MailTemplateService mailTemplateService;
 	
 	@GetMapping("/{batch}")
-	public <T extends Object> T seMailTemplateByBatchId(String batch) throws Exception {
+	public <T extends Object> T seMailTemplateByTempName(String temp) throws Exception {
 		ControllerResponse<MailTemplate> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Search Template By Batch :) ");
+			res.setMessage("Success Search Template :) ");
 			res.setResultCode(HttpStatus.OK);
-			res.setResult(mailTemplateService.seMailTemplateByBatchId(batch));
+			res.setResult(mailTemplateService.seMailTemplateByTempName(temp));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setMessage(e.getMessage());
@@ -42,13 +42,13 @@ public class MailTemplateController {
 	}
 	
 	@GetMapping("/{use}")
-	public <T extends Object> T seMailTemplateByUsed(String use) throws Exception {
+	public <T extends Object> T seMailTemplateByTitle(String title) throws Exception {
 		ControllerResponse<List<MailTemplate>> res = new ControllerResponse<>();
 		
 		try {
-			res.setMessage("Success Search Template By Used :) ");
+			res.setMessage("Success Search Template By Title :) ");
 			res.setResultCode(HttpStatus.OK);
-			res.setResult(mailTemplateService.seMailTemplateByUsed(use));
+			res.setResult(mailTemplateService.seMailTemplateByTitle(title));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setMessage(e.getMessage());

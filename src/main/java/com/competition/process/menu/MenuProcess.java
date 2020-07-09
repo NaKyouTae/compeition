@@ -1,5 +1,7 @@
 package com.competition.process.menu;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,10 @@ import com.competition.jpa.repository.menu.MenuRepository;
 @Component
 @SuppressWarnings("unchecked")
 public class MenuProcess {
+	private static final Logger LOGGER = LogManager.getLogger(MenuProcess.class);
+	public MenuProcess() {
+		LOGGER.info("Menu Construct Test");
+	}
 
 	@Autowired
 	private MenuRepository menuRepository;

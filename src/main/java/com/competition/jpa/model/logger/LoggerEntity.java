@@ -5,13 +5,17 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
-//@Data
-//@ToString
+import lombok.Data;
+import lombok.ToString;
+
+@Data
+@ToString
 @Entity
 @Table(name = "LOGGER")
-public class Logger {
+public class LoggerEntity {
 	
 	private static final long serialVersionUID = 9190376302469353485L;
 
@@ -25,7 +29,8 @@ public class Logger {
 	@Column
 	private String level;
 	
-	@Column(name="message", length = 5000)
+	@Lob
+	@Column(columnDefinition = "text")
 	private String message;
 	
 }

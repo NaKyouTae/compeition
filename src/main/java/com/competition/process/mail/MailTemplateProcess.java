@@ -12,18 +12,18 @@ public class MailTemplateProcess {
 	@Autowired
 	private MailTemplateRepository mailTemplateRepository;
 	
-	public <T extends Object> T seMailTemplateByBatchId(String batch) throws Exception {
+	public <T extends Object> T seMailTemplateByTempName(String temp) throws Exception {
 		try {
-			return (T) mailTemplateRepository.findByBatchId(batch);
+			return (T) mailTemplateRepository.findByTempName(temp);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
 		}
 	}
 	
-	public <T extends Object> T seMailTemplateByUsed(String use) throws Exception {
+	public <T extends Object> T seMailTemplateByTitle(String title) throws Exception {
 		try {
-			return (T) mailTemplateRepository.findByUsed(use);
+			return (T) mailTemplateRepository.findByTitle(title);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

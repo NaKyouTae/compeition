@@ -3,7 +3,7 @@ package com.competition.service.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.logger.Logger;
+import com.competition.jpa.model.logger.LoggerEntity;
 import com.competition.process.logger.LoggerProcess;
 
 @Service
@@ -40,7 +40,7 @@ public class LoggerService {
 		}
 	}
 	
-	public <T extends Object> T deLogger(Logger logger) throws Exception {
+	public <T extends Object> T deLogger(LoggerEntity logger) throws Exception {
 		try {
 			return (T) loggerProcess.deLogger(logger); 
 		} catch (Exception e) {

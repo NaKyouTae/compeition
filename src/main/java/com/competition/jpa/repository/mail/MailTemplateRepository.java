@@ -10,7 +10,8 @@ import com.competition.jpa.model.mail.MailTemplate;
 @Repository
 public interface MailTemplateRepository extends JpaRepository<MailTemplate, Long> {
 	MailTemplate findByIdx(String idx);
-	MailTemplate findByBatchId(String batch);
 	List<MailTemplate> findByType(String type);
-	List<MailTemplate> findByUsed(String use);
+	MailTemplate findByTempName(String temp);
+	MailTemplate findByTitle(String title);
+	
 }
