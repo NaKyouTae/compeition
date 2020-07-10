@@ -1,6 +1,7 @@
 package com.competition.common.filter;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.competition.jpa.model.logger.LoggerEntity;
+import com.competition.jpa.repository.logger.LoggerRepository;
 import com.competition.util.DateUtil;
 
 /**
@@ -30,6 +34,8 @@ public class LogFilter implements Filter {
 	
 	private static final Logger LOGGER = LogManager.getLogger(LogFilter.class);
 	
+	@Autowired
+	private LoggerRepository loggerRepository;
 	/**
 	 *
 	 * 클라이언트의 요청 시 전/후 처리
@@ -51,7 +57,12 @@ public class LogFilter implements Filter {
 		LOGGER.debug("user principal : " + rq.getUserPrincipal());
 		LOGGER.debug("servelt path : " + rq.getServletPath());
 		System.out.println("===============================================================================");
-		
+		LoggerEntity jpaLogger = new LoggerEntity();
+		jpaLogger.setLevel("INFO");
+		jpaLogger.setInsertDate(new Date());
+		jpaLogger.setLogger("LogFilter");
+		jpaLogger.setMessage("request uri : " + rq.getRequestURI());
+		loggerRepository.save(jpaLogger);
 		chain.doFilter(rq, rs);
 	}
 }

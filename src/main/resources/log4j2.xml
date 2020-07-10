@@ -29,10 +29,12 @@
 			<AppenderRef ref="Console" />
 		    <AppenderRef ref="DataBase" />
 		</Root>
+		<!-- 
 		<Logger name="com.competition.common.filter.LogFilter" level="DEBUG" additivity="false">
 			<AppenderRef ref="Console" />
 		    <AppenderRef ref="DataBase" />
 		</Logger>
+		 -->
 		<Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
 			<!-- 
 			<MarkerFilter marker="LOG4JDBC_SQL" onMatch="DENY" onMismatch="DENY"/>
