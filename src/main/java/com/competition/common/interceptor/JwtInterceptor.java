@@ -1,4 +1,4 @@
-package com.competition.interceptor;
+package com.competition.common.interceptor;
 
 import java.util.Date;
 import java.util.Map;

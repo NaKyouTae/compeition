@@ -21,7 +21,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.competition.config.MailConfig;
+import com.competition.common.config.MailConfig;
 import com.competition.jpa.model.mail.MailTemplate;
 import com.competition.jpa.model.user.User;
 import com.competition.service.user.UserService;

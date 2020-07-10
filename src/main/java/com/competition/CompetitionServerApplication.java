@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.competition.interceptor.JwtInterceptor;
+import com.competition.common.interceptor.JwtInterceptor;
 import com.competition.jpa.model.grade.Grade;
 import com.competition.jpa.model.menu.Menu;
 import com.competition.jpa.model.role.Role;
@@ -33,6 +34,7 @@ import com.competition.jpa.repository.user.UserRoleRepository;
 import com.competition.util.DateUtil;
 import com.competition.util.UUIDUtil;
 
+@ServletComponentScan
 @SpringBootApplication
 public class CompetitionServerApplication implements WebMvcConfigurer {
 
@@ -40,10 +42,6 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CompetitionServerApplication.class, args);
-		
-		LOGGER.info("Info level log message");
-        LOGGER.debug("Debug level log message");
-        LOGGER.error("Error level log message");
 	}
 
 	@Override

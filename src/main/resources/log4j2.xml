@@ -12,7 +12,7 @@
 		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
 		 -->
 		<JDBC name="DataBase" tableName="Competition.logger">
-		    <ConnectionFactory class="com.competition.config.ConnectionFactory" method="getDatabaseConnection" />
+		    <ConnectionFactory class="com.competition.common.config.ConnectionFactory" method="getDatabaseConnection" />
 		    <Column name="LOGGER" pattern="%logger" />
 		    <Column name="INSERTDATE" isEventTimestamp="true" />
 		    <Column name="LEVEL" pattern="%level" />
@@ -29,6 +29,10 @@
 			<AppenderRef ref="Console" />
 		    <AppenderRef ref="DataBase" />
 		</Root>
+		<Logger name="com.competition.common.filter.LogFilter" level="DEBUG" additivity="false">
+			<AppenderRef ref="Console" />
+		    <AppenderRef ref="DataBase" />
+		</Logger>
 		<Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
 			<!-- 
 			<MarkerFilter marker="LOG4JDBC_SQL" onMatch="DENY" onMismatch="DENY"/>

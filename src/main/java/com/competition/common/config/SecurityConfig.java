@@ -1,4 +1,4 @@
-package com.competition.config;
+package com.competition.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

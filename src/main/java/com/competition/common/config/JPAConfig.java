@@ -1,4 +1,4 @@
-package com.competition.config;
+package com.competition.common.config;
 
 import java.util.HashMap;
 import java.util.Map;

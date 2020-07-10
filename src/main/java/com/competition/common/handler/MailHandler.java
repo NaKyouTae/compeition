@@ -1,4 +1,4 @@
-package com.competition.handler;
+package com.competition.common.handler;
 
 import org.springframework.stereotype.Component;
 
