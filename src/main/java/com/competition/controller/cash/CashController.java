@@ -42,6 +42,21 @@ public class CashController {
 		return (T) res;
 	}
 	
+	@GetMapping("/approvals")
+	public <T extends Object> T seCashByApproval(String type) throws Exception {
+		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+		try {
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Search Cash List By Approval :) ");
+			res.setResult(cashService.seCashByApprovals(type));
+		} catch (Exception e) {
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
+		}
+		return (T) res;
+	}
+	
 	@GetMapping("")
 	public <T extends Object> T seCashs() throws Exception{
 		ControllerResponse<List<Cash>> res = new ControllerResponse<>();

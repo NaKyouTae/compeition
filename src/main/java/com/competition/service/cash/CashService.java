@@ -25,6 +25,14 @@ public class CashService {
 		}
 	}
 	
+	public <T extends Object> T seCashByApprovals(String type) throws Exception {
+		try {
+			return cashProcess.seCashByApprovals(type);
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seCashs() throws Exception {
 		try {
 			return cashProcess.seCashs();
