@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -22,7 +20,6 @@ public class LoggerEntity {
 	private static final long serialVersionUID = 9190376302469353485L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	private long idx;
 	
@@ -34,6 +31,21 @@ public class LoggerEntity {
 
 	@Column
 	private String level;
+	
+	@Column
+	private String ip;
+	
+	@Column
+	private String method;
+	
+	@Column
+	private String user;
+	
+	@Column
+	private String requestUrl;
+	
+	@Column
+	private String browser;
 	
 	@Lob
 	@Column(columnDefinition = "text")

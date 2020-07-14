@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.competition.jpa.model.logger.LoggerEntity;
 import com.competition.jpa.repository.logger.LoggerRepository;
-import com.competition.util.DateUtil;
+import com.competition.util.IpUtil;
 
 /**
  * @author nkt
@@ -48,21 +48,28 @@ public class LogFilter implements Filter {
 		HttpServletRequest rq = (HttpServletRequest) request;
 		HttpServletResponse rs = (HttpServletResponse) response;
 		
-		System.out.println("===============================================================================");
-		LOGGER.debug("Now : " + DateUtil.now());
-		LOGGER.debug("method : " + rq.getMethod());
-		LOGGER.debug("request uri : " + rq.getRequestURI());
-		LOGGER.debug("local port : " + rq.getLocalPort());
-		LOGGER.debug("server port : " + rq.getServerPort());
-		LOGGER.debug("user principal : " + rq.getUserPrincipal());
-		LOGGER.debug("servelt path : " + rq.getServletPath());
-		System.out.println("===============================================================================");
-		LoggerEntity jpaLogger = new LoggerEntity();
-		jpaLogger.setLevel("INFO");
-		jpaLogger.setInsertDate(new Date());
-		jpaLogger.setLogger("LogFilter");
-		jpaLogger.setMessage("request uri : " + rq.getRequestURI());
-		loggerRepository.save(jpaLogger);
-		chain.doFilter(rq, rs);
+		try {
+//			LOGGER.debug("Now : " + DateUtil.now());
+//			LOGGER.debug("method : " + rq.getMethod());
+//			LOGGER.debug("request uri : " + rq.getRequestURI());
+//			LOGGER.debug("local port : " + rq.getLocalPort());
+//			LOGGER.debug("server port : " + rq.getServerPort());
+//			LOGGER.debug("user principal : " + rq.getUserPrincipal());
+//			LOGGER.debug("servelt path : " + rq.getServletPath());
+			
+			LoggerEntity jpaLogger = new LoggerEntity();
+			jpaLogger.setInsertDate(new Date());
+			jpaLogger.setLevel("INFO");
+			jpaLogger.setLogger("FILTER");
+			jpaLogger.setRequestUrl(rq.getRequestURI());
+			jpaLogger.setIp(IpUtil.getClientIP(rq));
+			jpaLogger.setBrowser(rq.getHeader("User-Agent"));
+			jpaLogger.setMethod(rq.getMethod());
+			jpaLogger.setMessage("User Request Server");
+			loggerRepository.save(jpaLogger);
+			chain.doFilter(rq, rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
