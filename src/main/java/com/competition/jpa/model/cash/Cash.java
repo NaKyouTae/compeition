@@ -46,6 +46,11 @@ public class Cash implements Serializable {
 	@Column
 	private String paymentDate;
 	
+	/**
+	 * Null
+	 * 신청
+	 * 승인
+	 */
 	@Column
 	private String approval; 
 	

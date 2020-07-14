@@ -187,7 +187,8 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(7).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("접속 이력").menuGroup("login").url("/admin/login").build(),
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(8).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("설정").menuGroup("config").url("/admin/config").build(),
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(9).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("공지사항").menuGroup("notice").url("/admin/notice").build(),
-						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(10).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("Logs").menuGroup("log").url("/admin/log").build()
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(10).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("Logs").menuGroup("log").url("/admin/log").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(11).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("출금").menuGroup("cash").url("/admin/cash").build()
 					));
 				}
 			}
