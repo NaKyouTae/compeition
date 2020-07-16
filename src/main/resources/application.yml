@@ -34,6 +34,7 @@ spring:
     show_sql: true
     hibernate:
       ddl-auto: true
+      use-new-id-generator-mappings: false
     properties:
       hibernate:  
         format_sql: true
