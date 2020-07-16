@@ -72,14 +72,25 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					if(!isRefresh && isBlack) throw new Exception("로그인 유효기간이 완료되었습니다.");
 				}
 				
-				// Access Token 유효성 체크
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
+				// 매번 유저 정보를 확인하여 기존 USER TOKEN과 새로운 USER TOKEN을 비교하여 다를 경우 새로운 USER TOKEN을 RETURN 한다.
+				
+				// REFRESH TOKEN이 DATA BASE에 있는 지 확인
+				RefreshToken reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
+				
+				// REFRESH TOKEN의 USERNAME을 가지고 USER 정보 조회
+				CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
+				
+				// USER 정보를 이용하여 USER TOKEN을 생성
+				userToken = jwtUtill.createUserToken(request, response, user, u_body.getExpiration());
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				// Access Token 유효 시간 체크
+				// 이전 USER TOKEN과 새로운 USER TOKEN을 비교
 				// 사용자 정보 재 조회 후 Access Token, User Token 재 발급
-				if(!jwtService.validateToken(Access, "Access")) {
-					RefreshToken reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
-					CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
+				if(!jwtService.validateToken(Access, "Access") || !User.equals(userToken)) {
 					
-					accessToken = jwtUtill.createAccessToken(request, response, user, new Date(System.currentTimeMillis() + a_exp));
-					userToken = jwtUtill.createUserToken(request, response, user, u_body.getExpiration());
+					accessToken = jwtUtill.createAccessToken(request, response, user.getUsername(), new Date(System.currentTimeMillis() + a_exp));
 					
 					response.setHeader("AWT", accessToken);
 					response.setHeader("UWT", userToken);
@@ -87,18 +98,31 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				
 			// 로그인 형태가 KAKAO 로그인 일 경우
 			}else if(u.get("sns").equals("KAKAO")) {
-				// Access Token 유효 기간 체크 
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
+				// 매번 유저 정보를 확인하여 기존 USER TOKEN과 새로운 USER TOKEN을 비교하여 다를 경우 새로운 USER TOKEN을 RETURN 한다. 
+				
+				// 카카오 사용자 정보 조회 API 호출
+				KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(accessToken);
+				
+				// 카카오 사용자 정보를 DATA BASE에 저장
+				User user = kakaoOAuthService.kakaoUserUp(kUser);
+				
+				// 카카오 사용자 아이디를 이용하여 DATA BASE에 사용자 정보 조회
+				CustomUserDetails cUser = (CustomUserDetails) userSerivce.loadUserByUsername(user.getUsername());
+				
+				// 사용자 정보를 이용하여 새로운 USER TOKEN 발급
+				userToken = jwtUtill.createUserToken(request, response, cUser, u_body.getExpiration());
+				///////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				// Access Token 유효 기간 체크
+				// 이전 USER TOKEN과 새로운 USER TOKEN을 비교
 				// KAKAO API CALL
-				if(kakaoOAuthService.checkAccessExpires(Access) == Boolean.FALSE) {
+				if(kakaoOAuthService.checkAccessExpires(Access) == Boolean.FALSE || !User.equals(userToken)) {
 					
 					// Access Token ReIssuance
 					Map<String, String> reissu = kakaoOAuthService.reIssuanceAccess(refreshToken);
 					
-					KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(accessToken);
-					
-					User user = kakaoOAuthService.kakaoUserUp(kUser);
-					CustomUserDetails cUser = (CustomUserDetails) userSerivce.loadUserByUsername(user.getUsername());
-
 					accessToken = reissu.get("access_token");
 					userToken = jwtUtill.createUserToken(request, response, cUser, u_body.getExpiration());
 					

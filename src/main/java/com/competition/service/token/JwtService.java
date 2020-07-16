@@ -86,12 +86,12 @@ public class JwtService {
 		return (T) jwt;
 	}
 	
-	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
+	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, String username, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject(systemConfigRepository.findByConfigName("AWT_SUBJECT").getConfigValue())
 				.setIssuer(systemConfigRepository.findByConfigName("ISSUER").getConfigValue())
-				.setAudience(user.getUsername())
+				.setAudience(username)
 				.setIssuedAt(new Date())
 				.setExpiration(expriation);
 		
@@ -104,12 +104,12 @@ public class JwtService {
 		return (T) jwt;
 	}
 	
-	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String user, Date expriation) {
+	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String username, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject(systemConfigRepository.findByConfigName("RWT_SUBJECT").getConfigValue())
 				.setIssuer(systemConfigRepository.findByConfigName("ISSUER").getConfigValue())
-				.setAudience(user)
+				.setAudience(username)
 				.setIssuedAt(new Date())
 				.setExpiration(expriation);
 		

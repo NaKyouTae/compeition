@@ -99,7 +99,7 @@ public class LoginController {
 			
 			if(custom != null) {
 				
-				// RefreshToken, Access Token 생성 후 DB에 입력
+				// RefreshToken, Access Token, User Token 생성
 				{
 					
 					Long r_exp = Long.parseLong(systemConfigRepository.findByConfigName("RWT_EXPRIATION").getConfigValue());
@@ -108,7 +108,7 @@ public class LoginController {
 					
 					// Refresh Token, Access Token 생성
 					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + r_exp));
-					String accessJWT = jwtUtill.createAccessToken(request, response, custom, new Date(System.currentTimeMillis() + a_exp));
+					String accessJWT = jwtUtill.createAccessToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + a_exp));
 					String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + u_exp));
 					
 					// Refresh Token & Access Token Header에 입력

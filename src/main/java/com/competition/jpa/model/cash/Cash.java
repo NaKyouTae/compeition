@@ -54,4 +54,7 @@ public class Cash implements Serializable {
 	@Column
 	private String approval; 
 	
+	@Column
+	private String account;
+	
 }
