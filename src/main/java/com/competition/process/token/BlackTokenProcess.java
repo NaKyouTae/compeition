@@ -3,7 +3,7 @@ package com.competition.process.token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.token.BlackToken;
+import com.competition.jpa.model.token.TokenBlack;
 import com.competition.jpa.repository.token.black.BlackTokenRepository;
 
 @Component
@@ -17,7 +17,7 @@ public class BlackTokenProcess {
 		Boolean result = Boolean.TRUE;
 		try {
 			
-			BlackToken black = blackTokenRepository.findByToken(token);
+			TokenBlack black = blackTokenRepository.findByToken(token);
 			
 			if(black != null) {
 				result = Boolean.TRUE;
@@ -45,21 +45,21 @@ public class BlackTokenProcess {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T inBlackToken(BlackToken token) throws Exception {
+	public <T extends Object> T inBlackToken(TokenBlack token) throws Exception {
 		try {
 			return (T) blackTokenRepository.save(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T upBlackToken(BlackToken token) throws Exception {
+	public <T extends Object> T upBlackToken(TokenBlack token) throws Exception {
 		try {
 			return (T) blackTokenRepository.save(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T deBlackToken(BlackToken token) throws Exception {
+	public <T extends Object> T deBlackToken(TokenBlack token) throws Exception {
 		try {
 			
 			blackTokenRepository.delete(token);

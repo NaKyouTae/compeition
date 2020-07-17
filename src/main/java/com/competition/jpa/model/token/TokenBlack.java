@@ -16,15 +16,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "REFRESHTOKEN")
-public class RefreshToken implements Serializable {
+@Table(name = "MERCURY_TB_TOKEN_BLACK")
+public class TokenBlack implements Serializable {
 
-	private static final long serialVersionUID = 4368682883404823822L;
+	private static final long serialVersionUID = 2288931954818799859L;
 
 	@Id
-	@Column
-	private String userName;
-
 	@Column(name="token", length=5000)
 	private String token;
 	

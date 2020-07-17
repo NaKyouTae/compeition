@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.oauth.KakaoOAuthService;
@@ -76,7 +76,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				// 매번 유저 정보를 확인하여 기존 USER TOKEN과 새로운 USER TOKEN을 비교하여 다를 경우 새로운 USER TOKEN을 RETURN 한다.
 				
 				// REFRESH TOKEN이 DATA BASE에 있는 지 확인
-				RefreshToken reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
+				TokenRefresh reTokenInfo = refreshTokenService.seRefreshToken(Refresh);
 				
 				// REFRESH TOKEN의 USERNAME을 가지고 USER 정보 조회
 				CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());

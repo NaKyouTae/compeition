@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "SYSTEMCONFIG")
+@Table(name = "MERCURY_TB_SYSTEM_CONFIG")
 public class SystemConfig implements Serializable {
 
 	private static final long serialVersionUID = 992380708237331117L;

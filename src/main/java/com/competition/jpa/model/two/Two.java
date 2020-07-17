@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "TWO")
+@Table(name = "MERCURY_TB_TWO")
 public class Two implements Serializable {
 
 	private static final long serialVersionUID = -8570162283978145091L;

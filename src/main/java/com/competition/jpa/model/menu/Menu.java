@@ -22,7 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "MENU")
+@Table(name = "MERCURY_TB_MENU")
 public class Menu implements Serializable {
 
 	private static final long serialVersionUID = -7965795983437805021L;

@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "CASH")
+@Table(name = "MERCURY_TB_CASH")
 public class Cash implements Serializable {
 	
 	private static final long serialVersionUID = 429492698367141650L;

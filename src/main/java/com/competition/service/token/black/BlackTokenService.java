@@ -3,7 +3,7 @@ package com.competition.service.token.black;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.token.BlackToken;
+import com.competition.jpa.model.token.TokenBlack;
 import com.competition.process.token.BlackTokenProcess;
 
 @Service
@@ -31,21 +31,21 @@ public class BlackTokenService {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T inBlackToken(BlackToken token) throws Exception{
+	public <T extends Object> T inBlackToken(TokenBlack token) throws Exception{
 		try {
 			return (T) blackTokenProcess.inBlackToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T upBlackToken(BlackToken token) throws Exception{
+	public <T extends Object> T upBlackToken(TokenBlack token) throws Exception{
 		try {
 			return (T) blackTokenProcess.upBlackToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T deBlackToken(BlackToken token) throws Exception{
+	public <T extends Object> T deBlackToken(TokenBlack token) throws Exception{
 		try {
 			return (T) blackTokenProcess.deBlackToken(token);
 		} catch (Exception e) {

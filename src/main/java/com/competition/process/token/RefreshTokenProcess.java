@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.jpa.repository.token.refresh.RefreshTokenRepository;
 
 @Component
@@ -19,7 +19,7 @@ public class RefreshTokenProcess {
 		Boolean result = Boolean.FALSE;
 		
 		try {
-			RefreshToken refresh = refreshTokenRepository.findByToken(token);
+			TokenRefresh refresh = refreshTokenRepository.findByToken(token);
 			
 			if(refresh != null) {
 				result = Boolean.TRUE;
@@ -54,21 +54,21 @@ public class RefreshTokenProcess {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T inRefreshToken(RefreshToken token) throws Exception {
+	public <T extends Object> T inRefreshToken(TokenRefresh token) throws Exception {
 		try {
 			return (T) refreshTokenRepository.save(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T upRefreshToken(RefreshToken token) throws Exception {
+	public <T extends Object> T upRefreshToken(TokenRefresh token) throws Exception {
 		try {
 			return (T) refreshTokenRepository.save(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T deRefreshToken(RefreshToken token) throws Exception {
+	public <T extends Object> T deRefreshToken(TokenRefresh token) throws Exception {
 		try {
 			refreshTokenRepository.delete(token);
 			return (T) Boolean.TRUE; 
@@ -76,7 +76,7 @@ public class RefreshTokenProcess {
 			return (T) e;
 		}
 	}
-	public <T extends Object> T deRefreshTokenAllEntities(List<RefreshToken> tokens) throws Exception {
+	public <T extends Object> T deRefreshTokenAllEntities(List<TokenRefresh> tokens) throws Exception {
 		try {
 			refreshTokenRepository.deleteAll(tokens);
 			return (T) Boolean.TRUE; 

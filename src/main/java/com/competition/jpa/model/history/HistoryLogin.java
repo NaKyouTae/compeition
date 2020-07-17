@@ -1,4 +1,4 @@
-package com.competition.jpa.model.notice;
+package com.competition.jpa.model.history;
 
 import java.io.Serializable;
 
@@ -15,24 +15,25 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "MERCURY_TB_NOTICE")
-public class Notice implements Serializable {
+@Table(name = "MERCURY_TB_HISTORY_LOGIN")
+public class HistoryLogin implements Serializable {
 
-	private static final long serialVersionUID = 1135979481373964586L;
+	private static final long serialVersionUID = -6580695243567475799L;
 	
 	@Id
 	@Column
 	private String idx;
 	
 	@Column
-	private String title;
-	
-	@Column(name="content", length=5000)
-	private String content;
+	private String accessDate;
 	
 	@Column
-	private String insertDate;
+	private String browser;
 	
 	@Column
-	private String type;
+	private String userName;
+	
+	@Column
+	private String userIdx;
+	
 }

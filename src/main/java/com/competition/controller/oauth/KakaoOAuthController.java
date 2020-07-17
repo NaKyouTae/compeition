@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.history.LoginHistory;
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.history.HistoryLogin;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.history.LoginHistoryService;
@@ -130,7 +130,7 @@ public class KakaoOAuthController {
 			
 			{
 				// Refresh Token DB에 입력
-				RefreshToken refreshToken = new RefreshToken();
+				TokenRefresh refreshToken = new TokenRefresh();
 				refreshToken.setUserName(kUser.getKakao_account().getProfile().getNickname());
 				refreshToken.setToken(Refresh);
 				refreshToken.setInsertDate(DateUtil.now());
@@ -140,7 +140,7 @@ public class KakaoOAuthController {
 			
 			// 로그인 이력 DB에 입력
 			{
-				LoginHistory his = new LoginHistory();
+				HistoryLogin his = new HistoryLogin();
 				
 				his.setIdx(UUIDUtil.randomString());
 				his.setUserIdx(kUser.getId());

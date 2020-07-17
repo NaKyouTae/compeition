@@ -3,7 +3,7 @@ package com.competition.service.history;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.competition.jpa.model.history.LoginHistory;
+import com.competition.jpa.model.history.HistoryLogin;
 import com.competition.process.history.LoginHistoryProcess;
 
 @Service
@@ -40,7 +40,7 @@ public class LoginHistoryService {
 		}
 	}
 	
-	public <T extends Object> T inLoginHistory(LoginHistory history) throws Exception {
+	public <T extends Object> T inLoginHistory(HistoryLogin history) throws Exception {
 		try {
 			return (T) loginHistoryProcess.upLoginHistory(history);
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class LoginHistoryService {
 		}
 	}
 	
-	public <T extends Object> T upLoginHistory(LoginHistory history) throws Exception {
+	public <T extends Object> T upLoginHistory(HistoryLogin history) throws Exception {
 		try {
 			return (T) loginHistoryProcess.upLoginHistory(history);
 		} catch (Exception e) {

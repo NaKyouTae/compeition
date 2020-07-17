@@ -1,4 +1,4 @@
-package com.competition.jpa.model.history;
+package com.competition.jpa.model.token;
 
 import java.io.Serializable;
 
@@ -11,29 +11,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 @Data
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "LOGINHISTORY")
-public class LoginHistory implements Serializable {
+@Table(name = "MERCURY_TB_TOKEN_REFRESH")
+public class TokenRefresh implements Serializable {
 
-	private static final long serialVersionUID = -6580695243567475799L;
-	
+	private static final long serialVersionUID = 4368682883404823822L;
+
 	@Id
 	@Column
-	private String idx;
-	
-	@Column
-	private String accessDate;
-	
-	@Column
-	private String browser;
-	
-	@Column
 	private String userName;
+
+	@Column(name="token", length=5000)
+	private String token;
 	
 	@Column
-	private String userIdx;
-	
+	private String insertDate;
 }

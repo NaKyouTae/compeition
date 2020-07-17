@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.history.LoginHistory;
+import com.competition.jpa.model.history.HistoryLogin;
 import com.competition.service.history.LoginHistoryService;
 
 @RestController
@@ -24,7 +24,7 @@ public class LoginHistoryController {
 	
 	@GetMapping("/{username}")
 	public <T extends Object> T seLoginHistoryByUserName(String username) throws Exception {
-		ControllerResponse<List<LoginHistory>> res = new ControllerResponse<>();
+		ControllerResponse<List<HistoryLogin>> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -40,7 +40,7 @@ public class LoginHistoryController {
 	
 	@GetMapping("")
 	public <T extends Object> T seLoginHistorys() throws Exception{
-		ControllerResponse<List<LoginHistory>> res = new ControllerResponse<>();
+		ControllerResponse<List<HistoryLogin>> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -56,7 +56,7 @@ public class LoginHistoryController {
 	
 	@GetMapping("/{idx}")
 	public <T extends Object> T seLoginHistory(String idx) throws Exception {
-		ControllerResponse<LoginHistory> res = new ControllerResponse<>();
+		ControllerResponse<HistoryLogin> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -72,8 +72,8 @@ public class LoginHistoryController {
 	}
 	
 	@PostMapping("")
-	public <T extends Object> T inLoginHistory(LoginHistory history) throws Exception {
-		ControllerResponse<LoginHistory> res = new ControllerResponse<>();
+	public <T extends Object> T inLoginHistory(HistoryLogin history) throws Exception {
+		ControllerResponse<HistoryLogin> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -89,8 +89,8 @@ public class LoginHistoryController {
 	}
 	
 	@PutMapping("/{idx}")
-	public <T extends Object> T upLoginHistory(LoginHistory history) throws Exception {
-		ControllerResponse<LoginHistory> res = new ControllerResponse<>();
+	public <T extends Object> T upLoginHistory(HistoryLogin history) throws Exception {
+		ControllerResponse<HistoryLogin> res = new ControllerResponse<>();
 		
 		try {
 			res.setResultCode(HttpStatus.OK);

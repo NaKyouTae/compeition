@@ -16,7 +16,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-@Table(name = "LOGGER")
+@Table(name = "MERCURY_TB_LOGGER")
 public class LoggerEntity {
 	
 	private static final long serialVersionUID = 9190376302469353485L;

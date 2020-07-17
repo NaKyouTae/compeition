@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.service.token.JwtService;
 import com.competition.service.token.refresh.RefreshTokenService;
 import com.competition.service.user.UserService;
@@ -55,7 +55,7 @@ public class RefreshTokenController {
 	
 	@GetMapping("/{username}")
 	public <T extends Object> T seRefreshTokenByUsername(@RequestParam String username) throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Search Refresh Tokens by User Name :) ");
 			res.setResultCode(HttpStatus.OK);
@@ -70,7 +70,7 @@ public class RefreshTokenController {
 	
 	@GetMapping("")
 	public <T extends Object> T seRefreshTokens() throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Search Refresh Tokens :) ");
 			res.setResultCode(HttpStatus.OK);
@@ -85,7 +85,7 @@ public class RefreshTokenController {
 	
 	@GetMapping("/{token}")
 	public <T extends Object> T seRefreshToken(String token) throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Search Refresh Token :) ");
 			res.setResultCode(HttpStatus.OK);
@@ -98,8 +98,8 @@ public class RefreshTokenController {
 		return (T) res;
 	}
 	@PostMapping("")
-	public <T extends Object> T inRefreshToken(RefreshToken token) throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+	public <T extends Object> T inRefreshToken(TokenRefresh token) throws Exception{
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Insert Refresh Token :) ");
 			res.setResultCode(HttpStatus.OK);
@@ -112,8 +112,8 @@ public class RefreshTokenController {
 		return (T) res;
 	}
 	@PutMapping("/{token}")
-	public <T extends Object> T upRefreshToken(RefreshToken token) throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+	public <T extends Object> T upRefreshToken(TokenRefresh token) throws Exception{
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Update Refresh Token :) ");
 			res.setResultCode(HttpStatus.OK);
@@ -126,8 +126,8 @@ public class RefreshTokenController {
 		return (T) res;
 	}
 	@DeleteMapping("/{token}")
-	public <T extends Object> T deRefreshToken(RefreshToken token) throws Exception{
-		ControllerResponse<List<RefreshToken>> res = new ControllerResponse<>();
+	public <T extends Object> T deRefreshToken(TokenRefresh token) throws Exception{
+		ControllerResponse<List<TokenRefresh>> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Delete Refresh Token :) ");
 			res.setResultCode(HttpStatus.OK);

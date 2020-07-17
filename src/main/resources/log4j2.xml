@@ -11,7 +11,7 @@
 		</Appender>
 		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
 		 -->
-		<JDBC name="DataBase" tableName="Competition.logger">
+		<JDBC name="DataBase" tableName="Competition.mercury_tb_logger">
 		    <ConnectionFactory class="com.competition.common.config.ConnectionFactory" method="getDatabaseConnection" />
 		    <Column name="LOGGER" pattern="%logger" />
 		    <Column name="INSERTDATE" isEventTimestamp="true" />

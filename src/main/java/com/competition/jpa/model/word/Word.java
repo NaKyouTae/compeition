@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "WORD")
+@Table(name = "MERCURY_TB_WORD")
 public class Word implements Serializable {
 
 	private static final long serialVersionUID = -1139838270144095544L;

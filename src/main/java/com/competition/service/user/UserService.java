@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.competition.jpa.model.cash.Cash;
 import com.competition.jpa.model.grade.Grade;
 import com.competition.jpa.model.role.Role;
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.model.user.UserGrade;
 import com.competition.jpa.model.user.UserNotice;
@@ -238,7 +238,7 @@ public class UserService implements UserDetailsService {
 			userGradeRepository.delete(grade);
 			
 			// Refresh Token Delete All By UserName
-			List<RefreshToken> refresh = refreshTokenService.seRefreshTokenByUsername(user.getUsername());
+			List<TokenRefresh> refresh = refreshTokenService.seRefreshTokenByUsername(user.getUsername());
 			refreshTokenService.deRefreshTokenAllEntities(refresh);
 			
 			// Cash History Delete All By UserName

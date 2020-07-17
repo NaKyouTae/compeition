@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.competition.common.ControllerResponse;
-import com.competition.jpa.model.history.LoginHistory;
-import com.competition.jpa.model.token.RefreshToken;
+import com.competition.jpa.model.history.HistoryLogin;
+import com.competition.jpa.model.token.TokenRefresh;
 import com.competition.jpa.model.user.User;
 import com.competition.jpa.repository.system.config.SystemConfigRepository;
 import com.competition.service.history.LoginHistoryService;
@@ -117,7 +117,7 @@ public class LoginController {
 					headers.add("UWT", userJWT);
 					
 					// Refresh Token DB에 입력
-					RefreshToken refreshToken = new RefreshToken();
+					TokenRefresh refreshToken = new TokenRefresh();
 					refreshToken.setUserName(custom.getUsername());
 					refreshToken.setToken(refreshJWT);
 					refreshToken.setInsertDate(DateUtil.now());
@@ -127,7 +127,7 @@ public class LoginController {
 
 				// 로그인 이력 DB에 입력
 				{
-					LoginHistory his = new LoginHistory();
+					HistoryLogin his = new HistoryLogin();
 	
 					his.setIdx(UUID.randomUUID().toString().replace("-", ""));
 					his.setUserIdx(custom.getUser().getIdx());

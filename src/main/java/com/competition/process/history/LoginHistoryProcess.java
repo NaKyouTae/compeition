@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import com.competition.jpa.model.history.LoginHistory;
+import com.competition.jpa.model.history.HistoryLogin;
 import com.competition.jpa.repository.history.LoginHistoryRepository;
 
 @Component
@@ -40,7 +40,7 @@ public class LoginHistoryProcess {
 		}
 	}
 	
-	public <T extends Object> T inLoginHistory(LoginHistory history) throws Exception {
+	public <T extends Object> T inLoginHistory(HistoryLogin history) throws Exception {
 		try {
 			return (T) loginHistoryRepository.save(history);
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class LoginHistoryProcess {
 		}
 	}
 	
-	public <T extends Object> T upLoginHistory(LoginHistory history) throws Exception {
+	public <T extends Object> T upLoginHistory(HistoryLogin history) throws Exception {
 		try {
 			return (T) loginHistoryRepository.save(history);
 		} catch (Exception e) {
