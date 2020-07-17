@@ -1,4 +1,4 @@
-package com.mercury.controller.token.black;
+package com.mercury.controller.token;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.token.TokenBlack;
-import com.mercury.service.token.black.BlackTokenService;
+import com.mercury.service.token.TokenBlackService;
 
 @RestController
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/blacks")
-public class BlackTokenController {
+public class TokenBlackController {
 	
 	@Autowired
-	private BlackTokenService blackTokenService;
+	private TokenBlackService blackTokenService;
 	
 	@GetMapping("")
 	public <T extends Object> T seBlackTokens() throws Exception{

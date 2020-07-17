@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.mercury.jpa.model.love.Love;
 
 @SpringBootTest
-class CompetitionServerApplicationTests {
+class MercuryServerApplicationTests {
 
 	@Test
 	void contextLoads() {

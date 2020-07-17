@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.model.token.TokenBlack;
-import com.mercury.jpa.repository.token.black.BlackTokenRepository;
+import com.mercury.jpa.repository.token.TokenBlackRepository;
 
 @Component
 @SuppressWarnings("unchecked")
-public class BlackTokenProcess {
+public class TokenBlackProcess {
 	
 	@Autowired
-	private BlackTokenRepository blackTokenRepository;
+	private TokenBlackRepository blackTokenRepository;
 	
 	public <T extends Object> T isBlackToken(String token) throws Exception {
 		Boolean result = Boolean.TRUE;

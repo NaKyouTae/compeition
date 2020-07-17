@@ -36,12 +36,12 @@ import com.mercury.util.UUIDUtil;
 
 @ServletComponentScan
 @SpringBootApplication
-public class CompetitionServerApplication implements WebMvcConfigurer {
+public class MercuryServerApplication implements WebMvcConfigurer {
 
-	private static final Logger LOGGER = LogManager.getLogger(CompetitionServerApplication.class);
+	private static final Logger LOGGER = LogManager.getLogger(MercuryServerApplication.class);
 	
 	public static void main(String[] args) {
-		SpringApplication.run(CompetitionServerApplication.class, args);
+		SpringApplication.run(MercuryServerApplication.class, args);
 	}
 
 	@Override
@@ -78,11 +78,11 @@ public class CompetitionServerApplication implements WebMvcConfigurer {
 					
 					sysconf.saveAll(Arrays.asList(
 							// JWT SECRET
-							SystemConfig.builder().configType("JWT").configName("RWT_SECRET").configValue("CompetitionRefreshjwt").build(),
-							SystemConfig.builder().configType("JWT").configName("AWT_SECRET").configValue("CompetitionAccessjwt").build(),
-							SystemConfig.builder().configType("JWT").configName("UWT_SECRET").configValue("CompetitionUserjwt").build(),
+							SystemConfig.builder().configType("JWT").configName("RWT_SECRET").configValue("MercuryRefreshjwt").build(),
+							SystemConfig.builder().configType("JWT").configName("AWT_SECRET").configValue("MercuryAccessjwt").build(),
+							SystemConfig.builder().configType("JWT").configName("UWT_SECRET").configValue("MercuryUserjwt").build(),
 							// JWT ISSUER
-							SystemConfig.builder().configType("JWT").configName("ISSUER").configValue("Competition").build(),
+							SystemConfig.builder().configType("JWT").configName("ISSUER").configValue("Mercury").build(),
 							// JWT SUBJECT
 							SystemConfig.builder().configType("JWT").configName("RWT_SUBJECT").configValue("REFRESH").build(),
 							SystemConfig.builder().configType("JWT").configName("AWT_SUBJECT").configValue("ACCESS").build(),

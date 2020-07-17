@@ -14,8 +14,8 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
 import com.mercury.service.oauth.KakaoOAuthService;
 import com.mercury.service.token.JwtService;
-import com.mercury.service.token.black.BlackTokenService;
-import com.mercury.service.token.refresh.RefreshTokenService;
+import com.mercury.service.token.TokenRefreshService;
+import com.mercury.service.token.TokenBlackService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.vo.kakao.KakaoUserVO;
@@ -29,9 +29,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	private JwtService jwtUtill;
 	@Autowired
-	private BlackTokenService blackTokenService;
+	private TokenBlackService blackTokenService;
 	@Autowired
-	private RefreshTokenService refreshTokenService;
+	private TokenRefreshService refreshTokenService;
 	@Autowired
 	private UserService userSerivce;
 	@Autowired

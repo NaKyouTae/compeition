@@ -24,7 +24,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "com.competition.jpa.repository"
+        basePackages = "com.mercury.jpa.repository"
 )
 public class JPAConfig {
 	@Primary
@@ -43,7 +43,7 @@ public class JPAConfig {
         map.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
         map.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         return builder.dataSource(dataSource)
-                .packages("com.competition.jpa.model") // TODO Model 패키지 지정
+                .packages("com.mercury.jpa.model") // TODO Model 패키지 지정
                 .properties(map)
                 .build();
     }

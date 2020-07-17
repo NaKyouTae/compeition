@@ -1,4 +1,4 @@
-package com.mercury.jpa.repository.token.refresh;
+package com.mercury.jpa.repository.token;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.mercury.jpa.model.token.TokenRefresh;
 
 @Repository
-public interface RefreshTokenRepository extends JpaRepository<TokenRefresh, Long>{
+public interface TokenRefreshRepository extends JpaRepository<TokenRefresh, Long>{
 	TokenRefresh findByToken(String token);
 	List<TokenRefresh> findByUserName(String username);
 }

@@ -33,7 +33,7 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
 import com.mercury.service.history.LoginHistoryService;
 import com.mercury.service.token.JwtService;
-import com.mercury.service.token.refresh.RefreshTokenService;
+import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
@@ -49,7 +49,7 @@ public class LoginController {
 	@Autowired
 	private JwtService jwtUtill;
 	@Autowired
-	private RefreshTokenService refreshTokenService;
+	private TokenRefreshService refreshTokenService;
 	
 	@Autowired
 	private AuthenticationManager am;

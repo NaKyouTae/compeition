@@ -39,19 +39,19 @@ public class JwtService {
 	@Autowired
 	private UserGradeRepository userGradeRepository;
 	
-	private String refreshSecretKey = "CompetitionRefreshjwt"; 
+	private String refreshSecretKey = "MercuryRefreshjwt"; 
 //			systemConfigRepository.findByConfigName("RWT_SECRET").getConfigValue();
 	private byte[] refreshSecretBytes = DatatypeConverter.parseBase64Binary(refreshSecretKey);
 	private SignatureAlgorithm refreshSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key refreshKey = new SecretKeySpec(refreshSecretBytes, refreshSignatureAlgorithm.getJcaName());
 
-	private String accessSecretKey = "CompetitionAccessjwt";
+	private String accessSecretKey = "MercuryAccessjwt";
 //	systemConfigRepository.findByConfigName("AWT_SECRET").getConfigValue();
 	private byte[] accessSecretBytes = DatatypeConverter.parseBase64Binary(accessSecretKey);
 	private SignatureAlgorithm accessSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key accessKey = new SecretKeySpec(accessSecretBytes, accessSignatureAlgorithm.getJcaName());
 
-	private String userSecretKey = "CompetitionUserjwt"; 
+	private String userSecretKey = "MercuryUserjwt"; 
 //			systemConfigRepository.findByConfigName("UWT_SECRET").getConfigValue();
 	private byte[] userSecretBytes = DatatypeConverter.parseBase64Binary(userSecretKey);
 	private SignatureAlgorithm userSignatureAlgorithm = SignatureAlgorithm.HS256;

@@ -26,7 +26,7 @@ import com.mercury.process.user.UserProcess;
 import com.mercury.service.cash.CashService;
 import com.mercury.service.grade.GradeService;
 import com.mercury.service.mail.MailService;
-import com.mercury.service.token.refresh.RefreshTokenService;
+import com.mercury.service.token.TokenRefreshService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
 import com.mercury.util.ObjectUtil;
@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private CashService cashService;
 	@Autowired
-	private RefreshTokenService refreshTokenService;
+	private TokenRefreshService refreshTokenService;
 	@Autowired
 	private MailService mailService;
 	

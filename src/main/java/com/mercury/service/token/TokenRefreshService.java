@@ -1,85 +1,69 @@
-package com.mercury.process.token;
+package com.mercury.service.token;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.mercury.jpa.model.token.TokenRefresh;
-import com.mercury.jpa.repository.token.refresh.RefreshTokenRepository;
+import com.mercury.process.token.TokenRefreshProcess;
 
-@Component
+@Service
 @SuppressWarnings("unchecked")
-public class RefreshTokenProcess {
+public class TokenRefreshService {
 	
 	@Autowired
-	private RefreshTokenRepository refreshTokenRepository;
+	private TokenRefreshProcess refreshTokenProcess; 
 	
 	public <T extends Object> T isRefreshToken(String token) throws Exception {
-		Boolean result = Boolean.FALSE;
-		
-		try {
-			TokenRefresh refresh = refreshTokenRepository.findByToken(token);
-			
-			if(refresh != null) {
-				result = Boolean.TRUE;
-			}else if(refresh == null) {
-				result = Boolean.FALSE;
-			}
-			
-			return (T) result;
-		} catch (Exception e) {
-			return (T) e;
-		}
+		return (T) refreshTokenProcess.isRefreshToken(token);
 	}
 	
 	public <T extends Object> T seRefreshTokenByUsername(String username) throws Exception {
 		try {
-			return (T) refreshTokenRepository.findByUserName(username);
+			return refreshTokenProcess.seRefreshTokenByUsername(username);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T seRefreshTokens() throws Exception {
 		try {
-			return (T) refreshTokenRepository.findAll();
+			return refreshTokenProcess.seRefreshTokens();
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T seRefreshToken(String token) throws Exception {
 		try {
-			return (T) refreshTokenRepository.findByToken(token);
+			return refreshTokenProcess.seRefreshToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T inRefreshToken(TokenRefresh token) throws Exception {
 		try {
-			return (T) refreshTokenRepository.save(token);
+			return refreshTokenProcess.inRefreshToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T upRefreshToken(TokenRefresh token) throws Exception {
 		try {
-			return (T) refreshTokenRepository.save(token);
+			return refreshTokenProcess.upRefreshToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T deRefreshToken(TokenRefresh token) throws Exception {
 		try {
-			refreshTokenRepository.delete(token);
-			return (T) Boolean.TRUE; 
+			return refreshTokenProcess.deRefreshToken(token);
 		} catch (Exception e) {
 			return (T) e;
 		}
 	}
 	public <T extends Object> T deRefreshTokenAllEntities(List<TokenRefresh> tokens) throws Exception {
 		try {
-			refreshTokenRepository.deleteAll(tokens);
-			return (T) Boolean.TRUE; 
+			return refreshTokenProcess.deRefreshTokenAllEntities(tokens);
 		} catch (Exception e) {
 			return (T) e;
 		}

@@ -1,4 +1,4 @@
-package com.mercury.controller.token.refresh;
+package com.mercury.controller.token;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.token.TokenRefresh;
 import com.mercury.service.token.JwtService;
-import com.mercury.service.token.refresh.RefreshTokenService;
+import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
 
 @RestController
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/refreshs")
-public class RefreshTokenController {
+public class TokenRefreshController {
 	
 	@Autowired
 	private JwtService jwtService;
@@ -29,7 +29,7 @@ public class RefreshTokenController {
 	private UserService userService;
 	
 	@Autowired
-	private RefreshTokenService refreshTokenService;
+	private TokenRefreshService refreshTokenService;
 	
 //	@GetMapping("")
 //	public <T extends Object> T createToken(String refreshToken, HttpServletRequest request, HttpServletResponse response) throws Exception {

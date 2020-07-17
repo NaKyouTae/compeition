@@ -14,7 +14,7 @@
     <class>org.apache.logging.log4j.core.appender.db.jpa.converter.MarkerAttributeConverter</class>
     <class>org.apache.logging.log4j.core.appender.db.jpa.converter.MessageAttributeConverter</class>
     <class>org.apache.logging.log4j.core.appender.db.jpa.converter.StackTraceElementAttributeConverter</class>
-    <class>com.competition.jpa.model.logger.JpaLogger</class>
+    <class>com.mercury.jpa.model.logger.JpaLogger</class>
     <!-- <non-jta-data-source>jdbc/LoggingDataSource</non-jta-data-source> -->
     <shared-cache-mode>NONE</shared-cache-mode>
   </persistence-unit>

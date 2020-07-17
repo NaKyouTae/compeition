@@ -4,15 +4,15 @@
 		<!-- 
 		<Appender name="DataBase" class="org.apache.log4j.jdbc.JDBCAppender">
 			<param name="driver" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-			<param name="URL" value="jdbc:log4jdbc:mariadb://localhost:3306/competition" />
+			<param name="URL" value="jdbc:log4jdbc:mariadb://localhost:3306/mercury" />
 			<param name="user" value="root" />
 			<param name="password" value="skrbxo12!@" />
 			<param name="sql" value="insert into logger (id, insertDate, logger, level, message) values('%p', now(), '%p', '%C', '%m')" />
 		</Appender>
-		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.competition.jpa.model.logger.JpaLogger" />
+		<JPA name="DataBase" persistenceUnitName="loggingPersistenceUnit" entityClassName="com.mercury.jpa.model.logger.JpaLogger" />
 		 -->
-		<JDBC name="DataBase" tableName="Competition.mercury_tb_logger">
-		    <ConnectionFactory class="com.competition.common.config.ConnectionFactory" method="getDatabaseConnection" />
+		<JDBC name="DataBase" tableName="Mercury.mercury_tb_logger">
+		    <ConnectionFactory class="com.mercury.common.config.ConnectionFactory" method="getDatabaseConnection" />
 		    <Column name="LOGGER" pattern="%logger" />
 		    <Column name="INSERTDATE" isEventTimestamp="true" />
 		    <Column name="LEVEL" pattern="%level" />
@@ -30,7 +30,7 @@
 		    <AppenderRef ref="DataBase" />
 		</Root>
 		<!-- 
-		<Logger name="com.competition.common.filter.LogFilter" level="DEBUG" additivity="false">
+		<Logger name="com.mercury.common.filter.LogFilter" level="DEBUG" additivity="false">
 			<AppenderRef ref="Console" />
 		    <AppenderRef ref="DataBase" />
 		</Logger>

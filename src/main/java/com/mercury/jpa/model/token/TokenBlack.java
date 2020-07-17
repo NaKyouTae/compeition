@@ -22,6 +22,9 @@ public class TokenBlack implements Serializable {
 	private static final long serialVersionUID = 2288931954818799859L;
 
 	@Id
+	@Column
+	private String userName;
+	
 	@Column(name="token", length=5000)
 	private String token;
 	

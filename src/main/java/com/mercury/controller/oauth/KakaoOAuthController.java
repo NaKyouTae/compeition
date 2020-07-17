@@ -34,7 +34,7 @@ import com.mercury.service.history.LoginHistoryService;
 import com.mercury.service.oauth.KakaoOAuthService;
 import com.mercury.service.oauth.OauthService;
 import com.mercury.service.token.JwtService;
-import com.mercury.service.token.refresh.RefreshTokenService;
+import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
@@ -50,7 +50,7 @@ public class KakaoOAuthController {
 	private KakaoOAuthService kakaoOAuthService;
 	
 	@Autowired
-	private RefreshTokenService refreshTokenService;
+	private TokenRefreshService refreshTokenService;
 	
 	@Autowired
 	private LoginHistoryService loginHistoryService;

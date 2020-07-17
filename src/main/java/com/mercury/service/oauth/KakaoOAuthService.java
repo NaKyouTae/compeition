@@ -45,7 +45,7 @@ public class KakaoOAuthService {
 	
 	/**
 	 * 
-	 * KAKAO USER UPDATE COMPETITION
+	 * KAKAO USER UPDATE MERCURY
 	 * 
 	 * @param <T>
 	 * @param user
@@ -73,7 +73,7 @@ public class KakaoOAuthService {
 	
 	/**
 	 * 
-	 * KAKAO USER SINGUP COMPETITION
+	 * KAKAO USER SINGUP MERCURY
 	 * 
 	 * @param <T>
 	 * @param user

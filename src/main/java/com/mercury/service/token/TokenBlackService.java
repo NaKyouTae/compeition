@@ -1,17 +1,17 @@
-package com.mercury.service.token.black;
+package com.mercury.service.token;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mercury.jpa.model.token.TokenBlack;
-import com.mercury.process.token.BlackTokenProcess;
+import com.mercury.process.token.TokenBlackProcess;
 
 @Service
 @SuppressWarnings("unchecked")
-public class BlackTokenService {
+public class TokenBlackService {
 	
 	@Autowired
-	private BlackTokenProcess blackTokenProcess; 
+	private TokenBlackProcess blackTokenProcess; 
 	
 	public <T extends Object> T isBlackToken(String token) throws Exception {
 		return (T) blackTokenProcess.isBlackToken(token);
