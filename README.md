@@ -1,2 +1,2 @@
-# compeition
+# Mercury
 server
