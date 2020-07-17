@@ -11,6 +11,6 @@ import com.mercury.jpa.model.love.Love;
 public interface LoveRepository extends JpaRepository<Love, Long>{
 	Love findByContentIdx(String contentIdx);
 	
-	@Query(value="SELECT idx, userIdx, contentIdx, insertDate FROM love WHERE userIdx=:userIdx AND contentIdx=:contentIdx", nativeQuery=true)
+	@Query(value="SELECT idx, userIdx, contentIdx, insertDate FROM mercury_tb_love WHERE userIdx=:userIdx AND contentIdx=:contentIdx", nativeQuery=true)
 	Love findByUserLove(@Param("userIdx")String userIdx, @Param("contentIdx")String contentIdx);
 }

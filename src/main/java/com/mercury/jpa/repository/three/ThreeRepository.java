@@ -16,6 +16,6 @@ public interface ThreeRepository extends JpaRepository<Three, Long> {
 	List<Three> findByWordIdx(String idx, Sort sort);
 	List<Three> findByUserIdx(String idx, Sort sort);
 	
-	@Query(value="select sum(t.point) as point from three t where userIdx = :userIdx", nativeQuery=true)
+	@Query(value="select sum(t.point) as point from mercury_tb_three t where userIdx = :userIdx", nativeQuery=true)
 	Integer getTotalPoint(@Param("userIdx") String userIdx);
 }
