@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.history.HistoryLogin;
-import com.mercury.service.history.LoginHistoryService;
+import com.mercury.service.history.HistoryLoginService;
 
 @RestController
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/historys/logins")
-public class LoginHistoryController {
+public class HistoryLoginController {
 	
 	@Autowired
-	private LoginHistoryService loginHistoryService;
+	private HistoryLoginService loginHistoryService;
 	
 	@GetMapping("/{username}")
 	public <T extends Object> T seLoginHistoryByUserName(String username) throws Exception {

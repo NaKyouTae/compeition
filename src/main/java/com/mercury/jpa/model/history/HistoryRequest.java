@@ -1,5 +1,6 @@
-package com.mercury.jpa.model.logger;
+package com.mercury.jpa.model.history;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,15 +12,17 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "MERCURY_TB_LOGGER")
-public class LoggerEntity {
-	
-	private static final long serialVersionUID = 9190376302469353485L;
+@Table(name = "MERCURY_TB_HISTORY_REQUEST")
+public class HistoryRequest implements Serializable {
+
+	private static final long serialVersionUID = -4687813483521415848L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +30,24 @@ public class LoggerEntity {
 	private long idx;
 	
 	@Column
-	private String logger;
+	private String ip;
 	
 	@Column
-	private Date insertDate;
-
+	private String method;
+	
 	@Column
-	private String level;
+	private String username;
+	
+	@Column
+	private String requestUrl;
+	
+	@Column
+	private String browser;
 	
 	@Lob
 	@Column(columnDefinition = "text")
 	private String message;
 	
+	@Column
+	private Date requestDate;
 }

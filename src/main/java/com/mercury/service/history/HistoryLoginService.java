@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mercury.jpa.model.history.HistoryLogin;
-import com.mercury.process.history.LoginHistoryProcess;
+import com.mercury.process.history.HistoryLoginProcess;
 
 @Service
 @SuppressWarnings("unchecked")
-public class LoginHistoryService {
+public class HistoryLoginService {
 	
 	@Autowired
-	private LoginHistoryProcess loginHistoryProcess;
+	private HistoryLoginProcess loginHistoryProcess;
 	
 	public <T extends Object> T seLoginHistoryByUserName(String userName) throws Exception {
 		try {

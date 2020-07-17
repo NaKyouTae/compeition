@@ -31,7 +31,7 @@ import com.mercury.jpa.model.history.HistoryLogin;
 import com.mercury.jpa.model.token.TokenRefresh;
 import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
-import com.mercury.service.history.LoginHistoryService;
+import com.mercury.service.history.HistoryLoginService;
 import com.mercury.service.token.JwtService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
@@ -45,7 +45,7 @@ public class LoginController {
 	@Autowired
 	private UserService	userService;
 	@Autowired
-	private LoginHistoryService loginHistoryService;
+	private HistoryLoginService loginHistoryService;
 	@Autowired
 	private JwtService jwtUtill;
 	@Autowired

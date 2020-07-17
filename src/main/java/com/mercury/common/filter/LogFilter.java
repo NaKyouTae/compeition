@@ -17,8 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mercury.jpa.model.logger.LoggerEntity;
-import com.mercury.jpa.repository.logger.LoggerRepository;
+import com.mercury.jpa.model.history.HistoryRequest;
+import com.mercury.jpa.repository.history.HistoryRequestRepository;
 import com.mercury.util.IpUtil;
 
 /**
@@ -35,7 +35,7 @@ public class LogFilter implements Filter {
 	private static final Logger LOGGER = LogManager.getLogger(LogFilter.class);
 	
 	@Autowired
-	private LoggerRepository loggerRepository;
+	private HistoryRequestRepository historyRequestRepository;
 	/**
 	 *
 	 * 클라이언트의 요청 시 전/후 처리
@@ -57,16 +57,15 @@ public class LogFilter implements Filter {
 //			LOGGER.debug("user principal : " + rq.getUserPrincipal());
 //			LOGGER.debug("servelt path : " + rq.getServletPath());
 			
-			LoggerEntity jpaLogger = new LoggerEntity();
-			jpaLogger.setInsertDate(new Date());
-			jpaLogger.setLevel("INFO");
-			jpaLogger.setLogger("FILTER");
-			jpaLogger.setRequestUrl(rq.getRequestURI());
-			jpaLogger.setIp(IpUtil.getClientIP(rq));
-			jpaLogger.setBrowser(rq.getHeader("User-Agent"));
-			jpaLogger.setMethod(rq.getMethod());
-			jpaLogger.setMessage("User Request Server");
-			loggerRepository.save(jpaLogger);
+			HistoryRequest hq = new HistoryRequest();
+			hq.setRequestDate(new Date());
+			hq.setRequestUrl(rq.getRequestURI());
+			hq.setIp(IpUtil.getClientIP(rq));
+			hq.setBrowser(rq.getHeader("User-Agent"));
+			hq.setMethod(rq.getMethod());
+			hq.setMessage(rq.getRequestURL() + " : " + rq.getMethod() + "Call");
+			
+			historyRequestRepository.save(hq);
 			chain.doFilter(rq, rs);
 		} catch (Exception e) {
 			e.printStackTrace();
