@@ -11,7 +11,7 @@ import com.mercury.jpa.model.history.HistoryRequest;
 public interface HistoryRequestRepository extends JpaRepository<HistoryRequest, Long>{
 	HistoryRequest findByIdx(String idx);
 	List<HistoryRequest> findByUsername(String username); 
-	List<HistoryRequest> findByRequestUtl(String path);
+	List<HistoryRequest> findByRequestUrl(String path);
 	List<HistoryRequest> findByBrowser(String browser);
 	List<HistoryRequest> findByMethod(String method);
 	List<HistoryRequest> findByIp(String ip);
