@@ -31,7 +31,7 @@ public class HistoryRequestProcess {
 	}
 	public <T extends Object> T seHistoryRequestByUrl(String path) throws Exception{
 		try {
-			return (T) historyRequestRepository.findByRequestUtl(path);
+			return (T) historyRequestRepository.findByRequestUrl(path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
