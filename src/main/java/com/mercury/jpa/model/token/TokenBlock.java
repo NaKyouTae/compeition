@@ -16,8 +16,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "MERCURY_TB_TOKEN_BLACK")
-public class TokenBlack implements Serializable {
+@Table(name = "MERCURY_TB_TOKEN_BLOCK")
+public class TokenBlock implements Serializable {
 
 	private static final long serialVersionUID = 2288931954818799859L;
 

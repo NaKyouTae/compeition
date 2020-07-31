@@ -14,8 +14,8 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
 import com.mercury.service.oauth.KakaoOAuthService;
 import com.mercury.service.token.JwtService;
+import com.mercury.service.token.TokenBlockService;
 import com.mercury.service.token.TokenRefreshService;
-import com.mercury.service.token.TokenBlackService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.vo.kakao.KakaoUserVO;
@@ -29,7 +29,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	private JwtService jwtUtill;
 	@Autowired
-	private TokenBlackService blackTokenService;
+	private TokenBlockService blockTokenService;
 	@Autowired
 	private TokenRefreshService refreshTokenService;
 	@Autowired
@@ -64,12 +64,12 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 			// 로그인 형태가 자체 로그인 일 경우
 			if(u.get("sns").equals("DEFAULT")) {
 				// Refresh Token DB에 존재 하는지 체크
-				// Refresh Token이 Black List에 등록 되어있는지 체크
+				// Refresh Token이 Block List에 등록 되어있는지 체크
 				if(jwtService.validateToken(Refresh, "Refresh")) {
 					Boolean isRefresh = refreshTokenService.isRefreshToken(Refresh);
-					Boolean isBlack = blackTokenService.isBlackToken(Refresh);
+					Boolean isBlock = blockTokenService.isBlockToken(Refresh);
 					
-					if(!isRefresh && isBlack) throw new Exception("로그인 유효기간이 완료되었습니다.");
+					if(!isRefresh && isBlock) throw new Exception("로그인 유효기간이 완료되었습니다.");
 				}
 				
 				///////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
-import com.mercury.jpa.model.token.TokenBlack;
-import com.mercury.service.token.TokenBlackService;
+import com.mercury.jpa.model.token.TokenBlock;
+import com.mercury.service.token.TokenBlockService;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/blacks")
-public class TokenBlackController {
+@RequestMapping("/service/blocks")
+public class TokenBlockController {
 	
 	@Autowired
-	private TokenBlackService blackTokenService;
+	private TokenBlockService blockTokenService;
 	
 	@GetMapping("")
-	public <T extends Object> T seBlackTokens() throws Exception{
-		ControllerResponse<List<TokenBlack>> res = new ControllerResponse<>();
+	public <T extends Object> T seBlockTokens() throws Exception{
+		ControllerResponse<List<TokenBlock>> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Search Black Tokens :) ");
-			res.setResult(blackTokenService.seBlackTokens());
+			res.setMessage("Success Search Block Tokens :) ");
+			res.setResult(blockTokenService.seBlockTokens());
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage());
@@ -38,11 +38,11 @@ public class TokenBlackController {
 		return (T) res;
 	}
 	@GetMapping("/{token}")
-	public <T extends Object> T seBlackToken(String token) throws Exception{
-		ControllerResponse<TokenBlack> res = new ControllerResponse<>();
+	public <T extends Object> T seBlockToken(String token) throws Exception{
+		ControllerResponse<TokenBlock> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Search Black Token :) ");
-			res.setResult(blackTokenService.seBlackToken(token));
+			res.setMessage("Success Search Block Token :) ");
+			res.setResult(blockTokenService.seBlockToken(token));
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage());
@@ -52,11 +52,11 @@ public class TokenBlackController {
 		return (T) res;
 	}
 	@PostMapping("")
-	public <T extends Object> T inBlackToken(TokenBlack token) throws Exception{
-		ControllerResponse<TokenBlack> res = new ControllerResponse<>();
+	public <T extends Object> T inBlockToken(TokenBlock token) throws Exception{
+		ControllerResponse<TokenBlock> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Insert Black Token :) ");
-			res.setResult(blackTokenService.inBlackToken(token));
+			res.setMessage("Success Insert Block Token :) ");
+			res.setResult(blockTokenService.inBlockToken(token));
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage());
@@ -66,11 +66,11 @@ public class TokenBlackController {
 		return (T) res;
 	}
 	@PutMapping("/{token}")
-	public <T extends Object> T upBlackToken(TokenBlack token) throws Exception{
-		ControllerResponse<TokenBlack> res = new ControllerResponse<>();
+	public <T extends Object> T upBlockToken(TokenBlock token) throws Exception{
+		ControllerResponse<TokenBlock> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Update Black Token :) ");
-			res.setResult(blackTokenService.upBlackToken(token));
+			res.setMessage("Success Update Block Token :) ");
+			res.setResult(blockTokenService.upBlockToken(token));
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage());
@@ -80,11 +80,11 @@ public class TokenBlackController {
 		return (T) res;
 	}
 	@DeleteMapping("/{token}")
-	public <T extends Object> T deBlackToken(TokenBlack token) throws Exception{
-		ControllerResponse<TokenBlack> res = new ControllerResponse<>();
+	public <T extends Object> T deBlockToken(TokenBlock token) throws Exception{
+		ControllerResponse<TokenBlock> res = new ControllerResponse<>();
 		try {
-			res.setMessage("Success Delete Black Token :) ");
-			res.setResult(blackTokenService.deBlackToken(token));
+			res.setMessage("Success Delete Block Token :) ");
+			res.setResult(blockTokenService.deBlockToken(token));
 			res.setResultCode(HttpStatus.OK);
 		} catch (Exception e) {
 			res.setMessage(e.getMessage());
