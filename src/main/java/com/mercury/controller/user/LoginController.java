@@ -162,11 +162,13 @@ public class LoginController {
 //				new SecurityContextLogoutHandler().logout(request, response, auth);
 //			}
 			
-			String refresh = request.getHeader("Refresh-JWT");
+			String awt = request.getHeader("AWT");
+			String rwt = request.getHeader("RWT");
+			String uwt = request.getHeader("UWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("LogOut Success :)");
-			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(refresh)));
+			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(rwt)));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
