@@ -207,7 +207,6 @@ public class MailService {
 		} catch (Exception e) {
 			return (T) e;
 		}
-		
 	}
 	
 	public void sendWithAttch(String to, String subject, String text, String attch) throws Exception {
