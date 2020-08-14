@@ -29,6 +29,7 @@ import com.mercury.service.mail.MailService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
+import com.mercury.util.EncodingUtil;
 import com.mercury.util.ObjectUtil;
 
 @Service
@@ -196,11 +197,28 @@ public class UserService implements UserDetailsService {
 			
 			user.setChangeDate(DateUtil.now());
 			
-			if(role != null) {
-				UserRole userRole = userRoleRepository.findByRoleName(role.getRoleName());
-				UserRole sumRole = ObjectUtil.toObj(role, userRole);
-				userRoleRepository.save(sumRole);
+			if(user.getNewPassword() != null) {
+				// 사용자가 입력한 현재 비밀번호가 DB에 있는 비밀번호와 맞는지 확인
+				// DB에 암호화 되어 있어서 확인하는 방법 필요
+				User userInfo = userRepository.findByUsername(user.getUsername());
+				Boolean matched = EncodingUtil.matches(user.getPassword(), userInfo.getPassword());
+				if(!matched) {
+					return null;
+				}else {
+					String newPwEncode = EncodingUtil.encodingPW(user.getNewPassword());
+					user.setPassword(newPwEncode);
+					user.setNewPassword(null);
+				}
 			}
+			
+			if(role != null) {
+				List<UserRole> userRole = userRoleRepository.findByUserName(user.getUsername());
+				for(UserRole r : userRole) {					
+					UserRole sumRole = ObjectUtil.toObj(role, r);
+					userRoleRepository.save(sumRole);
+				}
+			}
+			
 
 			CustomUserDetails cu = (CustomUserDetails) loadUserByUsername(user.getUsername());
 			

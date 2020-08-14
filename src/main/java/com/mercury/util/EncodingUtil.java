@@ -12,8 +12,17 @@ public class EncodingUtil {
 	
 	public static <T extends Object> T encodingPW(String pw) throws Exception {
 		try {
-			String p = passwordEncoder.encode(pw);
-			return (T) p;
+			return (T) passwordEncoder.encode(pw);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
+	public static <T extends Object> T matches(String prevPw, String pw) throws Exception {
+		try {
+			Boolean yn = passwordEncoder.matches(prevPw, pw);
+			return (T) yn;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

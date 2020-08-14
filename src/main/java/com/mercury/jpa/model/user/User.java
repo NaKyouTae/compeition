@@ -49,5 +49,8 @@ public class User implements Serializable {
 	
 	@Column
 	private String sns;	
+	
+	@Column
+	private String newPassword;
 		
 }
