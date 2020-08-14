@@ -197,7 +197,7 @@ public class UserService implements UserDetailsService {
 			
 			user.setChangeDate(DateUtil.now());
 			
-			if(user.getNewPassword() != null) {
+			if(user.getNewPassword() != null && user.getNewPassword() != "") {
 				// 사용자가 입력한 현재 비밀번호가 DB에 있는 비밀번호와 맞는지 확인
 				// DB에 암호화 되어 있어서 확인하는 방법 필요
 				User userInfo = userRepository.findByUsername(user.getUsername());
