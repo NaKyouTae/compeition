@@ -44,7 +44,7 @@ public class TwoProcess {
 	public <T extends Object> T getPopular() throws Exception {
 		Word dto = weekWordRepository.findByWord("TWO");
 		
-		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
+		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point", "insertDate"));
 		
 		return (T) two;
 	}

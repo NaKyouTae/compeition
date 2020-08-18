@@ -53,7 +53,7 @@ public class ThreeProcess {
 			if(dto == null) {
 				three = null; 
 			}else {			
-				three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point"));
+				three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point", "insertDate"));
 			}
 			
 			return (T) three;
