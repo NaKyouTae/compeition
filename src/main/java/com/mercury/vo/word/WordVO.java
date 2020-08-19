@@ -1,9 +1,9 @@
-package com.mercury.vo.weekword;
+package com.mercury.vo.word;
 
 import lombok.Data;
 
 @Data
-public class WeekWordVO {
+public class WordVO {
 	private String idx;
 	private String wordGroup;
 	private String word;

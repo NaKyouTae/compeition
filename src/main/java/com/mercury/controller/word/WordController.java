@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.word.Word;
 import com.mercury.service.word.WordService;
-import com.mercury.vo.weekword.WeekWordVO;
+import com.mercury.vo.word.WordVO;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -75,7 +75,7 @@ public class WordController {
 	}
 	
 	@PostMapping("")
-	public <T extends Object> T inWord(@RequestBody WeekWordVO vo) throws Exception {
+	public <T extends Object> T inWord(@RequestBody WordVO vo) throws Exception {
 		ControllerResponse<Word> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -90,7 +90,7 @@ public class WordController {
 		return (T) res;
 	}
 	@PutMapping("/{idx}")
-	public <T extends Object> T upWord(@RequestBody WeekWordVO vo) throws Exception {
+	public <T extends Object> T upWord(@RequestBody WordVO vo) throws Exception {
 		ControllerResponse<Word> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -105,7 +105,7 @@ public class WordController {
 		return (T) res;
 	}
 	@DeleteMapping("/{idx}")
-	public <T extends Object> T deWord(@RequestBody WeekWordVO vo) throws Exception {
+	public <T extends Object> T deWord(@RequestBody WordVO vo) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);

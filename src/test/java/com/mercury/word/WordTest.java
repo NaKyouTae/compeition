@@ -1,4 +1,4 @@
-package com.mercury.weekword;
+package com.mercury.word;
 
 import java.net.URI;
 
@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mercury.vo.weekword.WeekWordVO;
+import com.mercury.vo.word.WordVO;
 
 /**
  * 
@@ -21,7 +21,7 @@ import com.mercury.vo.weekword.WeekWordVO;
  *
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WeekWordTest {
+public class WordTest {
 
 	@Test
 	public void test() throws Exception {
@@ -46,7 +46,7 @@ public class WeekWordTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WeekWordVO vo = new WeekWordVO();
+		WordVO vo = new WordVO();
 
 		vo.setWord("노트북");
 		vo.setWordGroup("THREE");
@@ -71,7 +71,7 @@ public class WeekWordTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WeekWordVO vo = new WeekWordVO();
+		WordVO vo = new WordVO();
 
 		vo.setIdx("4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
 		vo.setWordGroup("THREE");
@@ -97,7 +97,7 @@ public class WeekWordTest {
 
 		RestTemplate rest = new RestTemplate();
 
-		WeekWordVO vo = new WeekWordVO();
+		WordVO vo = new WordVO();
 
 		vo.setIdx("4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
 		vo.setWordGroup("THREE");

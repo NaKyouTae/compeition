@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.honor.Honor;
 import com.mercury.service.honor.HonorService;
+import com.mercury.vo.honor.HonorVO;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -21,7 +22,7 @@ public class HonorController {
 	
 	@GetMapping("")
 	public <T extends Object> T seHonors() throws Exception{
-		ControllerResponse<List<Honor>> res = new ControllerResponse<>();
+		ControllerResponse<HonorVO> res = new ControllerResponse<>();
 		try {
 			res.setMessage("Success Search Honor List :) ");
 			res.setResultCode(HttpStatus.OK);

@@ -9,7 +9,7 @@ import com.mercury.jpa.model.word.Word;
 import com.mercury.process.word.WordProcess;
 import com.mercury.util.DateUtil;
 import com.mercury.util.ObjectUtil;
-import com.mercury.vo.weekword.WeekWordVO;
+import com.mercury.vo.word.WordVO;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -29,7 +29,7 @@ public class WordService {
 		return (T) weekWordProcess.seWord(wordIdx);
 	}
 	
-	public <T extends Object> T inWord(WeekWordVO vo) throws Exception {
+	public <T extends Object> T inWord(WordVO vo) throws Exception {
 		Word word = ObjectUtil.toObj(vo, new Word());
 		
 		word.setIdx(UUID.randomUUID().toString().replace("-", ""));
@@ -37,12 +37,12 @@ public class WordService {
 		
 		return (T) weekWordProcess.inWord(word);
 	}
-	public <T extends Object> T upWord(WeekWordVO vo) throws Exception {
+	public <T extends Object> T upWord(WordVO vo) throws Exception {
 		Word word = ObjectUtil.toObj(vo, new Word());
 		
 		return (T) weekWordProcess.upWord(word);
 	}
-	public <T extends Object> T deWord(WeekWordVO vo) throws Exception {
+	public <T extends Object> T deWord(WordVO vo) throws Exception {
 		try {
 			Word word = ObjectUtil.toObj(vo, new Word());
 
