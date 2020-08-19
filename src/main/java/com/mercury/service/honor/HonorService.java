@@ -11,6 +11,15 @@ public class HonorService {
 	@Autowired
 	private HonorProcess honorProcess;
 	
+	public <T extends Object> T seHonors() throws Exception{
+		try {
+			return (T) honorProcess.seHonors();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
 	public <T extends Object> T seHonorByIdx(String idx) throws Exception{
 		try {
 			return (T) honorProcess.seHonorByIdx(idx);
