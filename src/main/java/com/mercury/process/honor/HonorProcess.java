@@ -1,6 +1,7 @@
 package com.mercury.process.honor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.repository.honor.HonorRepository;
@@ -13,7 +14,7 @@ public class HonorProcess {
 	
 	public <T extends Object> T seHonors() throws Exception{
 		try {
-			return (T) honorRepository.findAll();
+			return (T) honorRepository.findAll(Sort.by(Sort.Direction.DESC, "startDate", "word"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

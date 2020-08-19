@@ -15,6 +15,7 @@ public class HonorVO {
 	public static class HonorWeek {	
 		private List<Honor> datas;
 		private String word;
-		private String dataRange;
+		private String startDate;
+		private String endDate;
 	}
 }

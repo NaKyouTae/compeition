@@ -22,7 +22,7 @@ public class HonorService {
 			
 			List<Honor> honor_list = honorProcess.seHonors();
 			
-			
+			System.out.println(honor_list.toString());
 			HonorVO vo = new HonorVO();
 			List<HonorWeek> week = new ArrayList<>();		
 			HonorWeek hw = new HonorWeek();
@@ -31,18 +31,39 @@ public class HonorService {
 			for(int i = 0; i<honor_list.size(); i++) {
 				Honor honor = honor_list.get(i);
 				
-				hw.setDataRange(honor.getStartDate() + " ~ " + honor.getEndDate());
-				hw.setWord(honor.getWord());
 				
 				if(i != 0) {					
-					if(!honor_list.get(i).getWord().equals(honor_list.get(i-1).getWord())) {
+					if(!honor.getWord().equals(honor_list.get(i-1).getWord())) {
+						
+						hw.setStartDate(honor_list.get(i-1).getStartDate());
+						hw.setEndDate(honor_list.get(i-1).getEndDate());
+						hw.setWord(honor_list.get(i-1).getWord());
 						hw.setDatas(list);
+						
 						week.add(hw);
+						
+						hw = new HonorWeek();
 						list = new ArrayList<>();
+						
+						list.add(honor);
 					}
+					
+					if(honor_list.size() == i+1) {
+						hw.setStartDate(honor_list.get(i).getStartDate());
+						hw.setEndDate(honor_list.get(i).getEndDate());
+						hw.setWord(honor_list.get(i).getWord());
+						hw.setDatas(list);
+						
+						week.add(hw);						
+						list.add(honor);
+					}
+					
+					
+					list.add(honor);
+				}else {
+					list.add(honor);					
 				}
 				
-				list.add(honor);
 			}
 			
 			vo.setHonors(week);
