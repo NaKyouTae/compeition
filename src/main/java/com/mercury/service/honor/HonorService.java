@@ -44,22 +44,17 @@ public class HonorService {
 						
 						hw = new HonorWeek();
 						list = new ArrayList<>();
-						
-						list.add(honor);
-					}
-					
-					if(honor_list.size() == i+1) {
-						hw.setStartDate(honor_list.get(i).getStartDate());
-						hw.setEndDate(honor_list.get(i).getEndDate());
-						hw.setWord(honor_list.get(i).getWord());
+					}else if(honor_list.size() == i+1) {
+						hw.setStartDate(honor.getStartDate());
+						hw.setEndDate(honor.getEndDate());
+						hw.setWord(honor.getWord());
 						hw.setDatas(list);
 						
-						week.add(hw);						
-						list.add(honor);
+						week.add(hw);
 					}
 					
-					
 					list.add(honor);
+					
 				}else {
 					list.add(honor);					
 				}

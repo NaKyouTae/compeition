@@ -14,7 +14,7 @@ public class HonorProcess {
 	
 	public <T extends Object> T seHonors() throws Exception{
 		try {
-			return (T) honorRepository.findAll(Sort.by(Sort.Direction.DESC, "startDate", "word"));
+			return (T) honorRepository.findAll(Sort.by(Sort.Direction.DESC, "startDate", "point", "word"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

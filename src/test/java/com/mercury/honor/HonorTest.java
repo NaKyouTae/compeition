@@ -29,7 +29,7 @@ public class HonorTest {
 
 		ResponseEntity<Object> re = rest.getForEntity(uri, Object.class);
 
-		System.out.println(re.toString());
+		System.out.println(re.getBody().toString());
 	}
 
 }
