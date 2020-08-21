@@ -104,13 +104,37 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_PROTOCOL").configValue("smtp").build(),
 							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_AUTH").configValue("true").build(),
 							SystemConfig.builder().configType("MAIL").configName("MAIL_SMTP_STARTTLS_ENABLE").configValue("true").build(),
-							SystemConfig.builder().configType("MAIL").configName("MAIL_DEBUG").configValue("true").build()
+							SystemConfig.builder().configType("MAIL").configName("MAIL_DEBUG").configValue("true").build(),
 							// MAIL TEMPLATE REQURIED
+							// BANK LIST
+							SystemConfig.builder().configType("BANK").configName("기업은행").configValue("기업은행").build(),
+							SystemConfig.builder().configType("BANK").configName("국민은행").configValue("국민은행").build(),
+							SystemConfig.builder().configType("BANK").configName("신한은행").configValue("신한은행").build(),
+							SystemConfig.builder().configType("BANK").configName("농협은행").configValue("농협은행").build(),
+							SystemConfig.builder().configType("BANK").configName("KEB하나은행").configValue("KEB하나은행").build(),
+							SystemConfig.builder().configType("BANK").configName("우리은행").configValue("우리은행").build(),
+							SystemConfig.builder().configType("BANK").configName("SC제일은행").configValue("SC제일은행").build(),
+							SystemConfig.builder().configType("BANK").configName("외한은행").configValue("외한은행").build(),
+							SystemConfig.builder().configType("BANK").configName("한국시티은행").configValue("한국시티은행").build(),
+							SystemConfig.builder().configType("BANK").configName("경남은행").configValue("경남은행").build(),
+							SystemConfig.builder().configType("BANK").configName("광주은행").configValue("광주은행").build(),
+							SystemConfig.builder().configType("BANK").configName("부산은행").configValue("부산은행").build(),
+							SystemConfig.builder().configType("BANK").configName("대구은행").configValue("대구은행").build(),
+							SystemConfig.builder().configType("BANK").configName("제주은행").configValue("제주은행").build(),
+							SystemConfig.builder().configType("BANK").configName("전북은행").configValue("전북은행").build(),
+							SystemConfig.builder().configType("BANK").configName("수협은행").configValue("수협은행").build(),
+							SystemConfig.builder().configType("BANK").configName("산업은행").configValue("산업은행").build(),
+							SystemConfig.builder().configType("BANK").configName("한국씨티은행").configValue("한국씨티은행").build(),
+							SystemConfig.builder().configType("BANK").configName("저축은행").configValue("저축은행").build(),
+							SystemConfig.builder().configType("BANK").configName("새마을금고").configValue("새마을금고").build(),
+							SystemConfig.builder().configType("BANK").configName("수협은행").configValue("수협은행").build(),
+							SystemConfig.builder().configType("BANK").configName("신협중앙회").configValue("신협중앙회").build(),
+							SystemConfig.builder().configType("BANK").configName("우체국은행").configValue("우체국은행").build(),
+							SystemConfig.builder().configType("BANK").configName("카카오뱅크").configValue("카카오뱅크").build(),
+							SystemConfig.builder().configType("BANK").configName("케이뱅크").configValue("케이뱅크").build()
 					));
 					
 				}
-				
-				
 			}
 			
 			{
