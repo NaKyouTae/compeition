@@ -14,5 +14,5 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
 	Notice findByIdx(String idx);
 	
 	@Query(value="select idx, title, content, insertDate, type from mercury_tb_notice where type = :type", nativeQuery=true)
-	List<Notice> findByType(@Param("type") String type);
+	List<Notice> findByType(@Param("type") Boolean type);
 }

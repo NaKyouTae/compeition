@@ -34,5 +34,5 @@ public class Notice implements Serializable {
 	private String insertDate;
 	
 	@Column
-	private String type;
+	private Boolean type;
 }

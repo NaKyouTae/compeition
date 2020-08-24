@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.model.notice.Notice;
@@ -34,7 +35,7 @@ public class NoticeProcess {
 		try {
 			
 			List<UserNotice> un = userNoticeRepository.findByUserName(username);
-			List<Notice> notice = noticeRepository.findByType(type);
+			List<Notice> notice = noticeRepository.findByType(type.equals("true") ? Boolean.TRUE : Boolean.FALSE);
 			List<Notice> result = new ArrayList<Notice>();
 			
 			for(int i = 0; i < notice.size(); i++) {
@@ -62,7 +63,7 @@ public class NoticeProcess {
 	
 	public <T extends Object> T seNotices() throws Exception {
 		try {
-			return (T) noticeRepository.findAll();
+			return (T) noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "type", "insertDate"));
 		} catch (Exception e) {
 			return (T) e;
 		}
