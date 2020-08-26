@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.model.cash.Cash;
 import com.mercury.jpa.repository.cash.CashRepository;
-import com.mercury.util.ObjectUtil;
 
 @Component
 @SuppressWarnings("unchecked")
@@ -18,31 +17,9 @@ public class CashProcess {
 	
 	
 	
-	public <T extends Object> T approvalCash(String idx) throws Exception {
-		try {
-			
-			Cash cash = cashRepository.findByIdx(idx);
-			Cash apCash = ObjectUtil.toObj(cash, new Cash());
-			
-			apCash.setApproval(Boolean.TRUE);
-			
-			return (T) cashRepository.save(cash);
-		} catch (Exception e) {
-			return (T) e;
-		}
-	}
-	
 	public <T extends Object> T seCashByUserName(String userName) throws Exception {
 		try {
 			return (T) cashRepository.findByUserName(userName);
-		} catch (Exception e) {
-			return (T) e;
-		}
-	}
-	
-	public <T extends Object> T seCashByApprovals(Boolean approval) throws Exception {
-		try {
-			return (T) cashRepository.findByApproval(approval);
 		} catch (Exception e) {
 			return (T) e;
 		}

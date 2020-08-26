@@ -149,15 +149,9 @@ public class UserService implements UserDetailsService {
 			user.setSns(user.getSns() == null ? "DEFUALT" : user.getSns());
 			Cash cash = new Cash();
 
-			cash.setIdx(UUID.randomUUID().toString().replace("-", ""));
 			cash.setUserName(user.getUsername());
-			cash.setWithDrawCash(0);
-			cash.setWithDrawDate(DateUtil.now());
-			cash.setPrevCash(0);
 			cash.setAfterCash(1000);
-			cash.setPaymentDate(null);
-			cash.setApproval("N");
-			cash.setWhy("가입 축하 1000 포인트 지급");
+			cash.setContent("가입 축하 1000 포인트 지급");
 			
 			cashService.inCash(cash);
 			
