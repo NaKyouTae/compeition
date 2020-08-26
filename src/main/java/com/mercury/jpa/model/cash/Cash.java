@@ -52,7 +52,7 @@ public class Cash implements Serializable {
 	 * 승인
 	 */
 	@Column
-	private String approval; 
+	private Boolean approval; 
 	
 	@Column
 	private String account;

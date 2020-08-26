@@ -17,18 +17,29 @@ public class CashService {
 	@Autowired
 	private CashProcess cashProcess;
 	
-	public <T extends Object> T seCashByUserName(String userName) throws Exception {
+	public <T extends Object> T approvalCash(String idx) throws Exception {
 		try {
-			return cashProcess.seCashByUserName(userName);
+			return (T) cashProcess.approvalCash(idx);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
 	
-	public <T extends Object> T seCashByApprovals(String type) throws Exception {
+	public <T extends Object> T seCashByUserName(String userName) throws Exception {
 		try {
-			return cashProcess.seCashByApprovals(type);
+			return cashProcess.seCashByUserName(userName);
 		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
+	public <T extends Object> T seCashByApprovals(Boolean approval) throws Exception {
+		try {
+			return cashProcess.seCashByApprovals(approval);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -37,6 +48,7 @@ public class CashService {
 		try {
 			return cashProcess.seCashs();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -44,6 +56,7 @@ public class CashService {
 		try {
 			return cashProcess.seCash(idx);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -54,6 +67,7 @@ public class CashService {
 			cash.setWithDrawDate(DateUtil.now());
 			return cashProcess.inCash(cash);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -62,6 +76,7 @@ public class CashService {
 		try {
 			return cashProcess.upCash(cash);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -70,6 +85,7 @@ public class CashService {
 		try {
 			return cashProcess.deCash(cash);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
@@ -78,6 +94,7 @@ public class CashService {
 		try {
 			return cashProcess.deCashAllEntities(cashs);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return (T) e;
 		}
 	}
