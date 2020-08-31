@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class CashRequestController {
 	private CashRequestService cashRequestService;
 	
 	@PutMapping("/approval/{idx}")
-	public <T extends Object> T approvalCash(@PathParam(value = "idx") String idx) throws Exception {
+	public <T extends Object> T approvalCash(@PathVariable(value = "idx") String idx) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);

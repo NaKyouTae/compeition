@@ -1,5 +1,7 @@
 package com.mercury.process.cash;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import com.mercury.util.UUIDUtil;
 
 @Component
 @SuppressWarnings("unchecked")
+@Transactional
 public class CashRequestProcess {
 	
 	@Autowired
@@ -27,18 +30,11 @@ public class CashRequestProcess {
 			CashRequest cash = cashRequestRepository.findByIdx(idx);
 			CashRequest apCash = ObjectUtil.toObj(cash, new CashRequest());
 			
-			CustomUserDetails customUser = (CustomUserDetails) userService.loadUserByUsername(apCash.getUserName());
-			User user = customUser.getUser();
-			user.setMileage(user.getMileage() - apCash.getWithDrawCash());
-			
-			// 사용자 정보 중 마일리지 정보 수정
-			userService.upUser(user, null);
-			
 			apCash.setApproval(Boolean.TRUE);
 			apCash.setPaymentDate(DateUtil.now());
-			apCash.setAfterCash(user.getMileage() - apCash.getWithDrawCash());
+			
 			// 마일리지 요청 승인
-			cashRequestRepository.save(cash);
+			cashRequestRepository.save(apCash);
 			
 			return (T) Boolean.TRUE; 
 		} catch (Exception e) {

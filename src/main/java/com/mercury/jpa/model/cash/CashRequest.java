@@ -40,12 +40,6 @@ public class CashRequest implements Serializable {
 	private Integer prevCash;
 
 	/**
-	 * 잔액
-	 */
-	@Column
-	private Integer afterCash;
-	
-	/**
 	 * 요청 일자
 	 */
 	@Column 
