@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.model.cash.CashRequest;
+import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.cash.CashRequestRepository;
+import com.mercury.service.user.UserService;
+import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
 import com.mercury.util.ObjectUtil;
 import com.mercury.util.UUIDUtil;
@@ -15,8 +18,8 @@ public class CashRequestProcess {
 	
 	@Autowired
 	private CashRequestRepository cashRequestRepository;
-	
-	
+	@Autowired
+	private UserService userService;
 	
 	public <T extends Object> T approvalCash(String idx) throws Exception {
 		try {
@@ -24,9 +27,20 @@ public class CashRequestProcess {
 			CashRequest cash = cashRequestRepository.findByIdx(idx);
 			CashRequest apCash = ObjectUtil.toObj(cash, new CashRequest());
 			
-			apCash.setApproval(Boolean.TRUE);
+			CustomUserDetails customUser = (CustomUserDetails) userService.loadUserByUsername(apCash.getUserName());
+			User user = customUser.getUser();
+			user.setMileage(user.getMileage() - apCash.getWithDrawCash());
 			
-			return (T) cashRequestRepository.save(cash);
+			// 사용자 정보 중 마일리지 정보 수정
+			userService.upUser(user, null);
+			
+			apCash.setApproval(Boolean.TRUE);
+			apCash.setPaymentDate(DateUtil.now());
+			apCash.setAfterCash(user.getMileage() - apCash.getWithDrawCash());
+			// 마일리지 요청 승인
+			cashRequestRepository.save(cash);
+			
+			return (T) Boolean.TRUE; 
 		} catch (Exception e) {
 			return (T) e;
 		}
@@ -58,8 +72,22 @@ public class CashRequestProcess {
 	
 	public <T extends Object> T inCash(CashRequest cr) throws Exception {
 		try {
+			
+			CustomUserDetails customUser = (CustomUserDetails) userService.loadUserByUsername(cr.getUserName());
+			
+			User user = customUser.getUser();
+			
 			cr.setIdx(UUIDUtil.randomString());
 			cr.setWithDrawDate(DateUtil.now());
+			cr.setApproval(Boolean.FALSE);
+			cr.setPrevCash(user.getMileage());
+			
+			
+			user.setMileage(user.getMileage() - cr.getWithDrawCash());
+			
+			// 사용자 정보 중 마일리지 정보 수정
+			userService.upUser(user, null);
+			
 			return (T) cashRequestRepository.save(cr);
 		} catch (Exception e) {
 			return (T) e;

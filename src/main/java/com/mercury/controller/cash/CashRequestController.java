@@ -11,11 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
-import com.mercury.jpa.model.cash.Cash;
 import com.mercury.jpa.model.cash.CashRequest;
 import com.mercury.service.cash.CashRequestService;
 
@@ -46,7 +46,7 @@ public class CashRequestController {
 	
 	@GetMapping("/users")
 	public <T extends Object> T seCashByUserName(String username) throws Exception{
-		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Cash Request List By User Name :) ");
@@ -61,7 +61,7 @@ public class CashRequestController {
 	
 	@GetMapping
 	public <T extends Object> T seCashs() throws Exception{
-		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Cash Request List :) ");
@@ -76,7 +76,7 @@ public class CashRequestController {
 	
 	@GetMapping("/{idx}")
 	public <T extends Object> T seCash(@PathParam(value = "idx") String idx) throws Exception{
-		ControllerResponse<Cash> res = new ControllerResponse<>();
+		ControllerResponse<CashRequest> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Cash Request :) ");
@@ -90,8 +90,8 @@ public class CashRequestController {
 	}
 	
 	@PostMapping
-	public <T extends Object> T inCash(CashRequest cash) throws Exception{
-		ControllerResponse<Cash> res = new ControllerResponse<>();
+	public <T extends Object> T inCash(@RequestBody CashRequest cash) throws Exception{
+		ControllerResponse<CashRequest> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Insert Cash Request :) ");

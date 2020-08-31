@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -73,7 +74,7 @@ public class CashController {
 	}
 	
 	@PostMapping
-	public <T extends Object> T inCash(Cash cash) throws Exception{
+	public <T extends Object> T inCash(@RequestBody Cash cash) throws Exception{
 		ControllerResponse<Cash> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -88,7 +89,7 @@ public class CashController {
 	}
 	
 	@PutMapping
-	public <T extends Object> T upCash(Cash cash) throws Exception{
+	public <T extends Object> T upCash(@RequestBody Cash cash) throws Exception{
 		ControllerResponse<Cash> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
@@ -103,7 +104,7 @@ public class CashController {
 	}
 	
 	@DeleteMapping
-	public <T extends Object> T deCash(Cash cash) throws Exception{
+	public <T extends Object> T deCash(@RequestBody Cash cash) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);

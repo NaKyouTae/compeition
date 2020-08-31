@@ -50,7 +50,7 @@ public class UserController {
 		return (T) res;
 	}
 	
-	@GetMapping("/ids")
+	@GetMapping("/email")
 	public <T extends Object> T findId(String email) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
@@ -81,7 +81,7 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping("")
+	@GetMapping
 	public ControllerResponse<List<User>> getLists() throws Exception {
 		ControllerResponse<List<User>> res = new ControllerResponse<>();
 
@@ -98,6 +98,7 @@ public class UserController {
 		return res;
 	}
 	
+	@GetMapping("/idx")
 	public <T extends Object> T seUserByIdx(String idx) throws Exception {
 		ControllerResponse<User> res = new ControllerResponse<User>();
 		try {
