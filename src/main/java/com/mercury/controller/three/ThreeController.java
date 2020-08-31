@@ -24,12 +24,12 @@ public class ThreeController {
 	private ThreeService threeService;
 	
 	@GetMapping("/popular")
-	public ControllerResponse<List<Three>> getPopular(){
+	public ControllerResponse<List<Three>> getPopular(String userIdx){
 		ControllerResponse<List<Three>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Three Popular Lists :) "); 
-			res.setResult(threeService.getPopular());
+			res.setResult(threeService.getPopular(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -40,12 +40,12 @@ public class ThreeController {
 	}
 	
 	@GetMapping("")
-	public ControllerResponse<List<Three>> getList() throws Exception {
+	public ControllerResponse<List<Three>> getList(String userIdx) throws Exception {
 		ControllerResponse<List<Three>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Three Lists :) "); 
-			res.setResult(threeService.getList());
+			res.setResult(threeService.getList(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -88,12 +88,12 @@ public class ThreeController {
 	}
 	
 	@GetMapping("/words")
-	public ControllerResponse<List<Three>> seByWord() throws Exception {
+	public ControllerResponse<List<Three>> seByWord(String userIdx) throws Exception {
 		ControllerResponse<List<Three>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Searh Three List By Word :) "); 
-			res.setResult(threeService.seByWord());
+			res.setResult(threeService.seByWord(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 

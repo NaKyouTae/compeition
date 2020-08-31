@@ -24,12 +24,12 @@ public class TwoController {
 	private TwoService twoService;
 	
 	@GetMapping("/popular")
-	public ControllerResponse<List<Two>> getPopular(){
+	public ControllerResponse<List<Two>> getPopular(String userIdx){
 		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Two Popular Lists :) "); 
-			res.setResult(twoService.getPopular());
+			res.setResult(twoService.getPopular(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -40,12 +40,12 @@ public class TwoController {
 	}
 	
 	@GetMapping("")
-	public ControllerResponse<List<Two>> getList() throws Exception {
+	public ControllerResponse<List<Two>> getList(String userIdx) throws Exception {
 		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Get Two Lists :) "); 
-			res.setResult(twoService.getList());
+			res.setResult(twoService.getList(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
@@ -72,12 +72,12 @@ public class TwoController {
 	}
 	
 	@GetMapping("/words")
-	public ControllerResponse<List<Two>> seByWord() throws Exception {
+	public ControllerResponse<List<Two>> seByWord(String userIdx) throws Exception {
 		ControllerResponse<List<Two>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search Two By Word List :) "); 
-			res.setResult(twoService.seByWord());
+			res.setResult(twoService.seByWord(userIdx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage()); 
