@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.mercury.jpa.model.love.Love;
 import com.mercury.jpa.model.three.Three;
-import com.mercury.jpa.repository.user.UserRepository;
 import com.mercury.process.love.LoveProcess;
 import com.mercury.service.three.ThreeService;
 import com.mercury.service.two.TwoService;
@@ -22,9 +21,6 @@ public class LoveService {
 	
 	@Autowired
 	private TwoService twoService;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	public <T extends Object> T seTotalLove(String userIdx) throws Exception{
 		try {

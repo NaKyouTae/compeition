@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.mercury.jpa.model.cash.CashRequest;
 import com.mercury.jpa.repository.cash.CashRequestRepository;
+import com.mercury.util.DateUtil;
 import com.mercury.util.ObjectUtil;
+import com.mercury.util.UUIDUtil;
 
 @Component
 @SuppressWarnings("unchecked")
@@ -56,6 +58,8 @@ public class CashRequestProcess {
 	
 	public <T extends Object> T inCash(CashRequest cr) throws Exception {
 		try {
+			cr.setIdx(UUIDUtil.randomString());
+			cr.setWithDrawDate(DateUtil.now());
 			return (T) cashRequestRepository.save(cr);
 		} catch (Exception e) {
 			return (T) e;
