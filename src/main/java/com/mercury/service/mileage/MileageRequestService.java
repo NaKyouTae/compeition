@@ -1,10 +1,12 @@
-package com.mercury.service.cash;
+package com.mercury.service.mileage;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mercury.jpa.model.cash.CashRequest;
-import com.mercury.process.cash.CashRequestProcess;
+import com.mercury.jpa.model.mileage.MileageRequest;
+import com.mercury.process.mileage.MileageRequestProcess;
 
 /**
  * 
@@ -18,10 +20,10 @@ import com.mercury.process.cash.CashRequestProcess;
  */
 @Service
 @SuppressWarnings("unchecked")
-public class CashRequestService {
+public class MileageRequestService {
 	
 	@Autowired
-	private CashRequestProcess cashRequestProcess;
+	private MileageRequestProcess mileageRequestProcess;
 	
 	/**
 	 * 
@@ -32,9 +34,9 @@ public class CashRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T approvalCash(String idx) throws Exception {
+	public <T extends Object> T approvalMileage(String idx) throws Exception {
 		try {
-			return (T) cashRequestProcess.approvalCash(idx);
+			return (T) mileageRequestProcess.approvalMileage(idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
@@ -49,9 +51,9 @@ public class CashRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T seCashByUserName(String userName) throws Exception {
+	public <T extends Object> T seMileageByUserName(String userName) throws Exception {
 		try {
-			return cashRequestProcess.seCashByUserName(userName);
+			return mileageRequestProcess.seMileageByUserName(userName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
@@ -65,9 +67,9 @@ public class CashRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T seCashs() throws Exception {
+	public <T extends Object> T seMileages() throws Exception {
 		try {
-			return cashRequestProcess.seCashs();
+			return mileageRequestProcess.seMileages();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
@@ -82,9 +84,9 @@ public class CashRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T seCash(String idx) throws Exception {
+	public <T extends Object> T seMileage(String idx) throws Exception {
 		try {
-			return cashRequestProcess.seCash(idx);
+			return mileageRequestProcess.seMileage(idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;
@@ -96,13 +98,30 @@ public class CashRequestService {
 	 * 마일리지 출금 요청
 	 * 
 	 * @param <T>
-	 * @param cash
+	 * @param mileage
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T requestCash(CashRequest cash) throws Exception {
+	public <T extends Object> T requestMileage(MileageRequest mileage) throws Exception {
 		try {
-			return cashRequestProcess.requestCash(cash);
+			return mileageRequestProcess.requestMileage(mileage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return (T) e;
+		}
+	}
+	
+	/**
+	 * 마일리지 요청 이력 삭제
+	 * 
+	 * @param <T>
+	 * @param mileage
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Object> T deMileageAllEntities(List<MileageRequest> mileage) throws Exception {
+		try {
+			return mileageRequestProcess.deMileageAllEntities(mileage);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

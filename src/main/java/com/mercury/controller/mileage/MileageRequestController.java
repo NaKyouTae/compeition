@@ -1,4 +1,4 @@
-package com.mercury.controller.cash;
+package com.mercury.controller.mileage;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
-import com.mercury.jpa.model.cash.CashRequest;
-import com.mercury.service.cash.CashRequestService;
+import com.mercury.jpa.model.mileage.MileageRequest;
+import com.mercury.service.mileage.MileageRequestService;
 
 /**
  * 마일리지 요청 관련 Controller
@@ -31,13 +31,13 @@ import com.mercury.service.cash.CashRequestService;
  */
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/cashrequest")
-public class CashRequestController {
+@RequestMapping("/service/mileagerequest")
+public class MileageRequestController {
 	
-	Logger log = LogManager.getLogger(CashRequestController.class);
+	Logger log = LogManager.getLogger(MileageRequestController.class);
 	
 	@Autowired
-	private CashRequestService cashRequestService;
+	private MileageRequestService mileageRequestService;
 	
 	/**
 	 * 마일리지 요청 승인
@@ -48,12 +48,12 @@ public class CashRequestController {
 	 * @throws Exception
 	 */
 	@PutMapping("/approval/{idx}")
-	public <T extends Object> T approvalCash(@PathVariable(value = "idx") String idx) throws Exception {
+	public <T extends Object> T approvalMileage(@PathVariable(value = "idx") String idx) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Approval Cash Request :) ");
-			res.setResult(cashRequestService.approvalCash(idx));
+			res.setMessage("Success Approval Mileage Request :) ");
+			res.setResult(mileageRequestService.approvalMileage(idx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -71,12 +71,12 @@ public class CashRequestController {
 	 * @throws Exception
 	 */
 	@GetMapping("/users")
-	public <T extends Object> T seCashByUserName(String username) throws Exception{
-		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
+	public <T extends Object> T seMileageByUserName(String username) throws Exception{
+		ControllerResponse<List<MileageRequest>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash Request List By User Name :) ");
-			res.setResult(cashRequestService.seCashByUserName(username));
+			res.setMessage("Success Search Mileage Request List By User Name :) ");
+			res.setResult(mileageRequestService.seMileageByUserName(username));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -93,12 +93,12 @@ public class CashRequestController {
 	 * @throws Exception
 	 */
 	@GetMapping
-	public <T extends Object> T seCashs() throws Exception{
-		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
+	public <T extends Object> T seMileages() throws Exception{
+		ControllerResponse<List<MileageRequest>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash Request List :) ");
-			res.setResult(cashRequestService.seCashs());
+			res.setMessage("Success Search Mileage Request List :) ");
+			res.setResult(mileageRequestService.seMileages());
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -116,12 +116,12 @@ public class CashRequestController {
 	 * @throws Exception
 	 */
 	@GetMapping("/{idx}")
-	public <T extends Object> T seCash(@PathParam(value = "idx") String idx) throws Exception{
-		ControllerResponse<CashRequest> res = new ControllerResponse<>();
+	public <T extends Object> T seMileage(@PathParam(value = "idx") String idx) throws Exception{
+		ControllerResponse<MileageRequest> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash Request :) ");
-			res.setResult(cashRequestService.seCash(idx));
+			res.setMessage("Success Search Mileage Request :) ");
+			res.setResult(mileageRequestService.seMileage(idx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -134,17 +134,17 @@ public class CashRequestController {
 	 * 마일리지 출금 요청
 	 * 
 	 * @param <T>
-	 * @param cash
+	 * @param mileage
 	 * @return
 	 * @throws Exception
 	 */
 	@PostMapping
-	public <T extends Object> T requestCash(@RequestBody CashRequest cash) throws Exception{
-		ControllerResponse<CashRequest> res = new ControllerResponse<>();
+	public <T extends Object> T requestMileage(@RequestBody MileageRequest mileage) throws Exception{
+		ControllerResponse<MileageRequest> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Cash Request :) ");
-			res.setResult(cashRequestService.requestCash(cash));
+			res.setMessage("Success Mileage Request :) ");
+			res.setResult(mileageRequestService.requestMileage(mileage));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());

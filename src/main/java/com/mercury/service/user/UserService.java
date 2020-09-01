@@ -9,8 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.mercury.jpa.model.cash.Cash;
 import com.mercury.jpa.model.grade.Grade;
+import com.mercury.jpa.model.mileage.Mileage;
+import com.mercury.jpa.model.mileage.MileageRequest;
 import com.mercury.jpa.model.role.Role;
 import com.mercury.jpa.model.token.TokenRefresh;
 import com.mercury.jpa.model.user.User;
@@ -23,9 +24,10 @@ import com.mercury.jpa.repository.user.UserNoticeRepository;
 import com.mercury.jpa.repository.user.UserRepository;
 import com.mercury.jpa.repository.user.UserRoleRepository;
 import com.mercury.process.user.UserProcess;
-import com.mercury.service.cash.CashService;
 import com.mercury.service.grade.GradeService;
 import com.mercury.service.mail.MailService;
+import com.mercury.service.mileage.MileageRequestService;
+import com.mercury.service.mileage.MileageService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
@@ -41,7 +43,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private GradeService gradeService;
 	@Autowired
-	private CashService cashService;
+	private MileageService mileageService;
+	@Autowired
+	private MileageRequestService mileageRequestService;
 	@Autowired
 	private TokenRefreshService refreshTokenService;
 	@Autowired
@@ -147,13 +151,13 @@ public class UserService implements UserDetailsService {
 			user.setInsertDate(DateUtil.now());
 			user.setMileage(1000);
 			user.setSns(user.getSns() == null ? "DEFUALT" : user.getSns());
-			Cash cash = new Cash();
+			Mileage mileage = new Mileage();
 
-			cash.setUserName(user.getUsername());
-			cash.setAfterCash(1000);
-			cash.setContent("가입 축하 1000 포인트 지급");
+			mileage.setUserName(user.getUsername());
+			mileage.setPaymentMileage(1000);
+			mileage.setContent("가입 축하 1000 포인트 지급");
 			
-			cashService.inCash(cash);
+			mileageService.inMileage(mileage);
 			
 			
 			Role role_user = roleRepository.findByRoleName("ROLE_USER");
@@ -253,9 +257,13 @@ public class UserService implements UserDetailsService {
 			List<TokenRefresh> refresh = refreshTokenService.seRefreshTokenByUsername(user.getUsername());
 			refreshTokenService.deRefreshTokenAllEntities(refresh);
 			
-			// Cash History Delete All By UserName
-			List<Cash> cash = cashService.seCashByUserName(user.getUsername());
-			cashService.deCashAllEntities(cash);
+			// Mileage History Delete All By UserName
+			List<Mileage> mileage = mileageService.seMileageByUserName(user.getUsername());
+			mileageService.deMileageAllEntities(mileage);
+			
+			// Mileage Request Delete All By User Name			
+			List<MileageRequest> mileageRequest = mileageRequestService.seMileageByUserName(user.getUsername());
+			mileageRequestService.deMileageAllEntities(mileageRequest);
 			
 			// User Delete By User
 			userProcess.destoryUser(user);

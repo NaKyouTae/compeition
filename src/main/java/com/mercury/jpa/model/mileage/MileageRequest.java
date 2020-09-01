@@ -1,4 +1,4 @@
-package com.mercury.jpa.model.cash;
+package com.mercury.jpa.model.mileage;
 
 import java.io.Serializable;
 
@@ -15,8 +15,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "MERCURY_TB_CASH_REQUEST")
-public class CashRequest implements Serializable {
+@Table(name = "MERCURY_TB_MILEAGE_REQUEST")
+public class MileageRequest implements Serializable {
 	
 	private static final long serialVersionUID = -3858968337839809115L;
 
@@ -37,7 +37,7 @@ public class CashRequest implements Serializable {
 	 * 이전 금액
 	 */
 	@Column
-	private Integer prevCash;
+	private Integer prevMileage;
 
 	/**
 	 * 요청 일자
@@ -49,7 +49,7 @@ public class CashRequest implements Serializable {
 	 * 요청 금액
 	 */
 	@Column
-	private Integer withDrawCash;
+	private Integer withDrawMileage;
 	
 	/**
 	 * 지급 일자

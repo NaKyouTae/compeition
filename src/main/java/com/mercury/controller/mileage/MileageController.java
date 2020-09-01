@@ -1,4 +1,4 @@
-package com.mercury.controller.cash;
+package com.mercury.controller.mileage;
 
 import java.util.List;
 
@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mercury.common.ControllerResponse;
-import com.mercury.jpa.model.cash.Cash;
-import com.mercury.service.cash.CashService;
+import com.mercury.jpa.model.mileage.Mileage;
+import com.mercury.service.mileage.MileageService;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/service/cashs")
-public class CashController {
+@RequestMapping("/service/mileages")
+public class MileageController {
 	
-	Logger log = LogManager.getLogger(CashController.class);
+	Logger log = LogManager.getLogger(MileageController.class);
 	
 	@Autowired
-	private CashService cashService;
+	private MileageService mileageService;
 		
 	@GetMapping("/users")
-	public <T extends Object> T seCashByUserName(String username) throws Exception{
-		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+	public <T extends Object> T seMileageByUserName(String username) throws Exception{
+		ControllerResponse<List<Mileage>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash List By User Name :) ");
-			res.setResult(cashService.seCashByUserName(username));
+			res.setMessage("Success Search Mileage List By User Name :) ");
+			res.setResult(mileageService.seMileageByUserName(username));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -44,12 +44,12 @@ public class CashController {
 	}	
 	
 	@GetMapping("")
-	public <T extends Object> T seCashs() throws Exception{
-		ControllerResponse<List<Cash>> res = new ControllerResponse<>();
+	public <T extends Object> T seMileages() throws Exception{
+		ControllerResponse<List<Mileage>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash List :) ");
-			res.setResult(cashService.seCashs());
+			res.setMessage("Success Search Mileage List :) ");
+			res.setResult(mileageService.seMileages());
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -59,12 +59,12 @@ public class CashController {
 	}
 	
 	@GetMapping("/{idx}")
-	public <T extends Object> T seCash(String idx) throws Exception{
-		ControllerResponse<Cash> res = new ControllerResponse<>();
+	public <T extends Object> T seMileage(String idx) throws Exception{
+		ControllerResponse<Mileage> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Search Cash :) ");
-			res.setResult(cashService.seCash(idx));
+			res.setMessage("Success Search Mileage :) ");
+			res.setResult(mileageService.seMileage(idx));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -74,12 +74,12 @@ public class CashController {
 	}
 	
 	@PostMapping
-	public <T extends Object> T inCash(@RequestBody Cash cash) throws Exception{
-		ControllerResponse<Cash> res = new ControllerResponse<>();
+	public <T extends Object> T inMileage(@RequestBody Mileage mileage) throws Exception{
+		ControllerResponse<Mileage> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Insert Cash :) ");
-			res.setResult(cashService.inCash(cash));
+			res.setMessage("Success Insert Mileage :) ");
+			res.setResult(mileageService.inMileage(mileage));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -89,12 +89,12 @@ public class CashController {
 	}
 	
 	@PutMapping
-	public <T extends Object> T upCash(@RequestBody Cash cash) throws Exception{
-		ControllerResponse<Cash> res = new ControllerResponse<>();
+	public <T extends Object> T upMileage(@RequestBody Mileage mileage) throws Exception{
+		ControllerResponse<Mileage> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Update Cash :) ");
-			res.setResult(cashService.upCash(cash));
+			res.setMessage("Success Update Mileage :) ");
+			res.setResult(mileageService.upMileage(mileage));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
@@ -104,12 +104,12 @@ public class CashController {
 	}
 	
 	@DeleteMapping
-	public <T extends Object> T deCash(@RequestBody Cash cash) throws Exception{
+	public <T extends Object> T deMileage(@RequestBody Mileage mileage) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Delete Cash :) ");
-			res.setResult(cashService.deCash(cash));
+			res.setMessage("Success Delete Mileage :) ");
+			res.setResult(mileageService.deMileage(mileage));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
