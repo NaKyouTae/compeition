@@ -140,7 +140,7 @@ public class MileageRequestController {
 	 */
 	@PostMapping
 	public <T extends Object> T requestMileage(@RequestBody MileageRequest mileage) throws Exception{
-		ControllerResponse<MileageRequest> res = new ControllerResponse<>();
+		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Mileage Request :) ");

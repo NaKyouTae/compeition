@@ -103,7 +103,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("user", user.getUsername());
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByType("FIND_ID");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("FindId");
 				
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);
@@ -146,7 +146,7 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("pw", pw);
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByType("FIND_PW");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("FindPw");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.mercury.common.interceptor.JwtInterceptor;
 import com.mercury.jpa.model.grade.Grade;
+import com.mercury.jpa.model.mail.MailTemplate;
 import com.mercury.jpa.model.menu.Menu;
 import com.mercury.jpa.model.role.Role;
 import com.mercury.jpa.model.system.config.SystemConfig;
@@ -26,6 +27,7 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.model.user.UserGrade;
 import com.mercury.jpa.model.user.UserRole;
 import com.mercury.jpa.repository.grade.GradeRepository;
+import com.mercury.jpa.repository.mail.MailTemplateRepository;
 import com.mercury.jpa.repository.menu.MenuRepository;
 import com.mercury.jpa.repository.role.RoleRepository;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
@@ -67,7 +69,8 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
-			MenuRepository menu, GradeRepository grade, UserGradeRepository user_grade, SystemConfigRepository sysconf) {
+			MenuRepository menu, GradeRepository grade, UserGradeRepository user_grade, SystemConfigRepository sysconf,
+			MailTemplateRepository mailTemp) {
 		return (args) -> {
 			{
 				List<SystemConfig> syslist = sysconf.findAll();
@@ -217,6 +220,22 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(12).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("배치").menuGroup("batch").url("/admin/batch").build()
 					));
 				}
+			}
+			
+			{
+				List<MailTemplate> temps = mailTemp.findAll();
+				
+				if(temps.size() == 0) {
+					mailTemp.saveAll(Arrays.asList(
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("출금 승인").tempName("approvaldrawals.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("이메일 인증").tempName("certification.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("뉴스레터").tempName("newsletter.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("비밀번호 찾기").tempName("password.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("출금 요청").tempName("requestdrawals.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("이메일 찾기").tempName("username.html").build()
+					));
+				}
+				
 			}
 		};
 	}
