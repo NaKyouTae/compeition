@@ -13,6 +13,15 @@ public class CashRequestService {
 	@Autowired
 	private CashRequestProcess cashRequestProcess;
 	
+	/**
+	 * 
+	 * 마일리지 출금 요청 승인
+	 * 
+	 * @param <T>
+	 * @param idx
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T approvalCash(String idx) throws Exception {
 		try {
 			return (T) cashRequestProcess.approvalCash(idx);
@@ -39,6 +48,7 @@ public class CashRequestService {
 			return (T) e;
 		}
 	}
+	
 	public <T extends Object> T seCash(String idx) throws Exception {
 		try {
 			return cashRequestProcess.seCash(idx);
@@ -48,9 +58,18 @@ public class CashRequestService {
 		}
 	}
 	
-	public <T extends Object> T inCash(CashRequest cash) throws Exception {
+	/**
+	 * 
+	 * 마일리지 출금 요청
+	 * 
+	 * @param <T>
+	 * @param cash
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Object> T requestCash(CashRequest cash) throws Exception {
 		try {
-			return cashRequestProcess.inCash(cash);
+			return cashRequestProcess.requestCash(cash);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

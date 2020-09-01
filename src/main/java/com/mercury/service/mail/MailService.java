@@ -83,6 +83,14 @@ public class MailService {
 		}
 	}
 	
+	/**
+	 * 아이디 찾기 메일 발송
+	 * 
+	 * @param <T>
+	 * @param target
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T findId(String target) throws Exception {
 		try {
 			
@@ -114,6 +122,16 @@ public class MailService {
 		}
 	}
 	
+	/**
+	 * 비밀번호 찾기 메일 발송
+	 * 
+	 * 
+	 * @param <T>
+	 * @param user
+	 * @param target
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T findPW(User user, String target) throws Exception {
 		try {
 			
@@ -148,6 +166,15 @@ public class MailService {
 		}
 	}
 	
+	/**
+	 * 
+	 * 이메일 인증 메일 발송 
+	 * 
+	 * @param <T>
+	 * @param target
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T certiNumber(String target) throws Exception {
 		try {
 			
@@ -179,7 +206,16 @@ public class MailService {
 		
 	}
 	
-	public <T extends Object> T drawals(String target) throws Exception {
+	/**
+	 * 
+	 * 출금 요청 메일 발송 
+	 * 
+	 * @param <T>
+	 * @param target
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Object> T requestWithdraw(String target) throws Exception {
 		try {
 			
 			// Email이 없다면 False를 Return
@@ -191,7 +227,46 @@ public class MailService {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("auth", authNumber);
 			
-			MailTemplate temp = mailTemplateService.seMailTemplateByType("Drawals");
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("RequestWithdraw");
+			
+			VelocityContext context = new VelocityContext();
+			context.put("data", model);
+			
+			StringWriter sw = new StringWriter();
+			Template t = veloTemp(temp.getTempName());
+			t.merge(context, sw);
+			
+			// Send Mail Html Template
+			sendTempMail(target, temp.getTitle(), sw.toString());
+			
+			return (T) Boolean.TRUE;
+		} catch (Exception e) {
+			return (T) e;
+		}
+	}
+	
+	/**
+	 * 
+	 * 출금 요청 승인 메일 발송
+	 * 
+	 * @param <T>
+	 * @param target
+	 * @return
+	 * @throws Exception
+	 */
+	public <T extends Object> T approvalWithdraw(String target) throws Exception {
+		try {
+			
+			// Email이 없다면 False를 Return
+			Boolean check = userService.checkUserEmail(target);
+			if(!check) return (T) Boolean.FALSE;
+			
+			Integer authNumber = (int)(Math.random() * 100000);
+			
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("auth", authNumber);
+			
+			MailTemplate temp = mailTemplateService.seMailTemplateByType("ApprovalWithdraw");
 			
 			VelocityContext context = new VelocityContext();
 			context.put("data", model);

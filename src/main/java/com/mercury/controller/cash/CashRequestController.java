@@ -91,12 +91,12 @@ public class CashRequestController {
 	}
 	
 	@PostMapping
-	public <T extends Object> T inCash(@RequestBody CashRequest cash) throws Exception{
+	public <T extends Object> T requestCash(@RequestBody CashRequest cash) throws Exception{
 		ControllerResponse<CashRequest> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Insert Cash Request :) ");
-			res.setResult(cashRequestService.inCash(cash));
+			res.setMessage("Success Cash Request :) ");
+			res.setResult(cashRequestService.requestCash(cash));
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
