@@ -20,6 +20,15 @@ import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.cash.CashRequest;
 import com.mercury.service.cash.CashRequestService;
 
+/**
+ * 마일리지 요청 관련 Controller
+ * 
+ * @author nkt
+ *
+ *
+ * Create by User Date : 2020. 9. 1.
+ *
+ */
 @RestController
 @SuppressWarnings("unchecked")
 @RequestMapping("/service/cashrequest")
@@ -30,6 +39,14 @@ public class CashRequestController {
 	@Autowired
 	private CashRequestService cashRequestService;
 	
+	/**
+	 * 마일리지 요청 승인
+	 * 
+	 * @param <T>
+	 * @param idx
+	 * @return
+	 * @throws Exception
+	 */
 	@PutMapping("/approval/{idx}")
 	public <T extends Object> T approvalCash(@PathVariable(value = "idx") String idx) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
@@ -45,6 +62,14 @@ public class CashRequestController {
 		return (T) res;
 	}
 	
+	/**
+	 * 마일리지 사용자 명으로 조회 
+	 * 
+	 * @param <T>
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/users")
 	public <T extends Object> T seCashByUserName(String username) throws Exception{
 		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
@@ -60,6 +85,13 @@ public class CashRequestController {
 		return (T) res;
 	}
 	
+	/**
+	 * 마일리지 요청 전체 목록 조회
+	 * 
+	 * @param <T>
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping
 	public <T extends Object> T seCashs() throws Exception{
 		ControllerResponse<List<CashRequest>> res = new ControllerResponse<>();
@@ -75,6 +107,14 @@ public class CashRequestController {
 		return (T) res;
 	}
 	
+	/**
+	 * 마일리지 일렬번호로 조회
+	 * 
+	 * @param <T>
+	 * @param idx
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/{idx}")
 	public <T extends Object> T seCash(@PathParam(value = "idx") String idx) throws Exception{
 		ControllerResponse<CashRequest> res = new ControllerResponse<>();
@@ -90,6 +130,14 @@ public class CashRequestController {
 		return (T) res;
 	}
 	
+	/**
+	 * 마일리지 출금 요청
+	 * 
+	 * @param <T>
+	 * @param cash
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping
 	public <T extends Object> T requestCash(@RequestBody CashRequest cash) throws Exception{
 		ControllerResponse<CashRequest> res = new ControllerResponse<>();

@@ -6,6 +6,16 @@ import org.springframework.stereotype.Service;
 import com.mercury.jpa.model.cash.CashRequest;
 import com.mercury.process.cash.CashRequestProcess;
 
+/**
+ * 
+ * 마일리지 요청 관련 Service
+ * 
+ * @author nkt
+ *
+ *
+ * Create by User Date : 2020. 9. 1.
+ *
+ */
 @Service
 @SuppressWarnings("unchecked")
 public class CashRequestService {
@@ -31,6 +41,14 @@ public class CashRequestService {
 		}
 	}
 	
+	/**
+	 * 마일리지 사용자 명으로 조회
+	 * 
+	 * @param <T>
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T seCashByUserName(String userName) throws Exception {
 		try {
 			return cashRequestProcess.seCashByUserName(userName);
@@ -40,6 +58,13 @@ public class CashRequestService {
 		}
 	}
 	
+	/**
+	 * 마일리지 목록 전체 조회
+	 * 
+	 * @param <T>
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T seCashs() throws Exception {
 		try {
 			return cashRequestProcess.seCashs();
@@ -49,6 +74,14 @@ public class CashRequestService {
 		}
 	}
 	
+	/**
+	 * 마일리지 일렬번호로 조회
+	 * 
+	 * @param <T>
+	 * @param idx
+	 * @return
+	 * @throws Exception
+	 */
 	public <T extends Object> T seCash(String idx) throws Exception {
 		try {
 			return cashRequestProcess.seCash(idx);
