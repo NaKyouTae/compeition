@@ -146,13 +146,13 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 				if(grades.size() == 0) {
 					
 					grade.saveAll(Arrays.asList(
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(1).startRange("0").endRange("999").idx("RED").gradeName("빨강색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(2).startRange("1000").endRange("2999").idx("ORANGE").gradeName("주황색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(3).startRange("2000").endRange("3999").idx("YELLOW").gradeName("노랑색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(4).startRange("3000").endRange("4999").idx("GREEN").gradeName("초록색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(5).startRange("4000").endRange("5999").idx("BLUE").gradeName("파랑색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(6).startRange("5000").endRange("6999").idx("NAVY").gradeName("남색").build(),
-						Grade.builder().insertDate(DateUtil.now()).gradeOrder(7).startRange("6000").endRange("7000").idx("PURPLE").gradeName("보라색").build()
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(1).startRange(0).endRange(999).idx("RED").gradeName("빨강색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(2).startRange(1000).endRange(2999).idx("ORANGE").gradeName("주황색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(3).startRange(2000).endRange(3999).idx("YELLOW").gradeName("노랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(4).startRange(3000).endRange(4999).idx("GREEN").gradeName("초록색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(5).startRange(4000).endRange(5999).idx("BLUE").gradeName("파랑색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(6).startRange(5000).endRange(6999).idx("NAVY").gradeName("남색").build(),
+						Grade.builder().insertDate(DateUtil.now()).gradeOrder(7).startRange(6000).endRange(7000).idx("PURPLE").gradeName("보라색").build()
 					));
 				}
 			}

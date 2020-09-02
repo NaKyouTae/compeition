@@ -36,10 +36,10 @@ public class Grade implements Serializable {
 	private Integer gradeOrder;
 	
 	@Column
-	private String startRange;
+	private long startRange;
 
 	@Column
-	private String endRange;
+	private long endRange;
 	
 	@Column
 	private String insertDate;
