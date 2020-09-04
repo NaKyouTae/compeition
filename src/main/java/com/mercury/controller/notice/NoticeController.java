@@ -69,7 +69,7 @@ public class NoticeController {
 		return (T) res;
 	}
 	
-	@GetMapping("")
+	@GetMapping
 	public <T extends Object> T seNotices() throws Exception{
 		ControllerResponse<List<Notice>> res = new ControllerResponse<>();
 
@@ -103,7 +103,7 @@ public class NoticeController {
 		return (T) res;
 	}
 	
-	@PostMapping("")
+	@PostMapping
 	public <T extends Object> T inNotice(@RequestBody Notice notice) throws Exception{
 		ControllerResponse<Notice> res = new ControllerResponse<>();
 		
@@ -120,7 +120,7 @@ public class NoticeController {
 		return (T) res;
 	}
 	
-	@PutMapping("/{idx}")
+	@PutMapping
 	public <T extends Object> T upNotice(@RequestBody Notice notice) throws Exception{
 		ControllerResponse<Notice> res = new ControllerResponse<>();
 		
@@ -136,7 +136,7 @@ public class NoticeController {
 		
 		return (T) res;
 	}
-	@DeleteMapping("/{idx}")
+	@DeleteMapping
 	public <T extends Object> T deNotice(@RequestBody Notice notice) throws Exception{
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		

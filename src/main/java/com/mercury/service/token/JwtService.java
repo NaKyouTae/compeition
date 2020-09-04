@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +55,7 @@ public class JwtService {
 	private SignatureAlgorithm userSignatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key userKey = new SecretKeySpec(userSecretBytes, userSignatureAlgorithm.getJcaName());
 	
-	public <T extends Object> T createUserToken(HttpServletRequest request, HttpServletResponse response, CustomUserDetails user, Date expriation) {
+	public <T extends Object> T createUserToken(CustomUserDetails user, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject(systemConfigRepository.findByConfigName("UWT_SUBJECT").getConfigValue())
@@ -86,7 +84,7 @@ public class JwtService {
 		return (T) jwt;
 	}
 	
-	public <T extends Object> T createAccessToken(HttpServletRequest request, HttpServletResponse response, String username, Date expriation) {
+	public <T extends Object> T createAccessToken(String username, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject(systemConfigRepository.findByConfigName("AWT_SUBJECT").getConfigValue())
@@ -104,7 +102,7 @@ public class JwtService {
 		return (T) jwt;
 	}
 	
-	public <T extends Object> T createRefreshToken(HttpServletRequest request, HttpServletResponse response, String username, Date expriation) {
+	public <T extends Object> T createRefreshToken(String username, Date expriation) {
 		
 		Claims claims = Jwts.claims()
 				.setSubject(systemConfigRepository.findByConfigName("RWT_SUBJECT").getConfigValue())

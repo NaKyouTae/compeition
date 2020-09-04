@@ -3,6 +3,7 @@ package com.mercury.common.interceptor;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +42,10 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handle) throws Exception {
-
+		
+//		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4300");
+//		response.addHeader("Access-Control-Allow-Credentials", "true");
+		
 		String Access = request.getHeader("AWT");
 		String Refresh = request.getHeader("RWT");
 		String User = request.getHeader("UWT");
@@ -59,17 +63,21 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 			
 			// ValidateToken을 이용해서  유효성 확인 필요
 			Claims u_body = jwtUtill.getUserPayLoad(User);
-			Map u = (Map) u_body.get("user");
+			
+			String loginType = request.getHeader("loginType");
 			
 			// 로그인 형태가 자체 로그인 일 경우
-			if(u.get("sns").equals("DEFAULT")) {
+			if(loginType.equals("default")) {
 				// Refresh Token DB에 존재 하는지 체크
 				// Refresh Token이 Block List에 등록 되어있는지 체크
-				if(jwtService.validateToken(Refresh, "Refresh")) {
+				Boolean refreshCheck = jwtService.validateToken(Refresh, "Refresh");
+				if(refreshCheck) {
 					Boolean isRefresh = refreshTokenService.isRefreshToken(Refresh);
 					Boolean isBlock = blockTokenService.isBlockToken(Refresh);
 					
 					if(!isRefresh && isBlock) throw new Exception("로그인 유효기간이 완료되었습니다.");
+				}else {
+					throw new Exception("로그인 유효기간이 완료되었습니다.");
 				}
 				
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,22 +90,31 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				CustomUserDetails user = (CustomUserDetails) userSerivce.loadUserByUsername(reTokenInfo.getUserName());
 				
 				// USER 정보를 이용하여 USER TOKEN을 생성
-				userToken = jwtUtill.createUserToken(request, response, user, u_body.getExpiration());
+				userToken = jwtUtill.createUserToken(user, new Date(u_body.getExpiration().getTime()));
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				
 				// Access Token 유효 시간 체크
 				// 이전 USER TOKEN과 새로운 USER TOKEN을 비교
 				// 사용자 정보 재 조회 후 Access Token, User Token 재 발급
-				if(!jwtService.validateToken(Access, "Access") || !User.equals(userToken)) {
+				Boolean accessCheck = jwtService.validateToken(Access, "Access");
+				if(!accessCheck ) {
+					accessToken = jwtUtill.createAccessToken(user.getUsername(), new Date(System.currentTimeMillis() + a_exp));
+//					response.setHeader("AWT", accessToken);
+					response.addCookie(new Cookie("AWT", accessToken));
 					
-					accessToken = jwtUtill.createAccessToken(request, response, user.getUsername(), new Date(System.currentTimeMillis() + a_exp));
-					
-					response.setHeader("AWT", accessToken);
-					response.setHeader("UWT", userToken);
 				}
 				
+				Claims nu_body = jwtUtill.getUserPayLoad(userToken);
+				Boolean userCheck = jwtService.validateToken(Access, "Access");
+				if(!userCheck || !u_body.equals(nu_body)) {
+					userToken = jwtUtill.createUserToken(user, new Date(System.currentTimeMillis() + a_exp));
+//					response.setHeader("UWT", userToken);
+					response.addCookie(new Cookie("UWT", userToken));
+				}
+				
+				
 			// 로그인 형태가 KAKAO 로그인 일 경우
-			}else if(u.get("sns").equals("KAKAO")) {
+			}else if(loginType.equals("kakao")) {
 				
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				// 매번 유저 정보를 확인하여 기존 USER TOKEN과 새로운 USER TOKEN을 비교하여 다를 경우 새로운 USER TOKEN을 RETURN 한다. 
@@ -112,7 +129,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				CustomUserDetails cUser = (CustomUserDetails) userSerivce.loadUserByUsername(user.getUsername());
 				
 				// 사용자 정보를 이용하여 새로운 USER TOKEN 발급
-				userToken = jwtUtill.createUserToken(request, response, cUser, u_body.getExpiration());
+				userToken = jwtUtill.createUserToken(cUser, u_body.getExpiration());
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				
 				// Access Token 유효 기간 체크
@@ -124,18 +141,22 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 					Map<String, String> reissu = kakaoOAuthService.reIssuanceAccess(refreshToken);
 					
 					accessToken = reissu.get("access_token");
-					userToken = jwtUtill.createUserToken(request, response, cUser, u_body.getExpiration());
+					userToken = jwtUtill.createUserToken(cUser, u_body.getExpiration());
 					
 					if(!Refresh.equals(reissu.get("refresh_token"))) {
 						refreshToken = reissu.get("refresh_token");
-						response.setHeader("RWT", refreshToken);
+//						response.setHeader("RWT", refreshToken);
+						response.addCookie(new Cookie("RWT", refreshToken));
 					}
 					
-					response.setHeader("AWT", accessToken);
-					response.setHeader("UWT", userToken);
+//					response.setHeader("AWT", accessToken);
+//					response.setHeader("UWT", userToken);
+					response.addCookie(new Cookie("AWT", accessToken));
+					response.addCookie(new Cookie("UWT", userToken));
 				}
 			}
 		}
+		
 		return true;
 	}
 }

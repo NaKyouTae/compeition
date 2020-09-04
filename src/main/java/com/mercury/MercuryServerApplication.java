@@ -5,14 +5,12 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -35,6 +33,7 @@ import com.mercury.jpa.repository.user.UserGradeRepository;
 import com.mercury.jpa.repository.user.UserRepository;
 import com.mercury.jpa.repository.user.UserRoleRepository;
 import com.mercury.util.DateUtil;
+import com.mercury.util.EncodingUtil;
 import com.mercury.util.UUIDUtil;
 
 @ServletComponentScan
@@ -63,9 +62,6 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/**");
 	}
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
@@ -164,8 +160,8 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 					String t = UUIDUtil.randomString();
 					
 					user.saveAll(Arrays.asList(
-						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("admin").password(passwordEncoder.encode("skrbxo12!@")).email("qppk123@gmail.com").build(),
-						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("test").password(passwordEncoder.encode("test")).email("qppk123@gmail.com").build()
+						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("admin").password(EncodingUtil.encodingPW("skrbxo12!@")).email("qppk123@gmail.com").build(),
+						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("test").password(EncodingUtil.encodingPW("test")).email("qppk123@gmail.com").build()
 					));
 					
 					String a_idx = UUIDUtil.randomString();

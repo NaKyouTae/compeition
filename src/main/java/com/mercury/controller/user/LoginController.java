@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -83,6 +84,10 @@ public class LoginController {
 	@PostMapping("/login")
 	public ResponseEntity<ControllerResponse<Boolean>> Login(@RequestBody Map<String, Object> map,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4300");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
+		
 		String username = (String)map.get("username");
 		String password = (String)map.get("password");
 		
@@ -107,14 +112,26 @@ public class LoginController {
 					Long u_exp = Long.parseLong(systemConfigRepository.findByConfigName("UWT_EXPRIATION").getConfigValue());
 					
 					// Refresh Token, Access Token 생성
-					String refreshJWT = jwtUtill.createRefreshToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + r_exp));
-					String accessJWT = jwtUtill.createAccessToken(request, response, custom.getUsername(), new Date(System.currentTimeMillis() + a_exp));
-					String userJWT = jwtUtill.createUserToken(request, response, custom, new Date(System.currentTimeMillis() + u_exp));
+					String refreshJWT = jwtUtill.createRefreshToken(custom.getUsername(), new Date(System.currentTimeMillis() + r_exp));
+					String accessJWT = jwtUtill.createAccessToken(custom.getUsername(), new Date(System.currentTimeMillis() + a_exp));
+					String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + u_exp));
 					
-					// Refresh Token & Access Token Header에 입력
+					// Refresh Token & Access Token Cookie에 입력
 					headers.add("AWT", accessJWT);
 					headers.add("RWT", refreshJWT);
 					headers.add("UWT", userJWT);
+					
+					ResponseCookie awtCookie = ResponseCookie.from("AWT", accessJWT).sameSite("None").build();
+					
+					
+//					response.addCookie(new Cookie("AWT", accessJWT));
+//					response.addCookie(new Cookie("RWT", refreshJWT));
+//					response.addCookie(new Cookie("UWT", userJWT));
+//					
+//					headers.add("Access-Control-Allow-Origin", "http://localhost:4300");
+//					headers.add("Access-Control-Allow-Credentials", "true");
+//					headers.add("Set-Cookie", awtCookie.toString());
+					headers.add("loginType", "default");
 					
 					// Refresh Token DB에 입력
 					TokenRefresh refreshToken = new TokenRefresh();
@@ -137,6 +154,7 @@ public class LoginController {
 					
 					loginHistoryService.inLoginHistory(his);
 				}
+				
 			}
 			
 			res.setMessage("Success Login :)");
