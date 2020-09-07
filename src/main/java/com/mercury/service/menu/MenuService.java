@@ -48,7 +48,7 @@ public class MenuService {
 		List<Menu> list = new ArrayList<>();
 		
 		if(pidx.equals("null")) {
-			list = menuProcess.getListByLevelIsNull();
+			list = menuProcess.getListByParentIsNull();
 		}else {
 			list = menuProcess.getListByLevel(pidx);
 		}

@@ -3,7 +3,6 @@ package com.mercury.jpa.repository.notice;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +12,6 @@ import com.mercury.jpa.model.notice.Notice;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 	Notice findByIdx(String idx);
 	
-	@Query(value="select idx, title, content, insertDate, type from mercury_tb_notice where type = :type", nativeQuery=true)
+//	@Query(value="select idx, title, content, insertDate, type from mercury_tb_notice where type = :type", nativeQuery=true)
 	List<Notice> findByType(@Param("type") Boolean type);
 }

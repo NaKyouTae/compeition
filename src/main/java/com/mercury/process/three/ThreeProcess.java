@@ -1,5 +1,7 @@
 package com.mercury.process.three;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +49,8 @@ public class ThreeProcess {
 	
 	public <T extends Object> T getPopular() throws Exception {
 		try {
-			Word dto = weekWordRepository.findByWord("THREE");
+			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "THREE");
 			
 			List<Three> three = new ArrayList<>(); 
 			if(dto == null) {
@@ -81,7 +84,8 @@ public class ThreeProcess {
 		}
 	}
 	public <T extends Object> T seByWord() throws Exception {
-		Word dto = weekWordRepository.findByWord("THREE");
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "THREE");
 		
 		List<Three> three = new ArrayList<>(); 
 		if(dto == null) {

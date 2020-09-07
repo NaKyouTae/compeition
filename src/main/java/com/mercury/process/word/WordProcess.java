@@ -1,5 +1,8 @@
 package com.mercury.process.word;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +21,10 @@ public class WordProcess {
 	}
 	
 	public <T extends Object> T getWeekWords(String group) throws Exception {
-		Word word = weekWordRepository.findByWord(group);
+		
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		Word word = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, group);
 		
 		return (T) word;
 	}

@@ -20,7 +20,7 @@ public class LoveProcess {
 	public <T extends Object> T seUserLove(String userIdx, String contentIdx) throws Exception {
 		try {
 			LOGGER.info("LOVE PROCESS TEST");
-			return (T) loveRepository.findByUserLove(userIdx, contentIdx);
+			return (T) loveRepository.findByUserIdxAndContentIdx(userIdx, contentIdx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return (T) e;

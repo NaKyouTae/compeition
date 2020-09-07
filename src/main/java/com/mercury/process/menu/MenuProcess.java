@@ -23,7 +23,7 @@ public class MenuProcess {
 	public <T extends Object> T getList() throws Exception {
 		return (T) menuRepository.findAll(Sort.by(Sort.Direction.ASC, "menuOrder"));
 	}
-	public <T extends Object> T getListByLevelIsNull() throws Exception {
+	public <T extends Object> T getListByParentIsNull() throws Exception {
 		return(T) menuRepository.findByParentIsNull();
 	}
 	public <T extends Object> T getListByLevel(String pidx) throws Exception {

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="DEBUG">
+	<Propertie>	
+		<Property name="LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx</Property>
+	</Propertie>
 	<Appenders>
 		<!-- 
 		<Appender name="DataBase" class="org.apache.log4j.jdbc.JDBCAppender">
@@ -19,9 +22,9 @@
 		    <Column name="MESSAGE" pattern="%message" />
 		    <!-- <Column name="THROWABLE" pattern="%ex{full}" /> -->
 	    </JDBC>
-		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %t %-3level %logger{5} - %mssage %n" />
-		</Console>
+		 <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
 	</Appenders>
 	<Loggers>
 		

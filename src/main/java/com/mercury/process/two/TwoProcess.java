@@ -1,5 +1,7 @@
 package com.mercury.process.two;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +44,8 @@ public class TwoProcess {
 	}
 	
 	public <T extends Object> T getPopular() throws Exception {
-		Word dto = weekWordRepository.findByWord("TWO");
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "TWO");
 		
 		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point", "insertDate"));
 		
@@ -60,7 +63,8 @@ public class TwoProcess {
 	}
 	
 	public <T extends Object> T seByWord() throws Exception {
-		Word dto = weekWordRepository.findByWord("TWO");
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "TWO");
 		
 		List<Two> two = twoRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
 		
