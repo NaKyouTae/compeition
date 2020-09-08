@@ -4,68 +4,47 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.token.TokenRefresh;
 import com.mercury.process.token.TokenRefreshProcess;
 
 @Service
+@Transactional
 @SuppressWarnings("unchecked")
 public class TokenRefreshService {
-	
+
 	@Autowired
-	private TokenRefreshProcess refreshTokenProcess; 
-	
+	private TokenRefreshProcess refreshTokenProcess;
+
 	public <T extends Object> T isRefreshToken(String token) throws Exception {
 		return (T) refreshTokenProcess.isRefreshToken(token);
 	}
-	
-	public <T extends Object> T seRefreshTokenByUsername(String username) throws Exception {
-		try {
-			return refreshTokenProcess.seRefreshTokenByUsername(username);
-		} catch (Exception e) {
-			return (T) e;
-		}
+
+	public <T extends Object> T seRefreshTokenByUsername(String username)
+			throws Exception {
+		return refreshTokenProcess.seRefreshTokenByUsername(username);
 	}
 	public <T extends Object> T seRefreshTokens() throws Exception {
-		try {
-			return refreshTokenProcess.seRefreshTokens();
-		} catch (Exception e) {
-			return (T) e;
-		}
+		return refreshTokenProcess.seRefreshTokens();
 	}
 	public <T extends Object> T seRefreshToken(String token) throws Exception {
-		try {
-			return refreshTokenProcess.seRefreshToken(token);
-		} catch (Exception e) {
-			return (T) e;
-		}
+		return refreshTokenProcess.seRefreshToken(token);
 	}
-	public <T extends Object> T inRefreshToken(TokenRefresh token) throws Exception {
-		try {
-			return refreshTokenProcess.inRefreshToken(token);
-		} catch (Exception e) {
-			return (T) e;
-		}
+	public <T extends Object> T inRefreshToken(TokenRefresh token)
+			throws Exception {
+		return refreshTokenProcess.inRefreshToken(token);
 	}
-	public <T extends Object> T upRefreshToken(TokenRefresh token) throws Exception {
-		try {
-			return refreshTokenProcess.upRefreshToken(token);
-		} catch (Exception e) {
-			return (T) e;
-		}
+	public <T extends Object> T upRefreshToken(TokenRefresh token)
+			throws Exception {
+		return refreshTokenProcess.upRefreshToken(token);
 	}
-	public <T extends Object> T deRefreshToken(TokenRefresh token) throws Exception {
-		try {
-			return refreshTokenProcess.deRefreshToken(token);
-		} catch (Exception e) {
-			return (T) e;
-		}
+	public <T extends Object> T deRefreshToken(TokenRefresh token)
+			throws Exception {
+		return refreshTokenProcess.deRefreshToken(token);
 	}
-	public <T extends Object> T deRefreshTokenAllEntities(List<TokenRefresh> tokens) throws Exception {
-		try {
-			return refreshTokenProcess.deRefreshTokenAllEntities(tokens);
-		} catch (Exception e) {
-			return (T) e;
-		}
+	public <T extends Object> T deRefreshTokenAllEntities(
+			List<TokenRefresh> tokens) throws Exception {
+		return refreshTokenProcess.deRefreshTokenAllEntities(tokens);
 	}
 }

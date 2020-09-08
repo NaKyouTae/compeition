@@ -5,38 +5,39 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.word.Word;
 import com.mercury.jpa.repository.word.WordRepository;
 
 @Component
+@Transactional
 @SuppressWarnings("unchecked")
 public class WordProcess {
-	
+
 	@Autowired
 	private WordRepository weekWordRepository;
-	
+
 	public <T extends Object> T getLists() throws Exception {
 		return (T) weekWordRepository.findAll();
 	}
-	
+
 	public <T extends Object> T getWeekWords(String group) throws Exception {
-		
-		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		
-		Word word = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, group);
-		
+
+		String now = LocalDateTime.now()
+				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		Word word = weekWordRepository
+				.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(
+						now, now, group);
+
 		return (T) word;
 	}
-	
+
 	public <T extends Object> T seWord(String wordIdx) throws Exception {
-		try {
-			return (T) weekWordRepository.findByIdx(wordIdx);
-		} catch (Exception e) {
-			return (T) e;
-		}
+		return (T) weekWordRepository.findByIdx(wordIdx);
 	}
-	
+
 	public <T extends Object> T inWord(Word word) throws Exception {
 		return (T) weekWordRepository.save(word);
 	}
@@ -46,5 +47,5 @@ public class WordProcess {
 	public void deWord(Word word) throws Exception {
 		weekWordRepository.delete(word);
 	}
-	
+
 }

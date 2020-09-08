@@ -3,11 +3,13 @@ package com.mercury.process.grade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.grade.Grade;
 import com.mercury.jpa.repository.grade.GradeRepository;
 
 @Component
+@Transactional
 @SuppressWarnings("unchecked")
 public class GradeProcess {
 
@@ -30,13 +32,8 @@ public class GradeProcess {
 	}
 
 	public <T extends Object> T deGrade(Grade grade) throws Exception {
-		try {
-			gradeRepository.delete(grade);
-			
-			return (T) Boolean.TRUE;
-		} catch (Exception e) {
-			return (T) e;
-		}
+		gradeRepository.delete(grade);
+		return (T) Boolean.TRUE;
 	}
 	
 }

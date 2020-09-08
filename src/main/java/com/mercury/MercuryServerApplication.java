@@ -223,12 +223,12 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 				
 				if(temps.size() == 0) {
 					mailTemp.saveAll(Arrays.asList(
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("출금 승인").tempName("approvaldrawals.html").build(),
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("이메일 인증").tempName("certification.html").build(),
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("뉴스레터").tempName("newsletter.html").build(),
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("비밀번호 찾기").tempName("password.html").build(),
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("출금 요청").tempName("requestdrawals.html").build(),
-						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("").title("이메일 찾기").tempName("username.html").build()
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("ApprovalWithdraw").title("출금 승인").tempName("approvaldrawals.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("Certification").title("이메일 인증").tempName("certification.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("NewsLetter").title("뉴스레터").tempName("newsletter.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("FindPw").title("비밀번호 찾기").tempName("password.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("RequestWithdraw").title("출금 요청").tempName("requestdrawals.html").build(),
+						MailTemplate.builder().idx(UUIDUtil.randomString()).insertDate(DateUtil.now()).type("FindId").title("이메일 찾기").tempName("username.html").build()
 					));
 				}
 				

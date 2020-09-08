@@ -15,7 +15,7 @@ public interface DateUtil {
 	 * @return String
 	 * 
 	 */
-	public static String now() {
+	public static String now() throws Exception {
 		LocalDateTime now = LocalDateTime.now();
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

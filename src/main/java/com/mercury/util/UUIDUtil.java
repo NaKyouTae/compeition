@@ -14,7 +14,7 @@ public interface UUIDUtil {
 	 * @return String
 	 * 
 	 */
-	public static String randomString() {
+	public static String randomString() throws Exception {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 }

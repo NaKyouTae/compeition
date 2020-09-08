@@ -2,11 +2,13 @@ package com.mercury.process.role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.role.Role;
 import com.mercury.jpa.repository.role.RoleRepository;
 
 @Component
+@Transactional
 @SuppressWarnings("unchecked")
 public class RoleProcess {
 	

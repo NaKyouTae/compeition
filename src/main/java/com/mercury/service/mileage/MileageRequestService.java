@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.mileage.MileageRequest;
 import com.mercury.process.mileage.MileageRequestProcess;
@@ -15,16 +16,17 @@ import com.mercury.process.mileage.MileageRequestProcess;
  * @author nkt
  *
  *
- * Create by User Date : 2020. 9. 1.
+ *         Create by User Date : 2020. 9. 1.
  *
  */
 @Service
+@Transactional
 @SuppressWarnings("unchecked")
 public class MileageRequestService {
-	
+
 	@Autowired
 	private MileageRequestProcess mileageRequestProcess;
-	
+
 	/**
 	 * 
 	 * 마일리지 출금 요청 승인
@@ -35,14 +37,9 @@ public class MileageRequestService {
 	 * @throws Exception
 	 */
 	public <T extends Object> T approvalMileage(String idx) throws Exception {
-		try {
-			return (T) mileageRequestProcess.approvalMileage(idx);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+		return (T) mileageRequestProcess.approvalMileage(idx);
 	}
-	
+
 	/**
 	 * 마일리지 사용자 명으로 조회
 	 * 
@@ -51,15 +48,11 @@ public class MileageRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T seMileageByUserName(String userName) throws Exception {
-		try {
-			return mileageRequestProcess.seMileageByUserName(userName);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+	public <T extends Object> T seMileageByUserName(String userName)
+			throws Exception {
+		return mileageRequestProcess.seMileageByUserName(userName);
 	}
-	
+
 	/**
 	 * 마일리지 목록 전체 조회
 	 * 
@@ -68,14 +61,9 @@ public class MileageRequestService {
 	 * @throws Exception
 	 */
 	public <T extends Object> T seMileages() throws Exception {
-		try {
-			return mileageRequestProcess.seMileages();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+		return mileageRequestProcess.seMileages();
 	}
-	
+
 	/**
 	 * 마일리지 일렬번호로 조회
 	 * 
@@ -85,14 +73,9 @@ public class MileageRequestService {
 	 * @throws Exception
 	 */
 	public <T extends Object> T seMileage(String idx) throws Exception {
-		try {
-			return mileageRequestProcess.seMileage(idx);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+		return mileageRequestProcess.seMileage(idx);
 	}
-	
+
 	/**
 	 * 
 	 * 마일리지 출금 요청
@@ -102,15 +85,11 @@ public class MileageRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T requestMileage(MileageRequest mileage) throws Exception {
-		try {
-			return mileageRequestProcess.requestMileage(mileage);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+	public <T extends Object> T requestMileage(MileageRequest mileage)
+			throws Exception {
+		return mileageRequestProcess.requestMileage(mileage);
 	}
-	
+
 	/**
 	 * 마일리지 요청 이력 삭제
 	 * 
@@ -119,12 +98,8 @@ public class MileageRequestService {
 	 * @return
 	 * @throws Exception
 	 */
-	public <T extends Object> T deMileageAllEntities(List<MileageRequest> mileage) throws Exception {
-		try {
-			return mileageRequestProcess.deMileageAllEntities(mileage);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+	public <T extends Object> T deMileageAllEntities(
+			List<MileageRequest> mileage) throws Exception {
+		return mileageRequestProcess.deMileageAllEntities(mileage);
 	}
 }

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.love.Love;
 import com.mercury.jpa.model.three.Three;
@@ -23,77 +24,74 @@ import com.mercury.jpa.repository.word.WordRepository;
 import com.mercury.util.DateUtil;
 
 @Component
+@Transactional
 @SuppressWarnings("unchecked")
 public class ThreeProcess {
-	private static final Logger LOGGER = LogManager.getLogger(ThreeProcess.class);
-	
+	private static final Logger LOGGER = LogManager
+			.getLogger(ThreeProcess.class);
+
 	@Autowired
 	private ThreeRepository threeRepository;
 
 	@Autowired
 	private WordRepository weekWordRepository;
-	
+
 	@Autowired
 	private LoveRepository loveRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public <T extends Object> T getTotalPoint(String userIdx) throws Exception {
-		try {
-			return (T) threeRepository.getTotalPoint(userIdx);
-		} catch (Exception e) {
-			return (T) e;
-		}
+		return (T) threeRepository.getTotalPoint(userIdx);
 	}
-	
+
 	public <T extends Object> T getPopular() throws Exception {
-		try {
-			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-			Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "THREE");
-			
-			List<Three> three = new ArrayList<>(); 
-			if(dto == null) {
-				three = null; 
-			}else {			
-				three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "point", "insertDate"));
-			}
-			
-			return (T) three;
-		} catch (Exception e) {
-			return(T) e;
+		String now = LocalDateTime.now()
+				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		Word dto = weekWordRepository
+				.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(
+						now, now, "THREE");
+
+		List<Three> three = new ArrayList<>();
+		if (dto == null) {
+			three = null;
+		} else {
+			three = threeRepository.findByWordIdx(dto.getIdx(),
+					Sort.by(Sort.Direction.DESC, "point", "insertDate"));
 		}
+
+		return (T) three;
 	}
-	
+
 	public <T extends Object> T getList() throws Exception {
 		return (T) threeRepository.findAll();
 	}
-	
+
 	public <T extends Object> T seByUser(String userIdx) throws Exception {
-		List<Three> three = threeRepository.findByUserIdx(userIdx, Sort.by(Sort.Direction.DESC, "insertDate"));
-		
+		List<Three> three = threeRepository.findByUserIdx(userIdx,
+				Sort.by(Sort.Direction.DESC, "insertDate"));
 		return (T) three;
 	}
-	
+
 	public <T extends Object> T seThreeByIdx(String idx) throws Exception {
-		try {
-			return (T) threeRepository.findByIdx(idx); 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+		return (T) threeRepository.findByIdx(idx);
 	}
 	public <T extends Object> T seByWord() throws Exception {
-		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		Word dto = weekWordRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(now, now, "THREE");
-		
-		List<Three> three = new ArrayList<>(); 
-		if(dto == null) {
-			three = null; 
-		}else {			
-			three =	threeRepository.findByWordIdx(dto.getIdx(), Sort.by(Sort.Direction.DESC, "insertDate"));
+		String now = LocalDateTime.now()
+				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		Word dto = weekWordRepository
+				.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndWordGroup(
+						now, now, "THREE");
+
+		List<Three> three = new ArrayList<>();
+		if (dto == null) {
+			three = null;
+		} else {
+			three = threeRepository.findByWordIdx(dto.getIdx(),
+					Sort.by(Sort.Direction.DESC, "insertDate"));
 		}
-		
+
 		return (T) three;
 	}
 
@@ -101,44 +99,35 @@ public class ThreeProcess {
 		return (T) threeRepository.save(three);
 	}
 	public <T extends Object> T upThree(Three three) throws Exception {
-		
+
 		Three dbThree = threeRepository.findByIdx(three.getIdx());
-		
-		if(!dbThree.getPoint().equals(three.getPoint())) {
-			
+
+		if (!dbThree.getPoint().equals(three.getPoint())) {
+
 			Love love = new Love();
 			love.setIdx(UUID.randomUUID().toString().replace("-", ""));
 			love.setInsertDate(DateUtil.now());
 			love.setContentIdx(three.getIdx());
-			
+
 			User user = userRepository.findByUsername(three.getLoveName());
-			
+
 			love.setUserIdx(user.getIdx());
-			
+
 			loveRepository.save(love);
 			three.setLoveName("");
 		}
-		
+
 		return (T) threeRepository.save(three);
 	}
-	
+
 	public <T extends Object> T deThree(Three three) throws Exception {
-		try {
-			threeRepository.delete(three);
-			return (T) Boolean.TRUE;
-		} catch (Exception e) {
-			 e.printStackTrace();
-			 return (T) e;
-		}
+		threeRepository.delete(three);
+		return (T) Boolean.TRUE;
 	}
-	
-	public <T extends Object> T deThreeAllEntities(List<Three> threes) throws Exception {
-		try {
-			threeRepository.deleteAll(threes);
-			return (T) Boolean.TRUE;
-		} catch (Exception e) {
-			 e.printStackTrace();
-			 return (T) e;
-		}
+
+	public <T extends Object> T deThreeAllEntities(List<Three> threes)
+			throws Exception {
+		threeRepository.deleteAll(threes);
+		return (T) Boolean.TRUE;
 	}
 }

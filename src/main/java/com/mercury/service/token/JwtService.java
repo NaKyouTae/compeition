@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.user.UserGrade;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
@@ -25,6 +26,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
+@Transactional
 @SuppressWarnings("unchecked")
 public class JwtService {
 	
@@ -157,11 +159,6 @@ public class JwtService {
 	}
 	
 	public <T extends Object> T getUserPayLoad(String token) throws Exception{
-		try {
-			return (T) Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return (T) e;
-		}
+		return (T) Jwts.parser().setSigningKey(userKey).parseClaimsJws(token).getBody();
 	}
 }
