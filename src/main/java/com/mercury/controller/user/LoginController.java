@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -117,21 +118,17 @@ public class LoginController {
 					String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + u_exp));
 					
 					// Refresh Token & Access Token Cookie에 입력
-					headers.add("AWT", accessJWT);
-					headers.add("RWT", refreshJWT);
-					headers.add("UWT", userJWT);
+//					headers.add("AWT", accessJWT);
+//					headers.add("RWT", refreshJWT);
+//					headers.add("UWT", userJWT);
 					
 					ResponseCookie awtCookie = ResponseCookie.from("AWT", accessJWT).sameSite("None").build();
 					
-					
-//					response.addCookie(new Cookie("AWT", accessJWT));
-//					response.addCookie(new Cookie("RWT", refreshJWT));
-//					response.addCookie(new Cookie("UWT", userJWT));
-//					
-//					headers.add("Access-Control-Allow-Origin", "http://localhost:4300");
-//					headers.add("Access-Control-Allow-Credentials", "true");
-//					headers.add("Set-Cookie", awtCookie.toString());
 					headers.add("loginType", "default");
+					
+					response.addCookie(new Cookie("AWT", accessJWT));
+					response.addCookie(new Cookie("RWT", refreshJWT));
+					response.addCookie(new Cookie("UWT", userJWT));
 					
 					// Refresh Token DB에 입력
 					TokenRefresh refreshToken = new TokenRefresh();

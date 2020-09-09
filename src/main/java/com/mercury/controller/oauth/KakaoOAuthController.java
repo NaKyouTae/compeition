@@ -96,21 +96,12 @@ public class KakaoOAuthController {
 			String Access = rs.getBody().get("access_token").toString();
 			String Refresh = rs.getBody().get("refresh_token").toString();
 			
-			
-			Cookie accessCookie = new Cookie("AWT", Access);
-			accessCookie.setPath("http://127.0.0.1:4300");
-			
-			Cookie refreshCookie = new Cookie("RWT", Refresh);
-			refreshCookie.setPath("http://127.0.0.1:4300");
-			
-			response.addCookie(accessCookie);
-			response.addCookie(refreshCookie);
+			response.addCookie(new Cookie("AWT", Access));
+			response.addCookie(new Cookie("RWT", Refresh));
 			
 			URI redirect = new URI("http://127.0.0.1:4300");
 			HttpHeaders reHeaders = new HttpHeaders();
 			reHeaders.setLocation(redirect);
-//			reHeaders.add("Set-Cookie", "AWT=" + Access);
-//			reHeaders.add("Set-Cookie", "RWT=" + Refresh);
 			reHeaders.add("loginType", "kakao");
 			
 			KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
@@ -128,10 +119,7 @@ public class KakaoOAuthController {
 			
 			String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + exp));
 			
-//			reHeaders.add("Set-Cookie", "UWT=" + userJWT);
-			Cookie userCookie = new Cookie("UWT", userJWT);
-			userCookie.setPath("http://127.0.0.1:4300");
-			response.addCookie(userCookie);
+			response.addCookie(new Cookie("UWT", userJWT));
 			
 			{
 				// Refresh Token DB에 입력
