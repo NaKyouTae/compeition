@@ -49,7 +49,7 @@ public class MenuService {
 		List<Menu> list = new ArrayList<>();
 
 		if (pidx.equals("null")) {
-			list = menuProcess.getListByParentIsNull();
+			list = menuProcess.getParentIsNullOrderByMenuOrderAsc();
 		} else {
 			list = menuProcess.getListByLevel(pidx);
 		}

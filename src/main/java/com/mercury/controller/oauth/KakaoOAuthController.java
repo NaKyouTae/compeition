@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -72,9 +71,6 @@ public class KakaoOAuthController {
 	
 	@GetMapping("/kakao")
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4300");
-		response.addHeader("Access-Control-Allow-Credentials", "true");
-		
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		
 		try {
@@ -96,21 +92,18 @@ public class KakaoOAuthController {
 			String Access = rs.getBody().get("access_token").toString();
 			String Refresh = rs.getBody().get("refresh_token").toString();
 			
-			response.addCookie(new Cookie("AWT", Access));
-			response.addCookie(new Cookie("RWT", Refresh));
-			
-			URI redirect = new URI("http://127.0.0.1:4300");
+			URI redirect = new URI("http://localhost:4300");
 			HttpHeaders reHeaders = new HttpHeaders();
-			reHeaders.setLocation(redirect);
+			reHeaders.add("AWT", Access);
+			reHeaders.add("RWT", Refresh);
 			reHeaders.add("loginType", "kakao");
 			
 			KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
 			
-			
 			Boolean userCheck = userService.checkUserName(kUser.getProperties().getNickname());
 			
 			if(!userCheck){
-				// 회원 가입 프로세스			
+				// 회원 가입 프로세스
 				kakaoOAuthService.kakaoSignUp(kUser);
 			}
 			
@@ -119,7 +112,8 @@ public class KakaoOAuthController {
 			
 			String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + exp));
 			
-			response.addCookie(new Cookie("UWT", userJWT));
+			reHeaders.add("UWT", userJWT);
+			reHeaders.setLocation(redirect);
 			
 			{
 				// Refresh Token DB에 입력

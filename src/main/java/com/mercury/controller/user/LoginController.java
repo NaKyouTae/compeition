@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -86,9 +84,6 @@ public class LoginController {
 	public ResponseEntity<ControllerResponse<Boolean>> Login(@RequestBody Map<String, Object> map,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
-		response.addHeader("Access-Control-Allow-Origin", "http://localhost:4300");
-		response.addHeader("Access-Control-Allow-Credentials", "true");
-		
 		String username = (String)map.get("username");
 		String password = (String)map.get("password");
 		
@@ -118,17 +113,10 @@ public class LoginController {
 					String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + u_exp));
 					
 					// Refresh Token & Access Token Cookie에 입력
-//					headers.add("AWT", accessJWT);
-//					headers.add("RWT", refreshJWT);
-//					headers.add("UWT", userJWT);
-					
-					ResponseCookie awtCookie = ResponseCookie.from("AWT", accessJWT).sameSite("None").build();
-					
+					headers.add("AWT", accessJWT);
+					headers.add("RWT", refreshJWT);
+					headers.add("UWT", userJWT);
 					headers.add("loginType", "default");
-					
-					response.addCookie(new Cookie("AWT", accessJWT));
-					response.addCookie(new Cookie("RWT", refreshJWT));
-					response.addCookie(new Cookie("UWT", userJWT));
 					
 					// Refresh Token DB에 입력
 					TokenRefresh refreshToken = new TokenRefresh();

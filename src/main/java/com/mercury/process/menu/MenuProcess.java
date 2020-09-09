@@ -27,8 +27,8 @@ public class MenuProcess {
 		return (T) menuRepository
 				.findAll(Sort.by(Sort.Direction.ASC, "menuOrder"));
 	}
-	public <T extends Object> T getListByParentIsNull() throws Exception {
-		return (T) menuRepository.findByParentIsNull();
+	public <T extends Object> T getParentIsNullOrderByMenuOrderAsc() throws Exception {
+		return (T) menuRepository.findByParentIsNullOrderByMenuOrderAsc();
 	}
 	public <T extends Object> T getListByLevel(String pidx) throws Exception {
 		return (T) menuRepository.findByParent(pidx,
