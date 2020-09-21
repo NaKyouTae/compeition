@@ -73,6 +73,8 @@ public class KakaoOAuthController {
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		
+		HttpHeaders headers = new HttpHeaders();
+		
 		try {
 			RestTemplate rest = new RestTemplate();
 			
@@ -82,7 +84,6 @@ public class KakaoOAuthController {
 			map.add("redirect_uri", "http://localhost:8090/oauth/kakao");
 			map.add("code", code);
 			
-			HttpHeaders headers = new HttpHeaders();
 			headers.add("Context-type", "application/json");
 			
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
@@ -93,10 +94,10 @@ public class KakaoOAuthController {
 			String Refresh = rs.getBody().get("refresh_token").toString();
 			
 			URI redirect = new URI("http://localhost:4300");
-			HttpHeaders reHeaders = new HttpHeaders();
-			reHeaders.add("AWT", Access);
-			reHeaders.add("RWT", Refresh);
-			reHeaders.add("loginType", "kakao");
+			headers.add("AWT", Access);
+			headers.add("RWT", Refresh);
+			headers.add("loginType", "kakao");
+			
 			
 			KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
 			
@@ -112,8 +113,9 @@ public class KakaoOAuthController {
 			
 			String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + exp));
 			
-			reHeaders.add("UWT", userJWT);
-			reHeaders.setLocation(redirect);
+			
+			headers.add("UWT", userJWT);
+			headers.setLocation(redirect);
 			
 			{
 				// Refresh Token DB에 입력
@@ -138,15 +140,38 @@ public class KakaoOAuthController {
 				loginHistoryService.inLoginHistory(his);
 			}
 			
-			return (T) new ResponseEntity<>(reHeaders, HttpStatus.SEE_OTHER);
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Kakao Login :) ");
+			res.setResult(null);
+			
+//			Cookie AC = new Cookie("AWT", Access);
+//			Cookie RC = new Cookie("RWT", Refresh);
+//			Cookie UC = new Cookie("UWT", userJWT);
+
+//			response.setContentType("application/json");
+//
+//			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//			
+//			response.addHeader("loginType", "kakao");
+//			response.addHeader("UWT", userJWT);
+//			response.addHeader("AWT", Access);
+//			response.addHeader("RWT", Refresh);
+//			
+//			response.addCookie(AC);
+//			response.addCookie(RC);
+//			response.addCookie(UC);
+//
+//			response.sendRedirect("http://localhost:4300/three");
+			
+			return (T) ResponseEntity.status(HttpStatus.SEE_OTHER).headers(headers).body(res);
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());
 			res.setResult(null);
+			
+			return (T) res;
 		}
-		
-		return (T) res;
 	}
 	
 	@GetMapping("/kakao/logout")

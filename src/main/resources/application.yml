@@ -48,4 +48,4 @@ security:
 logging:
   level:
     root: DEBUG
-    org.springframework.transaction: DEBUG
+#    org.springframework.transaction: ERROR

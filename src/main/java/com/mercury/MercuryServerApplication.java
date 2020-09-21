@@ -49,6 +49,7 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("http://localhost:4300", "http://localhost:8090", "http://127.0.0.1:4300", "http://127.0.0.1:8090")
+				.allowedHeaders("*")
 				.allowedMethods("GET", "POST", "PUT", "DELETE")
 				.allowCredentials(true)
 				.maxAge(3600);
