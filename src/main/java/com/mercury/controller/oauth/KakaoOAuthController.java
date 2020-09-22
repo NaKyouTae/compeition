@@ -1,6 +1,5 @@
 package com.mercury.controller.oauth;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.LinkedMultiValueMap;
@@ -93,12 +93,6 @@ public class KakaoOAuthController {
 			String Access = rs.getBody().get("access_token").toString();
 			String Refresh = rs.getBody().get("refresh_token").toString();
 			
-			URI redirect = new URI("http://localhost:4300");
-			headers.add("AWT", Access);
-			headers.add("RWT", Refresh);
-			headers.add("loginType", "kakao");
-			
-			
 			KakaoUserVO kUser = kakaoOAuthService.getKakaoUserInfo(Access);
 			
 			Boolean userCheck = userService.checkUserName(kUser.getProperties().getNickname());
@@ -113,9 +107,6 @@ public class KakaoOAuthController {
 			
 			String userJWT = jwtUtill.createUserToken(custom, new Date(System.currentTimeMillis() + exp));
 			
-			
-			headers.add("UWT", userJWT);
-			headers.setLocation(redirect);
 			
 			{
 				// Refresh Token DB에 입력
@@ -144,26 +135,17 @@ public class KakaoOAuthController {
 			res.setMessage("Success Kakao Login :) ");
 			res.setResult(null);
 			
-//			Cookie AC = new Cookie("AWT", Access);
-//			Cookie RC = new Cookie("RWT", Refresh);
-//			Cookie UC = new Cookie("UWT", userJWT);
+			ResponseCookie AC = ResponseCookie.from("AWT", Access).domain("localhost").secure(true).path("/").sameSite("None").build();
+			ResponseCookie RC = ResponseCookie.from("RWT", Refresh).domain("localhost").secure(true).path("/").sameSite("None").build();
+			ResponseCookie UC = ResponseCookie.from("UWT", userJWT).domain("localhost").secure(true).path("/").sameSite("None").build();
 
-//			response.setContentType("application/json");
-//
-//			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-//			
-//			response.addHeader("loginType", "kakao");
-//			response.addHeader("UWT", userJWT);
-//			response.addHeader("AWT", Access);
-//			response.addHeader("RWT", Refresh);
-//			
-//			response.addCookie(AC);
-//			response.addCookie(RC);
-//			response.addCookie(UC);
-//
-//			response.sendRedirect("http://localhost:4300/three");
+			headers.add("Set-Cookie", "loginType=kakao");
+			headers.add("Set-Cookie", AC.toString());
+			headers.add("Set-Cookie", RC.toString());
+			headers.add("Set-Cookie", UC.toString());
+			headers.add("Location", "http://127.0.0.1:4300");
 			
-			return (T) ResponseEntity.status(HttpStatus.SEE_OTHER).headers(headers).body(res);
+			return (T) new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
