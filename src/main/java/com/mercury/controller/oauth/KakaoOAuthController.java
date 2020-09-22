@@ -3,6 +3,7 @@ package com.mercury.controller.oauth;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +30,6 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
 import com.mercury.service.history.HistoryLoginService;
 import com.mercury.service.oauth.KakaoOAuthService;
-import com.mercury.service.oauth.OauthService;
 import com.mercury.service.token.JwtService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
@@ -39,6 +37,8 @@ import com.mercury.user.CustomUserDetails;
 import com.mercury.util.DateUtil;
 import com.mercury.util.UUIDUtil;
 import com.mercury.vo.kakao.KakaoUserVO;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -61,19 +61,10 @@ public class KakaoOAuthController {
 	private JwtService jwtUtill;
 	
 	@Autowired
-	private OauthService oauthService;
-	
-	@Autowired
-	private AuthenticationManager am;
-	
-	@Autowired
 	private SystemConfigRepository systemConfigRepository;
 	
 	@GetMapping("/kakao")
-	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ControllerResponse<Object> res = new ControllerResponse<>();
-		
-		HttpHeaders headers = new HttpHeaders();
+	public void loinByKakao(String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		try {
 			RestTemplate rest = new RestTemplate();
@@ -81,9 +72,10 @@ public class KakaoOAuthController {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 			map.add("grant_type", "authorization_code");
 			map.add("client_id", "c4d7328a864db7fd90be93def8e00940");
-			map.add("redirect_uri", "http://localhost:8090/oauth/kakao");
+			map.add("redirect_uri", "http://localhost:4300/oauth/kakao");
 			map.add("code", code);
 			
+			HttpHeaders headers = new HttpHeaders();
 			headers.add("Context-type", "application/json");
 			
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
@@ -131,28 +123,45 @@ public class KakaoOAuthController {
 				loginHistoryService.inLoginHistory(his);
 			}
 			
-			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Kakao Login :) ");
-			res.setResult(null);
+			// Cookie, Response			
+			{
+				// Access Token Cookie Create
+				Cookie AC = new Cookie("AWT", Access);
+				Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
+				AC.setMaxAge((Integer) accessInfo.get("expires_in"));
+				AC.setDomain(request.getRemoteHost());
+				AC.setPath("/");
+				
+				// Refresh Token Cookie Create
+				Cookie RC = new Cookie("RWT", Refresh);
+				Map<String, Object> refreshInfo = kakaoOAuthService.getAccessInfo(Refresh);
+				RC.setMaxAge((Integer) refreshInfo.get("expires_in"));
+				RC.setDomain(request.getRemoteHost());
+				RC.setPath("/");
+				
+				// User Token Cookie Create			
+				Cookie UC = new Cookie("UWT", userJWT);
+				Claims u_body = jwtUtill.getUserPayLoad(userJWT);
+				int uMax = (int) u_body.getExpiration().getTime();
+				UC.setMaxAge(uMax);
+				UC.setDomain(request.getRemoteHost());
+				UC.setPath("/");
+				
+				// Login Tyep Cookie Create			
+				Cookie lt = new Cookie("loginType", "kakao");
+				lt.setMaxAge(uMax);
+				lt.setDomain(request.getRemoteHost());
+				lt.setPath("/");
+				
+				response.addCookie(lt);
+				response.addCookie(AC);
+				response.addCookie(RC);
+				response.addCookie(UC);
+				response.sendRedirect("http://localhost:4300");
+			}
 			
-			ResponseCookie AC = ResponseCookie.from("AWT", Access).domain("localhost").secure(true).path("/").sameSite("None").build();
-			ResponseCookie RC = ResponseCookie.from("RWT", Refresh).domain("localhost").secure(true).path("/").sameSite("None").build();
-			ResponseCookie UC = ResponseCookie.from("UWT", userJWT).domain("localhost").secure(true).path("/").sameSite("None").build();
-
-			headers.add("Set-Cookie", "loginType=kakao");
-			headers.add("Set-Cookie", AC.toString());
-			headers.add("Set-Cookie", RC.toString());
-			headers.add("Set-Cookie", UC.toString());
-			headers.add("Location", "http://127.0.0.1:4300");
-			
-			return (T) new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
 		} catch (Exception e) {
 			e.printStackTrace();
-			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
-			res.setMessage(e.getMessage());
-			res.setResult(null);
-			
-			return (T) res;
 		}
 	}
 	
