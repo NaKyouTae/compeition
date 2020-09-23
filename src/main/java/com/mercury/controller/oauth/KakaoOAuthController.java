@@ -65,7 +65,10 @@ public class KakaoOAuthController {
 	private SystemConfigRepository systemConfigRepository;
 	
 	@GetMapping("/kakao")
-	public void loinByKakao(String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ControllerResponse<Object> res = new ControllerResponse<>();
+		
+		HttpHeaders headers = new HttpHeaders();
 		
 		try {
 			RestTemplate rest = new RestTemplate();
@@ -76,7 +79,6 @@ public class KakaoOAuthController {
 			map.add("redirect_uri", "http://localhost:4300/oauth/kakao");
 			map.add("code", code);
 			
-			HttpHeaders headers = new HttpHeaders();
 			headers.add("Context-type", "application/json");
 			
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
@@ -125,26 +127,57 @@ public class KakaoOAuthController {
 			}
 			
 			// Cookie, Response			
-			{
-				Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
-				Claims u_body = jwtUtill.getUserPayLoad(userJWT);
-				
-				Cookie accessCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
-				Cookie refreshCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
-				Cookie userCookie 		= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
-				Cookie loginTypeCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
-
-				response.addCookie(accessCookie);
-				response.addCookie(refreshCookie);
-				response.addCookie(userCookie);
-				response.addCookie(loginTypeCookie);
-				
-				response.sendRedirect("http://localhost:4300");
-			}
+			Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
+			Claims u_body = jwtUtill.getUserPayLoad(userJWT);
 			
+			Cookie accessCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+
+			Cookie aCookie = new Cookie("AWT", Access);
+			aCookie.setMaxAge((Integer) accessInfo.get("expires_in"));
+			aCookie.setSecure(true);
+			aCookie.setHttpOnly(true);
+			aCookie.setPath("/");
+			
+			Cookie rCookie = new Cookie("RWT", Refresh);
+			rCookie.setMaxAge(((Integer) accessInfo.get("expires_in") * 7));
+			rCookie.setSecure(true);
+			rCookie.setHttpOnly(true);
+			rCookie.setPath("/");
+			
+			Cookie uCookie = new Cookie("UWT", userJWT);
+			uCookie.setMaxAge((int) u_body.getExpiration().getTime());
+			uCookie.setSecure(true);
+			uCookie.setHttpOnly(true);
+			uCookie.setPath("/");
+			
+			Cookie lCookie = new Cookie("loginType", "kakao");
+			lCookie.setMaxAge((int) u_body.getExpiration().getTime());
+			lCookie.setSecure(true);
+			lCookie.setHttpOnly(true);
+			lCookie.setPath("/");
+			
+			
+			response.addCookie(aCookie);
+			response.addCookie(rCookie);
+			response.addCookie(uCookie);
+			response.addCookie(lCookie);
+			
+			response.sendRedirect("http://localhost:4300");
+			
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Kakao Login :) ");
+			res.setResult(null);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setMessage(e.getMessage());
+			res.setResult(null);
 		}
+		return (T) res;
 	}
 	
 	@GetMapping("/kakao/logout")
