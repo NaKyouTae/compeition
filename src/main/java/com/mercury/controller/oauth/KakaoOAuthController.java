@@ -34,6 +34,7 @@ import com.mercury.service.token.JwtService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
+import com.mercury.util.CookieUtil;
 import com.mercury.util.DateUtil;
 import com.mercury.util.UUIDUtil;
 import com.mercury.vo.kakao.KakaoUserVO;
@@ -125,38 +126,19 @@ public class KakaoOAuthController {
 			
 			// Cookie, Response			
 			{
-				// Access Token Cookie Create
-				Cookie AC = new Cookie("AWT", Access);
 				Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
-				AC.setMaxAge((Integer) accessInfo.get("expires_in"));
-				AC.setDomain(request.getRemoteHost());
-				AC.setPath("/");
-				
-				// Refresh Token Cookie Create
-				Cookie RC = new Cookie("RWT", Refresh);
-				Map<String, Object> refreshInfo = kakaoOAuthService.getAccessInfo(Refresh);
-				RC.setMaxAge((Integer) refreshInfo.get("expires_in"));
-				RC.setDomain(request.getRemoteHost());
-				RC.setPath("/");
-				
-				// User Token Cookie Create			
-				Cookie UC = new Cookie("UWT", userJWT);
 				Claims u_body = jwtUtill.getUserPayLoad(userJWT);
-				int uMax = (int) u_body.getExpiration().getTime();
-				UC.setMaxAge(uMax);
-				UC.setDomain(request.getRemoteHost());
-				UC.setPath("/");
 				
-				// Login Tyep Cookie Create			
-				Cookie lt = new Cookie("loginType", "kakao");
-				lt.setMaxAge(uMax);
-				lt.setDomain(request.getRemoteHost());
-				lt.setPath("/");
+				Cookie accessCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
+				Cookie refreshCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
+				Cookie userCookie 		= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+				Cookie loginTypeCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+				                                                  
+				response.addCookie(accessCookie);
+				response.addCookie(refreshCookie);
+				response.addCookie(userCookie);
+				response.addCookie(loginTypeCookie);
 				
-				response.addCookie(lt);
-				response.addCookie(AC);
-				response.addCookie(RC);
-				response.addCookie(UC);
 				response.sendRedirect("http://localhost:4300");
 			}
 			
