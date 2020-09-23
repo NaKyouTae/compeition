@@ -2,6 +2,8 @@ package com.mercury.util;
 
 import javax.servlet.http.Cookie;
 
+import com.sun.istack.Nullable;
+
 import lombok.Data;
 
 @Data
@@ -28,12 +30,15 @@ public class CookieUtil {
 		private String value;
 		
 		private String comment;
+		@Nullable
 	    private String domain;
 	    private int maxAge;
+	    @Nullable
 	    private String path;
 	    private boolean secure;
 	    private boolean httpOnly;
 	    private String newValue;
+	    @Nullable
 	    private int version;
 	    
 	    public Builder() {}
