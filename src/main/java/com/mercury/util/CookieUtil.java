@@ -5,7 +5,15 @@ import javax.servlet.http.Cookie;
 import com.sun.istack.Nullable;
 
 import lombok.Data;
-
+/**
+*
+*	Required Variable name, value, comment, maxAge, secure, httpOnly
+*
+* @author nkt
+*
+* Create by User Date : 2020. 9. 23.
+*
+*/
 @Data
 public class CookieUtil {
 	private Cookie cookie;
@@ -24,19 +32,20 @@ public class CookieUtil {
     	
     	this.cookie = cookie;
     }
-
+    
 	public static class Builder {
 		private String name;
 		private String value;
-		
 		private String comment;
-		@Nullable
-	    private String domain;
 	    private int maxAge;
-	    @Nullable
-	    private String path;
 	    private boolean secure;
 	    private boolean httpOnly;
+	    
+	    @Nullable
+	    private String domain;
+	    @Nullable
+	    private String path;
+	    @Nullable
 	    private String newValue;
 	    @Nullable
 	    private int version;
@@ -55,16 +64,8 @@ public class CookieUtil {
 			this.comment = comment;
 			return this;
 		}
-		public Builder domain(String domain) {
-			this.domain = domain;
-			return this;
-		}
 		public Builder maxAge(int maxAge) {
 			this.maxAge = maxAge;
-			return this;
-		}
-		public Builder path(String path) {
-			this.path = path;
 			return this;
 		}
 		public Builder secure(boolean secure) {
@@ -75,10 +76,23 @@ public class CookieUtil {
 			this.httpOnly = httpOnly;
 			return this;
 		}
+		
+		@Nullable
+		public Builder domain(String domain) {
+			this.domain = domain;
+			return this;
+		}
+		@Nullable
+		public Builder path(String path) {
+			this.path = path;
+			return this;
+		}
+		@Nullable
 		public Builder newValue(String newValue) {
 			this.newValue = newValue;
 			return this;
 		}
+		@Nullable
 		public Builder version(int version) {
 			this.version = version;
 			return this;

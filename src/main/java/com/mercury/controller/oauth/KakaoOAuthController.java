@@ -133,7 +133,7 @@ public class KakaoOAuthController {
 				Cookie refreshCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
 				Cookie userCookie 		= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
 				Cookie loginTypeCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
-				                                                  
+
 				response.addCookie(accessCookie);
 				response.addCookie(refreshCookie);
 				response.addCookie(userCookie);
