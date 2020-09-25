@@ -137,33 +137,25 @@ public class KakaoOAuthController {
 
 			Cookie aCookie = new Cookie("AWT", Access);
 			aCookie.setMaxAge((Integer) accessInfo.get("expires_in"));
-			aCookie.setSecure(true);
-			aCookie.setHttpOnly(true);
 			aCookie.setPath("/");
 			
 			Cookie rCookie = new Cookie("RWT", Refresh);
 			rCookie.setMaxAge(((Integer) accessInfo.get("expires_in") * 7));
-			rCookie.setSecure(true);
-			rCookie.setHttpOnly(true);
 			rCookie.setPath("/");
 			
 			Cookie uCookie = new Cookie("UWT", userJWT);
 			uCookie.setMaxAge((int) u_body.getExpiration().getTime());
-			uCookie.setSecure(true);
-			uCookie.setHttpOnly(true);
 			uCookie.setPath("/");
 			
 			Cookie lCookie = new Cookie("loginType", "kakao");
 			lCookie.setMaxAge((int) u_body.getExpiration().getTime());
-			lCookie.setSecure(true);
-			lCookie.setHttpOnly(true);
 			lCookie.setPath("/");
 			
 			
-			response.addCookie(aCookie);
-			response.addCookie(rCookie);
-			response.addCookie(uCookie);
-			response.addCookie(lCookie);
+			response.addCookie(accessCookie);
+			response.addCookie(refreshCookie);
+			response.addCookie(userCookie);
+			response.addCookie(loginTypeCookie);
 			
 			response.sendRedirect("http://localhost:4300");
 			
