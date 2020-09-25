@@ -21,14 +21,13 @@ public class CookieUtil {
     private CookieUtil(Builder builder) {
     	Cookie cookie = new Cookie(builder.name, builder.value);
     	
-    	cookie.setComment(builder.comment);
-        cookie.setDomain(builder.domain);
-        cookie.setMaxAge(builder.maxAge);
-        cookie.setPath(builder.path);
-        cookie.setSecure(builder.secure);
-        cookie.setHttpOnly(builder.httpOnly);
-        cookie.setValue(builder.newValue);
-        cookie.setVersion(builder.version);
+    	cookie.setSecure(builder.secure);
+    	cookie.setHttpOnly(builder.httpOnly);
+    	cookie.setPath(builder.path != null ? builder.path : null);
+    	cookie.setMaxAge(builder.maxAge != 0 ? builder.maxAge : 0);
+    	cookie.setVersion(builder.version != 0 ? builder.version : 0);
+    	cookie.setDomain(builder.domain != null ? builder.domain : null);
+    	cookie.setComment(builder.comment != null ? builder.comment : null);
     	
     	this.cookie = cookie;
     }
@@ -45,8 +44,6 @@ public class CookieUtil {
 	    private String domain;
 	    @Nullable
 	    private String path;
-	    @Nullable
-	    private String newValue;
 	    @Nullable
 	    private int version;
 	    
@@ -85,11 +82,6 @@ public class CookieUtil {
 		@Nullable
 		public Builder path(String path) {
 			this.path = path;
-			return this;
-		}
-		@Nullable
-		public Builder newValue(String newValue) {
-			this.newValue = newValue;
 			return this;
 		}
 		@Nullable

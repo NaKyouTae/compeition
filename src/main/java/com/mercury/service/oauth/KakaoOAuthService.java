@@ -143,7 +143,7 @@ public class KakaoOAuthService {
 		RestTemplate rest = new RestTemplate();
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Context-type", "application/json");
+		headers.add("Context-type", "application/x-www-form-urlencoded;charset=utf-8");
 		headers.add("Authorization", "Bearer " + access);
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(
 				null, headers);
@@ -152,7 +152,7 @@ public class KakaoOAuthService {
 				"https://kapi.kakao.com/v1/user/access_token_info",
 				HttpMethod.GET, entity, String.class);
 		ObjectMapper m = new ObjectMapper();
-		Map<String, String> r = m.readValue(rs.getBody(), Map.class);
+		Map<String, Object> r = m.readValue(rs.getBody(), Map.class);
 
 		return (T) r;
 	}
@@ -161,9 +161,9 @@ public class KakaoOAuthService {
 			throws Exception {
 		Boolean result = Boolean.FALSE;
 
-		Map<String, String> info = getAccessInfo(token);
-
-		Integer exp = Integer.parseInt(info.get("expires_in"));
+		Map<String, Object> info = getAccessInfo(token);
+		
+		Integer exp = (Integer) info.get("expires_in");
 		if (exp > 0) {
 			result = Boolean.TRUE;
 		}
@@ -178,18 +178,18 @@ public class KakaoOAuthService {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("grant_type", "refresh_token");
 		map.add("client_id", "c4d7328a864db7fd90be93def8e00940");
-		map.add("refresh", refresh);
+		map.add("refresh_token", refresh);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Context-type", "application/json");
+		headers.add("Context-type", "application/x-www-form-urlencoded;charset=utf-8");
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map,
 				headers);
 
 		ResponseEntity<String> rs = rest.exchange(
-				"https://kapi.kakao.com/v1/user/access_token_info",
+				"https://kauth.kakao.com/oauth/token",
 				HttpMethod.POST, entity, String.class);
 		ObjectMapper m = new ObjectMapper();
-		Map<String, String> r = m.readValue(rs.getBody(), Map.class);
+		Map<String, Object> r = m.readValue(rs.getBody(), Map.class);
 
 		return (T) r;
 	}

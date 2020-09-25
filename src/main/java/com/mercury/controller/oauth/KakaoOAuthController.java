@@ -130,28 +130,11 @@ public class KakaoOAuthController {
 			Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
 			Claims u_body = jwtUtill.getUserPayLoad(userJWT);
 			
-			Cookie accessCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
-			Cookie refreshCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
-			Cookie userCookie 		= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
-			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain(request.getRemoteHost()).path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
 
-			Cookie aCookie = new Cookie("AWT", Access);
-			aCookie.setMaxAge((Integer) accessInfo.get("expires_in"));
-			aCookie.setPath("/");
-			
-			Cookie rCookie = new Cookie("RWT", Refresh);
-			rCookie.setMaxAge(((Integer) accessInfo.get("expires_in") * 7));
-			rCookie.setPath("/");
-			
-			Cookie uCookie = new Cookie("UWT", userJWT);
-			uCookie.setMaxAge((int) u_body.getExpiration().getTime());
-			uCookie.setPath("/");
-			
-			Cookie lCookie = new Cookie("loginType", "kakao");
-			lCookie.setMaxAge((int) u_body.getExpiration().getTime());
-			lCookie.setPath("/");
-			
-			
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
