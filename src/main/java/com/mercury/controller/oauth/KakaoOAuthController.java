@@ -159,14 +159,14 @@ public class KakaoOAuthController {
 	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpSession session) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		try {
-			Object rs = kakaoOAuthService.kakaoLogOut(acess);
+			res.setResultCode(HttpStatus.OK);
+			res.setMessage("Success Log Out by Kakao :) ");
+			res.setResult(kakaoOAuthService.kakaoLogOut(acess));
+
 			session.removeAttribute("AWT");
 			session.removeAttribute("RWT");
 			session.removeAttribute("UWT");
-			
-			res.setResultCode(HttpStatus.OK);
-			res.setMessage("Success Log Out by Kakao :) ");
-			res.setResult(rs);
+			session.removeAttribute("loginType");
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -177,12 +177,12 @@ public class KakaoOAuthController {
 	}
 	
 	@DeleteMapping("/kakao/withdrawal")
-	public <T extends Object> T withdrawal(@RequestBody User user) throws Exception {
+	public <T extends Object> T withdrawal(@RequestBody User user, String access) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Withdrawal by Kakao :) ");
-			res.setResult(kakaoOAuthService.kakaoWithdrawal(user));
+			res.setResult(kakaoOAuthService.kakaoWithdrawal(user, access));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);

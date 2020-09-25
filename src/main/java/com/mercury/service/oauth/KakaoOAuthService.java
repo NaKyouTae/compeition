@@ -35,7 +35,19 @@ public class KakaoOAuthService {
 	@Autowired
 	private UserService userService;
 
-	public <T extends Object> T kakaoWithdrawal(User user) throws Exception {
+	public <T extends Object> T kakaoWithdrawal(User user, String access) throws Exception {
+		RestTemplate rest = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Context-type", "application/json");
+		headers.add("Authorization", "Bearer " + access);
+
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
+		Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
+		
+		// 삭제된 사용자와 요청된 사용자의 일렬번호가 다를 경우 False를 Return 한다.
+		if(!user.getIdx().equals(rs)) return (T) Boolean.FALSE;
+		
 		return (T) userService.destoryUser(user);
 	}
 
@@ -99,17 +111,13 @@ public class KakaoOAuthService {
 	public <T extends Object> T kakaoLogOut(String access) throws Exception {
 		RestTemplate rest = new RestTemplate();
 
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-		map.add("Authorization", "Bearer " + access);
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Context-type", "application/json");
+		headers.add("Authorization", "Bearer " + access);
 
-		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map,
-				headers);
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
 
-		Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout",
-				entity, Object.class);
+		Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
 		return (T) rs;
 	}
 

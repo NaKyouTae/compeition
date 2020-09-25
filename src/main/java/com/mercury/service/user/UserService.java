@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.jpa.model.grade.Grade;
+import com.mercury.jpa.model.mail.NewsLetter;
 import com.mercury.jpa.model.mileage.Mileage;
 import com.mercury.jpa.model.mileage.MileageRequest;
 import com.mercury.jpa.model.role.Role;
@@ -19,6 +20,7 @@ import com.mercury.jpa.model.user.User;
 import com.mercury.jpa.model.user.UserGrade;
 import com.mercury.jpa.model.user.UserNotice;
 import com.mercury.jpa.model.user.UserRole;
+import com.mercury.jpa.repository.mail.NewsLetterRepository;
 import com.mercury.jpa.repository.role.RoleRepository;
 import com.mercury.jpa.repository.user.UserGradeRepository;
 import com.mercury.jpa.repository.user.UserNoticeRepository;
@@ -63,6 +65,8 @@ public class UserService implements UserDetailsService {
 	private UserGradeRepository userGradeRepository;
 	@Autowired
 	private UserNoticeRepository userNoticeRepository;
+	@Autowired 
+	private NewsLetterRepository newsLetterRepository;
 
 	public <T extends Object> T findPW(String username, String email)
 			throws Exception {
@@ -215,35 +219,33 @@ public class UserService implements UserDetailsService {
 	 */
 	public <T extends Object> T destoryUser(User user) throws Exception {
 		// User Role Delete All By UserName
-		List<UserRole> roles = userRoleRepository
-				.findByUserName(user.getUsername());
+		List<UserRole> roles = userRoleRepository.findByUserName(user.getUsername());
 		userRoleRepository.deleteAll(roles);
 
 		// User Notice Delete All By UserName
-		List<UserNotice> notices = userNoticeRepository
-				.findByUserName(user.getUsername());
+		List<UserNotice> notices = userNoticeRepository.findByUserName(user.getUsername());
 		userNoticeRepository.deleteAll(notices);
 
 		// User Grade Delete All By UserName
-		UserGrade grade = userGradeRepository
-				.findByUserName(user.getUsername());
+		UserGrade grade = userGradeRepository.findByUserName(user.getUsername());
 		userGradeRepository.delete(grade);
 
 		// Refresh Token Delete All By UserName
-		List<TokenRefresh> refresh = refreshTokenService
-				.seRefreshTokenByUsername(user.getUsername());
+		List<TokenRefresh> refresh = refreshTokenService.seRefreshTokenByUsername(user.getUsername());
 		refreshTokenService.deRefreshTokenAllEntities(refresh);
 
 		// Mileage History Delete All By UserName
-		List<Mileage> mileage = mileageService
-				.seMileageByUserName(user.getUsername());
+		List<Mileage> mileage = mileageService.seMileageByUserName(user.getUsername());
 		mileageService.deMileageAllEntities(mileage);
 
 		// Mileage Request Delete All By User Name
-		List<MileageRequest> mileageRequest = mileageRequestService
-				.seMileageByUserName(user.getUsername());
+		List<MileageRequest> mileageRequest = mileageRequestService.seMileageByUserName(user.getUsername());
 		mileageRequestService.deMileageAllEntities(mileageRequest);
 
+		// NewsLetter Delete All By User Index
+		List<NewsLetter> newsLetters = newsLetterRepository.findByUserIdx(user.getIdx());
+		newsLetterRepository.deleteAll(newsLetters);
+		
 		// User Delete By User
 		userProcess.destoryUser(user);
 		return (T) Boolean.TRUE;
