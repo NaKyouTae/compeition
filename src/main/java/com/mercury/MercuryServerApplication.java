@@ -19,6 +19,7 @@ import com.mercury.common.interceptor.JwtInterceptor;
 import com.mercury.jpa.model.grade.Grade;
 import com.mercury.jpa.model.mail.MailTemplate;
 import com.mercury.jpa.model.menu.Menu;
+import com.mercury.jpa.model.mileage.Mileage;
 import com.mercury.jpa.model.role.Role;
 import com.mercury.jpa.model.system.config.SystemConfig;
 import com.mercury.jpa.model.user.User;
@@ -27,6 +28,7 @@ import com.mercury.jpa.model.user.UserRole;
 import com.mercury.jpa.repository.grade.GradeRepository;
 import com.mercury.jpa.repository.mail.MailTemplateRepository;
 import com.mercury.jpa.repository.menu.MenuRepository;
+import com.mercury.jpa.repository.mileage.MileageRepository;
 import com.mercury.jpa.repository.role.RoleRepository;
 import com.mercury.jpa.repository.system.config.SystemConfigRepository;
 import com.mercury.jpa.repository.user.UserGradeRepository;
@@ -68,7 +70,7 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 	@Bean
 	public CommandLineRunner runner(UserRepository user, UserRoleRepository mapping_role, RoleRepository role,
 			MenuRepository menu, GradeRepository grade, UserGradeRepository user_grade, SystemConfigRepository sysconf,
-			MailTemplateRepository mailTemp) {
+			MailTemplateRepository mailTemp, MileageRepository mileage) {
 		return (args) -> {
 			{
 				List<SystemConfig> syslist = sysconf.findAll();
@@ -162,8 +164,8 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 					String t = UUIDUtil.randomString();
 					
 					user.saveAll(Arrays.asList(
-						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("admin").password(EncodingUtil.encodingPW("skrbxo12!@")).email("qppk123@gmail.com").build(),
-						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).mileage(0).sns("DEFAULT").username("test").password(EncodingUtil.encodingPW("test")).email("qppk123@gmail.com").build()
+						User.builder().idx(a).insertDate(DateUtil.now()).changeDate(null).mileage(1000).sns("DEFAULT").username("admin").password(EncodingUtil.encodingPW("skrbxo12!@")).email("qppk123@gmail.com").build(),
+						User.builder().idx(t).insertDate(DateUtil.now()).changeDate(null).mileage(1000).sns("DEFAULT").username("test").password(EncodingUtil.encodingPW("test")).email("qppk123@gmail.com").build()
 					));
 					
 					String a_idx = UUIDUtil.randomString();
@@ -186,6 +188,11 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 						UserGrade.builder().idx(UUIDUtil.randomString()).userIdx(t).userName("test").gradeIdx(red.getIdx()).gradeName(red.getGradeName()).build()
 					));
 					
+					mileage.saveAll(Arrays.asList(
+							Mileage.builder().idx(UUIDUtil.randomString()).userName("admin").content("가입 축하 1,000 마일리지 지금").paymentMileage(1000).paymentDate(UUIDUtil.randomString()).build(),
+							Mileage.builder().idx(UUIDUtil.randomString()).userName("test").content("가입 축하 1,000 마일리지 지금").paymentMileage(1000).paymentDate(UUIDUtil.randomString()).build()
+					));
+					
 				}
 			}
 
@@ -199,10 +206,10 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 					Role r_admin = role.findByRoleName("ROLE_ADMIN");
 					
 					menu.saveAll(Arrays.asList(
-						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(1).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("삼행시").menuGroup("three").url("/three").build(),
-						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(2).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("이행시").menuGroup("two").url("/two").build(),
-						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(3).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("명예의 전당").menuGroup("honor").url("/honor").build(),
-						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(4).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("공지 사항").menuGroup("notice").url("/notice").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(1).level(1).insertDate(DateUtil.now()).roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("삼행시").menuGroup("three").url("/three").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(2).level(1).insertDate(DateUtil.now()).roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("이행시").menuGroup("two").url("/two").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(3).level(1).insertDate(DateUtil.now()).roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("명예의 전당").menuGroup("honor").url("/honor").build(),
+						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(4).level(1).insertDate(DateUtil.now()).roleIdx(null).roleTitle(null).child(Boolean.FALSE).title("공지 사항").menuGroup("notice").url("/notice").build(),
 						Menu.builder().idx(m_admin).menuOrder(5).level(1).insertDate(DateUtil.now()).parent("null").roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.TRUE).title("관리자").menuGroup("admin").url("/admin").build(),
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(1).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("메뉴").menuGroup("menu").url("/admin/menu").build(),
 						Menu.builder().idx(UUIDUtil.randomString()).menuOrder(2).level(2).insertDate(DateUtil.now()).parent(m_admin).roleIdx(r_admin.getIdx()).roleTitle(r_admin.getRoleName()).child(Boolean.FALSE).title("사용자").menuGroup("user").url("/admin/user").build(),
