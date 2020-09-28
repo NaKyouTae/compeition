@@ -64,7 +64,7 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/**");
+		registry.addInterceptor(jwtInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/**", "/oauth/**");
 	}
 
 	@Bean
@@ -75,7 +75,6 @@ public class MercuryServerApplication implements WebMvcConfigurer {
 			{
 				List<SystemConfig> syslist = sysconf.findAll();
 				if(syslist.size() == 0) {
-					
 					
 					long awtExp = 1 * (1000 * 60 * 5);
 					long jwtExp = 7 * (1000 * 60 * 60 * 24);
