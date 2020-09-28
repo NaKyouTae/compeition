@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ import com.mercury.service.token.JwtService;
 import com.mercury.service.token.TokenRefreshService;
 import com.mercury.service.user.UserService;
 import com.mercury.user.CustomUserDetails;
+import com.mercury.util.CookieUtil;
 import com.mercury.util.DateUtil;
 
 @RestController
@@ -157,21 +159,22 @@ public class LoginController {
 	@GetMapping("/logout")
 	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<Object>();
-		
 		try {
-//			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//			
-//			if (auth != null) {
-//				new SecurityContextLogoutHandler().logout(request, response, auth);
-//			}
-			
-			String awt = request.getHeader("AWT");
 			String rwt = request.getHeader("RWT");
-			String uwt = request.getHeader("UWT");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("LogOut Success :)");
 			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(rwt)));
+			
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+
+			response.addCookie(accessCookie);
+			response.addCookie(refreshCookie);
+			response.addCookie(userCookie);
+			response.addCookie(loginTypeCookie);
 		} catch (Exception e) {
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			res.setMessage(e.getMessage());

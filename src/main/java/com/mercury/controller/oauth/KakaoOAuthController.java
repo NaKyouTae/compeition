@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercury.common.ControllerResponse;
 import com.mercury.jpa.model.history.HistoryLogin;
 import com.mercury.jpa.model.token.TokenRefresh;
@@ -43,7 +43,7 @@ import io.jsonwebtoken.Claims;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/oauth")
+@RequestMapping("/user")
 public class KakaoOAuthController {
 	
 	@Autowired
@@ -76,7 +76,7 @@ public class KakaoOAuthController {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 			map.add("grant_type", "authorization_code");
 			map.add("client_id", "c4d7328a864db7fd90be93def8e00940");
-			map.add("redirect_uri", "http://localhost:4300/oauth/kakao");
+			map.add("redirect_uri", "http://localhost:4300/user/kakao");
 			map.add("code", code);
 			
 			headers.add("Context-type", "application/json");
@@ -156,17 +156,23 @@ public class KakaoOAuthController {
 	}
 	
 	@GetMapping("/kakao/logout")
-	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpSession session) throws Exception {
+	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Log Out by Kakao :) ");
 			res.setResult(kakaoOAuthService.kakaoLogOut(acess));
 
-			session.removeAttribute("AWT");
-			session.removeAttribute("RWT");
-			session.removeAttribute("UWT");
-			session.removeAttribute("loginType");
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+
+			response.addCookie(accessCookie);
+			response.addCookie(refreshCookie);
+			response.addCookie(userCookie);
+			response.addCookie(loginTypeCookie);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -177,12 +183,29 @@ public class KakaoOAuthController {
 	}
 	
 	@DeleteMapping("/kakao/withdrawal")
-	public <T extends Object> T withdrawal(@RequestBody User user, String access) throws Exception {
+	public <T extends Object> T withdrawal(@RequestBody Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
+
+		ObjectMapper om = new ObjectMapper();
+		User user = om.convertValue(map.get("user"), User.class);		
+		
+		String access = (String) map.get("access");
+		
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Withdrawal by Kakao :) ");
 			res.setResult(kakaoOAuthService.kakaoWithdrawal(user, access));
+			
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+
+			response.addCookie(accessCookie);
+			response.addCookie(refreshCookie);
+			response.addCookie(userCookie);
+			response.addCookie(loginTypeCookie);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);

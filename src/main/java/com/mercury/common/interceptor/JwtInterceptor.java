@@ -121,7 +121,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 				// 매번 유저 정보를 확인하여 기존 USER TOKEN과 새로운 USER TOKEN을 비교하여 다를 경우 새로운 USER TOKEN을 RETURN 한다. 
 				///////////////////////////////////////////////////////////////////////////////////////////////////////
 				
-				if(kakaoOAuthService.checkAccessExpires(accHeaderToken).equals(false)) {
+				if(kakaoOAuthService.checkAccessExpires(accHeaderToken) == Boolean.FALSE) {
 					Map<String, Object> reissu = kakaoOAuthService.reIssuanceAccess(refHeaderToken);
 					
 					// 기존 Refresh Token과 새로들어온 Refresh Token이 다르면 Refresh Token을 갱신					

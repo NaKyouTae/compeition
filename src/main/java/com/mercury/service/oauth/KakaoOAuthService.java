@@ -43,10 +43,13 @@ public class KakaoOAuthService {
 		headers.add("Authorization", "Bearer " + access);
 
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
-		Object rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, Object.class);
+		ResponseEntity<String> rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, String.class);
+		
+		ObjectMapper m = new ObjectMapper();
+		Map<String, Object> r = m.readValue(rs.getBody(), Map.class);
 		
 		// 삭제된 사용자와 요청된 사용자의 일렬번호가 다를 경우 False를 Return 한다.
-		if(!user.getIdx().equals(rs)) return (T) Boolean.FALSE;
+		if(!user.getIdx().equals(r.get("id").toString())) return (T) Boolean.FALSE;
 		
 		return (T) userService.destoryUser(user);
 	}
