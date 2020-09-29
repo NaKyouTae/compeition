@@ -156,12 +156,12 @@ public class KakaoOAuthController {
 	}
 	
 	@GetMapping("/logout")
-	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public <T extends Object> T looutByKakao(@RequestParam String state, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Log Out by Kakao :) ");
-			res.setResult(kakaoOAuthService.kakaoLogOut(acess));
+			res.setResult(kakaoOAuthService.kakaoLogOut(state));
 
 			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
 			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
@@ -172,6 +172,8 @@ public class KakaoOAuthController {
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
 			response.addCookie(loginTypeCookie);
+			
+			response.sendRedirect("http://localhost:4300");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
