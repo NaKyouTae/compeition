@@ -43,7 +43,7 @@ import io.jsonwebtoken.Claims;
 
 @RestController
 @SuppressWarnings("unchecked")
-@RequestMapping("/user")
+@RequestMapping("/user/kakao")
 public class KakaoOAuthController {
 	
 	@Autowired
@@ -64,7 +64,7 @@ public class KakaoOAuthController {
 	@Autowired
 	private SystemConfigRepository systemConfigRepository;
 	
-	@GetMapping("/kakao")
+	@GetMapping
 	public <T extends Object> T loinByKakao(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		
@@ -155,7 +155,7 @@ public class KakaoOAuthController {
 		return (T) res;
 	}
 	
-	@GetMapping("/kakao/logout")
+	@GetMapping("/logout")
 	public <T extends Object> T looutByKakao(@RequestParam String acess, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Object> res = new ControllerResponse<>();
 		try {
@@ -182,7 +182,7 @@ public class KakaoOAuthController {
 		return (T) res;
 	}
 	
-	@DeleteMapping("/kakao/withdrawal")
+	@DeleteMapping("/withdrawal")
 	public <T extends Object> T withdrawal(@RequestBody Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ControllerResponse<Boolean> res = new ControllerResponse<>();
 
@@ -205,6 +205,8 @@ public class KakaoOAuthController {
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
 			response.addCookie(loginTypeCookie);
+			
+			response.sendRedirect("http://localhost:4300");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
