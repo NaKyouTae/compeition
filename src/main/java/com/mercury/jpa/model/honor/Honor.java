@@ -23,6 +23,9 @@ public class Honor implements Serializable {
 	@Id
 	@Column
 	private String idx;
+	
+	@Column
+	private String pidx;
 
 	@Column
 	private String userName;
@@ -53,5 +56,14 @@ public class Honor implements Serializable {
 	
 	@Column
 	private String endDate;
-
+	
+	@Column
+	private Integer year;
+	
+	@Column
+	private Integer month;
+	
+	@Column
+	private Integer weeks;
+	
 }
