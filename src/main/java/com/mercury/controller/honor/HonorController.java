@@ -118,4 +118,38 @@ public class HonorController {
 		
 		return (T) res;
 	}
+	
+	@GetMapping("/year")
+	public <T extends Object> T seYearByHonorDistinct() throws Exception{
+		ControllerResponse<T> res = new ControllerResponse<>();
+		try {
+			res.setMessage("Success Search Honor Year In DataBase :) ");
+			res.setResultCode(HttpStatus.OK);
+			res.setResult(honorService.seYearByHonorDistinct());
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setMessage(e.getMessage());
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
+	@GetMapping("/month")
+	public <T extends Object> T seMonthByHonorDistinct() throws Exception{
+		ControllerResponse<T> res = new ControllerResponse<>();
+		try {
+			res.setMessage("Success Search Honor Month In DataBase :) ");
+			res.setResultCode(HttpStatus.OK);
+			res.setResult(honorService.seMonthByHonorDistinct());
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setMessage(e.getMessage());
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
 }

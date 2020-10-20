@@ -1,7 +1,10 @@
 package com.mercury.service.honor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,8 @@ import com.mercury.jpa.model.honor.Honor;
 import com.mercury.process.honor.HonorProcess;
 import com.mercury.vo.honor.HonorVO;
 import com.mercury.vo.honor.HonorVO.HonorWeek;
+
+import one.util.streamex.StreamEx;
 
 @Service
 @Transactional
@@ -119,4 +124,39 @@ public class HonorService {
 	public <T extends Object> T seHonorByPidxIsNullAndYearAndMonth(Integer year, Integer month) throws Exception {
 		return (T) honorProcess.seHonorByPidxIsNullAndYearAndMonth(year, month);
 	}
+	
+	public <T extends Object> T seMonthByHonorDistinct() throws Exception {
+		List<Honor> list = honorProcess.seHonors();
+		
+		List<Honor> month = StreamEx.of(list).distinct(Honor::getMonth).toList();
+		
+		List<Object> result = month.stream().map(item ->{
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("field", item.getMonth().toString() + "월");
+			map.put("value", item.getMonth().toString());
+			
+			return map;
+		}).collect(Collectors.toList());
+		
+		return (T) result;
+	}
+	
+	public <T extends Object> T seYearByHonorDistinct() throws Exception {
+		List<Honor> list = honorProcess.seHonors();
+		
+		List<Honor> year = StreamEx.of(list).distinct(Honor::getYear).toList();
+		
+		List<Object> result = year.stream().map(item ->{
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("field", item.getYear().toString() + "년");
+			map.put("value", item.getYear().toString());
+			
+			return map;
+		}).collect(Collectors.toList());
+		
+		return (T) result;
+	}
+	
 }

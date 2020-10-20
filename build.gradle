@@ -61,6 +61,11 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	
+	// StreamEx
+	compile group: 'one.util', name: 'streamex', version: '0.6.5'
+	
+	
 }
 
 test {

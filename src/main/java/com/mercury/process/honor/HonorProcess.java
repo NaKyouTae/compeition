@@ -42,9 +42,9 @@ public class HonorProcess {
 	}
 	
 	public <T extends Object> T seHonorByPidxIsNull() throws Exception {
-		return (T) honorRepository.findByPidxIsNull(Sort.by(Sort.Direction.DESC, "year", "month"));
+		return (T) honorRepository.findByPidxIsNull(Sort.by(Sort.Direction.DESC, "year", "month", "weeks"));
 	}
 	public <T extends Object> T seHonorByPidxIsNullAndYearAndMonth(Integer year, Integer month) throws Exception {
-		return (T) honorRepository.findByPidxIsNullAndYearAndMonth(year, month, Sort.by(Sort.Direction.DESC, "year", "month"));
+		return (T) honorRepository.findByPidxIsNullAndYearAndMonth(year, month, Sort.by(Sort.Direction.DESC, "year", "month", "weeks"));
 	}
 }

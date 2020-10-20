@@ -47,6 +47,9 @@ public class Honor implements Serializable {
 	
 	@Column
 	private String word;
+	
+	@Column
+	private String description;
 
 	@Column
 	private String createDate;
