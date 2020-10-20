@@ -2,20 +2,19 @@ package com.mercury.vo.honor;
 
 import java.util.List;
 
-import com.mercury.jpa.model.honor.Honor;
-
 import lombok.Data;
 
 @Data
 public class HonorVO {
 	
-	private List<HonorWeek> honors;
+	private List<HonorWeek> root;
 	
 	@Data
 	public static class HonorWeek {	
-		private List<Honor> datas;
-		private String word;
-		private String startDate;
-		private String endDate;
+		private String idx;
+		private Integer year;
+		private Integer month;
+		private Integer weeks;
+		private List<Object> datas;
 	}
 }

@@ -35,5 +35,10 @@ public class Word implements Serializable {
 	private String startDate;
 	@Column
 	private String endDate;
-
+	@Column
+	private Integer year;
+	@Column
+	private Integer month;
+	@Column
+	private Integer weeks;
 }

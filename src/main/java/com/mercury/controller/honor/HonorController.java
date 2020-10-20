@@ -3,6 +3,7 @@ package com.mercury.controller.honor;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,6 +92,23 @@ public class HonorController {
 			res.setMessage("Success Search Honor By Word :) ");
 			res.setResultCode(HttpStatus.OK);
 			res.setResult(honorService.seHonorByWord(word));
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setMessage(e.getMessage());
+			res.setResultCode(HttpStatus.INTERNAL_SERVER_ERROR);
+			res.setResult(null);
+		}
+		
+		return (T) res;
+	}
+	
+	@GetMapping("/date")
+	public <T extends Object> T seHonorByYearAndMonth(@Param("year") Integer year, @Param("month") Integer month) throws Exception{
+		ControllerResponse<HonorVO> res = new ControllerResponse<>();
+		try {
+			res.setMessage("Success Search Honor By Year & Month :) ");
+			res.setResultCode(HttpStatus.OK);
+			res.setResult(honorService.seHonorByYearAndMonth(year, month));
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setMessage(e.getMessage());

@@ -36,4 +36,15 @@ public class HonorProcess {
 	public <T extends Object> T seHonorByWord(String word) throws Exception {
 		return (T) honorRepository.findByWord(word);
 	}
+
+	public <T extends Object> T seHonorByPidx(String pidx) throws Exception {
+		return (T) honorRepository.findByPidx(pidx, Sort.by(Sort.Direction.DESC, "word"));
+	}
+	
+	public <T extends Object> T seHonorByPidxIsNull() throws Exception {
+		return (T) honorRepository.findByPidxIsNull(Sort.by(Sort.Direction.DESC, "year", "month"));
+	}
+	public <T extends Object> T seHonorByPidxIsNullAndYearAndMonth(Integer year, Integer month) throws Exception {
+		return (T) honorRepository.findByPidxIsNullAndYearAndMonth(year, month, Sort.by(Sort.Direction.DESC, "year", "month"));
+	}
 }

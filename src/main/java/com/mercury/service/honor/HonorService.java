@@ -20,48 +20,73 @@ public class HonorService {
 	private HonorProcess honorProcess;
 
 	public <T extends Object> T seHonors() throws Exception {
-		List<Honor> honor_list = honorProcess.seHonors();
-
-		System.out.println(honor_list.toString());
+		List<Honor> honorListPidxNull = seHonorByPidxIsNull();
+		
+		List<HonorWeek> rootList = new ArrayList<>();
+		
 		HonorVO vo = new HonorVO();
-		List<HonorWeek> week = new ArrayList<>();
-		HonorWeek hw = new HonorWeek();
 
-		List<Honor> list = new ArrayList<>();
-		for (int i = 0; i < honor_list.size(); i++) {
-			Honor honor = honor_list.get(i);
+		for (int i = 0; i < honorListPidxNull.size(); i++) {
+			HonorWeek rootVo = new HonorWeek();
+			Honor honorVo = honorListPidxNull.get(i);
 
-			if (i != 0) {
-				if (!honor.getWord().equals(honor_list.get(i - 1).getWord())) {
+			rootVo.setIdx(honorVo.getIdx());
+			rootVo.setYear(honorVo.getYear());
+			rootVo.setMonth(honorVo.getMonth());
+			rootVo.setWeeks(honorVo.getWeeks());
+			
+			List<Object> honors = seHonorByPidx(honorVo.getIdx());
 
-					hw.setStartDate(honor_list.get(i - 1).getStartDate());
-					hw.setEndDate(honor_list.get(i - 1).getEndDate());
-					hw.setWord(honor_list.get(i - 1).getWord());
-					hw.setDatas(list);
-
-					week.add(hw);
-
-					hw = new HonorWeek();
-					list = new ArrayList<>();
-				} else if (honor_list.size() == i + 1) {
-					hw.setStartDate(honor.getStartDate());
-					hw.setEndDate(honor.getEndDate());
-					hw.setWord(honor.getWord());
-					hw.setDatas(list);
-
-					week.add(hw);
-				}
-
-				list.add(honor);
-
-			} else {
-				list.add(honor);
-			}
-
+			rootVo.setDatas(honors);
+			
+			rootList.add(rootVo);
 		}
 
-		vo.setHonors(week);
+		vo.setRoot(rootList);
+		
+		return (T) vo;
+	}
+	
+	public <T extends Object> T seHonorByYearAndMonth(Integer year, Integer month) throws Exception {
+		List<Honor> honorListPidxNull = seHonorByPidxIsNullAndYearAndMonth(year, month);
+		
+		List<HonorWeek> rootList = new ArrayList<>();
+		
+		HonorVO vo = new HonorVO();
 
+		for (int i = 0; i < honorListPidxNull.size(); i++) {
+			HonorWeek rootVo = new HonorWeek();
+			Honor honorVo = honorListPidxNull.get(i);
+
+			rootVo.setIdx(honorVo.getIdx());
+			rootVo.setYear(honorVo.getYear());
+			rootVo.setMonth(honorVo.getMonth());
+			rootVo.setWeeks(honorVo.getWeeks());
+			
+			List<Honor> honors = seHonorByPidx(honorVo.getIdx());
+			
+			List<Honor> threeList = new ArrayList<>();
+			List<Honor> twoList = new ArrayList<>();
+			
+			
+			for(Honor h : honors) {
+				if(h.getWord().length() > 2) {					
+					threeList.add(h);
+				}else {
+					twoList.add(h);
+				}
+			}
+			
+			List<Object> dataList = new ArrayList<>();
+			dataList.add(threeList);
+			dataList.add(twoList);
+			rootVo.setDatas(dataList);
+			
+			rootList.add(rootVo);
+		}
+
+		vo.setRoot(rootList);
+		
 		return (T) vo;
 	}
 
@@ -81,5 +106,17 @@ public class HonorService {
 
 	public <T extends Object> T seHonorByWord(String word) throws Exception {
 		return (T) honorProcess.seHonorByWord(word);
+	}
+	
+	public <T extends Object> T seHonorByPidxIsNull() throws Exception {
+		return (T) honorProcess.seHonorByPidxIsNull();
+	}
+	
+	public <T extends Object> T seHonorByPidx(String pidx) throws Exception {
+		return (T) honorProcess.seHonorByPidx(pidx);
+	}
+	
+	public <T extends Object> T seHonorByPidxIsNullAndYearAndMonth(Integer year, Integer month) throws Exception {
+		return (T) honorProcess.seHonorByPidxIsNullAndYearAndMonth(year, month);
 	}
 }
