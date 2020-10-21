@@ -43,7 +43,7 @@ public class KakaoOAuthService {
 		headers.add("Authorization", "Bearer " + access);
 
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
-		ResponseEntity<String> rs = rest.postForEntity("https://kapi.kakao.com/v1/user/logout", entity, String.class);
+		ResponseEntity<String> rs = rest.postForEntity("https://kapi.kakao.com/v1/user/unlink", entity, String.class);
 		
 		ObjectMapper m = new ObjectMapper();
 		Map<String, Object> r = m.readValue(rs.getBody(), Map.class);
