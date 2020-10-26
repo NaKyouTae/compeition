@@ -9,6 +9,7 @@ public class FiveVO {
 	private String wordIdx;
 	private String contentOne;
 	private String contentTwo;
+	private String contentThree;
 	private String userName;
 	private String userIdx;
 	private String insertDate;
