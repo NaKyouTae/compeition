@@ -22,33 +22,34 @@
 		    <Column name="MESSAGE" pattern="%message" />
 		    <!-- <Column name="THROWABLE" pattern="%ex{full}" /> -->
 	    </JDBC>
-		 <Console name="Console" target="SYSTEM_OUT" follow="true">
-            <PatternLayout pattern="${LOG_PATTERN}"/>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+        	<PatternLayout pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx"/>
         </Console>
+        <File name="File" fileName="D:\nkt\logs\mercury-server.log" append="true">
+	   		<PatternLayout pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx"/>
+	  	</File>
 	</Appenders>
 	<Loggers>
 		
 		<Root level="DEBUG">
+		    <!-- <AppenderRef ref="DataBase" /> -->
 			<AppenderRef ref="Console" />
-		    <AppenderRef ref="DataBase" />
+			<AppenderRef ref="File" />
 		</Root>
-		<!-- 
 		<Logger name="com.mercury.common.filter.LogFilter" level="DEBUG" additivity="false">
 			<AppenderRef ref="Console" />
-		    <AppenderRef ref="DataBase" />
+		    <!-- <AppenderRef ref="DataBase" /> -->
+		    <AppenderRef ref="File" />
 		</Logger>
-		 -->
-		<Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
-			<!-- 
+		<!-- <Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
 			<MarkerFilter marker="LOG4JDBC_SQL" onMatch="DENY" onMismatch="DENY"/>
 			<MarkerFilter marker="LOG4JDBC_CONNECTION" onMatch="DENY" onMismatch="DENY"/>
 			<MarkerFilter marker="LOG4JDBC_AUDIT" onMatch="DENY" onMismatch="DENY"/>
 			<MarkerFilter marker="LOG4JDBC_RESULTSET" onMatch="DENY" onMismatch="DENY"/>
 			<MarkerFilter marker="LOG4JDBC_EXCEPTION" onMatch="ACCEPT" onMismatch="DENY"/>
-			 -->
 			<MarkerFilter marker="LOG4JDBC_RESULTSETTABLE" onMatch="ACCEPT" onMismatch="DENY"/>
 			<AppenderRef ref="Console" />
 		    <AppenderRef ref="DataBase" />
-		</Logger>
+		</Logger> -->
 	</Loggers>
 </Configuration>
