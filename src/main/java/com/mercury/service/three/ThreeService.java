@@ -1,5 +1,6 @@
 package com.mercury.service.three;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,7 +54,12 @@ public class ThreeService {
 
 	public <T extends Object> T seByWord(String userIdx) throws Exception {
 		List<Three> list = threeProcess.seByWord();
-		List<Three> result = checkLoveOfList(list, userIdx);
+		List<Three> result = new ArrayList<>();
+		
+		if(list != null) {
+			 result = checkLoveOfList(list, userIdx);
+		}
+		
 		return (T) result;
 	}
 

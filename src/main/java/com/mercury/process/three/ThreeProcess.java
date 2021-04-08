@@ -54,9 +54,7 @@ public class ThreeProcess {
 						now, now, "THREE");
 
 		List<Three> three = new ArrayList<>();
-		if (dto == null) {
-			three = null;
-		} else {
+		if (dto != null) {
 			three = threeRepository.findByWordIdx(dto.getIdx(),
 					Sort.by(Sort.Direction.DESC, "point", "insertDate"));
 		}

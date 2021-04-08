@@ -44,7 +44,7 @@ public class NewsLetterController {
 	
 	@GetMapping("/users/idxs")
 	public <T extends Object> T seNewsLetterByUserIdx(String userIdx) throws Exception {
-		ControllerResponse<NewsLetter> res = new ControllerResponse<>();
+		ControllerResponse<List<NewsLetter>> res = new ControllerResponse<>();
 		try {
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Search NewsLetter By User Idx :) ");
