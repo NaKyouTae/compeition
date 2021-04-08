@@ -78,10 +78,7 @@ configurations {
 	}
 }
 
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
+task.bootJar {
+    archiveClassifier.set("boot")
+    mainClassName = "com.mercury.MercuryServerApplication"
 }
