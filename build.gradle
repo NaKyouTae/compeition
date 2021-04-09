@@ -7,6 +7,7 @@ plugins {
 
 group = 'com.mercury'
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = '1.8'
 
 repositories {
@@ -39,7 +40,6 @@ dependencies {
 
 	// Mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	compile "com.sun.mail:javax.mail"
 	
 	// DataBase
 	implementation 'com.h2database:h2'
@@ -69,16 +69,11 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+	exclude '**/*'
 }
 
 configurations {
 	all {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 	}
-}
-
-task.bootJar {
-    archiveClassifier.set("boot")
-    mainClassName = "com.mercury.MercuryServerApplication"
 }
