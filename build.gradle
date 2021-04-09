@@ -40,7 +40,7 @@ dependencies {
 
 	// Mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	
+
 	// DataBase
 	implementation 'com.h2database:h2'
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.5.4'

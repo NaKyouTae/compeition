@@ -15,7 +15,7 @@ spring:
     port: 587
     protocol: smtp
     username: qppk123@gmail.com
-    password: skrbxo12!@
+    password: huvozcvaoscprwqj
     properties:
       mail:
         smtp:

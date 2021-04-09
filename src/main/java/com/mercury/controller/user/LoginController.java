@@ -61,7 +61,7 @@ public class LoginController {
 	
 	@CrossOrigin("*")
 	@PostMapping("/signup")
-	public <T> ControllerResponse<Object> SignUp(@RequestBody User user) throws Exception {
+	public <T> ControllerResponse<Object> SignUp(@RequestBody User user) {
 		ControllerResponse<Object> response = new ControllerResponse<Object>();
 
 		try {
@@ -83,7 +83,7 @@ public class LoginController {
 	@CrossOrigin("*")
 	@PostMapping("/login")
 	public ResponseEntity<ControllerResponse<Boolean>> Login(@RequestBody Map<String, Object> map,
-			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		String username = (String)map.get("username");
 		String password = (String)map.get("password");
@@ -156,7 +156,7 @@ public class LoginController {
 	}
 	
 	@GetMapping("/logout")
-	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ControllerResponse<Object> Logout(HttpServletRequest request, HttpServletResponse response) {
 		ControllerResponse<Object> res = new ControllerResponse<Object>();
 		try {
 			String rwt = request.getHeader("RWT");

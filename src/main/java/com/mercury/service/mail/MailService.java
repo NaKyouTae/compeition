@@ -162,8 +162,8 @@ public class MailService {
 	 */
 	public <T extends Object> T certiNumber(String target) throws Exception {
 		// Email이 없다면 False를 Return
-		Boolean check = userService.checkUserEmail(target);
-		if(!check) return (T) Boolean.FALSE;
+//		Boolean check = userService.checkUserEmail(target);
+//		if(!check) return (T) "false";
 		
 		Integer authNumber = (int)(Math.random() * 100000);
 
