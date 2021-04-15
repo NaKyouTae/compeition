@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration status="WARN" monitorInterval="30">
 	<Propertie>	
 		<Property name="logNm">mercury-server</Property>
 		<Property name="layoutPattern">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx</Property>
@@ -28,8 +28,10 @@
         <File name="File" fileName="logs/mercury-server.log" append="true">
 	   		<PatternLayout pattern="${layoutPattern}"/>
 	  	</File> -->
-   		<RollingFile name="File" fileName="logs/${logNm}.log" filePattern="logs/${logNm}_%d{yyyy-MM-dd}_%i.log.gz">
-            <PatternLayout pattern="${layoutPattern}"/>
+   		<RollingFile name="File" fileName="logs/mercury-server.log" filePattern="logs/${logNm}_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout>
+                <Pattern>${layoutPattern}</Pattern>
+            </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="200KB"/>
                 <TimeBasedTriggeringPolicy interval="1"/>
