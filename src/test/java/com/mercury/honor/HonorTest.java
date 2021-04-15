@@ -23,7 +23,7 @@ public class HonorTest {
 	}
 
 	public void seHonor() throws Exception {
-		URI uri = new URI("http://localhost:8090/service/honor");
+		URI uri = new URI("http://127.0.0.1:8090/service/honor");
 
 		RestTemplate rest = new RestTemplate();
 

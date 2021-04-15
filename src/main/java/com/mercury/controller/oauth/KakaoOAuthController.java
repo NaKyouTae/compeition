@@ -76,7 +76,7 @@ public class KakaoOAuthController {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 			map.add("grant_type", "authorization_code");
 			map.add("client_id", "c4d7328a864db7fd90be93def8e00940");
-			map.add("redirect_uri", "http://localhost:4300/user/kakao");
+			map.add("redirect_uri", "http://na-kyutae.com/user/kakao");
 			map.add("code", code);
 			
 			headers.add("Context-type", "application/json");
@@ -130,17 +130,17 @@ public class KakaoOAuthController {
 			Map<String, Object> accessInfo = kakaoOAuthService.getAccessInfo(Access);
 			Claims u_body = jwtUtill.getUserPayLoad(userJWT);
 			
-			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
-			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
-			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
-			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("AWT").value(Access).maxAge((Integer) accessInfo.get("expires_in")).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("RWT").value(Refresh).maxAge(((Integer) accessInfo.get("expires_in") * 7)).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("UWT").value(userJWT).maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("loginType").value("kakao").maxAge((int) u_body.getExpiration().getTime()).build().getCookie();
 
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
 			response.addCookie(loginTypeCookie);
 			
-			response.sendRedirect("http://localhost:4300");
+			response.sendRedirect("http://www.na-kyutae.com");
 			
 			res.setResultCode(HttpStatus.OK);
 			res.setMessage("Success Kakao Login :) ");
@@ -163,17 +163,17 @@ public class KakaoOAuthController {
 			res.setMessage("Success Log Out by Kakao :) ");
 			res.setResult(kakaoOAuthService.kakaoLogOut(access));
 
-			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
-			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
-			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
-			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
 
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
 			response.addCookie(loginTypeCookie);
 			
-			response.sendRedirect("http://localhost:4300");
+			response.sendRedirect("http://www.na-kyutae.com");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,17 +198,17 @@ public class KakaoOAuthController {
 			res.setMessage("Success Withdrawal by Kakao :) ");
 			res.setResult(kakaoOAuthService.kakaoWithdrawal(user, access));
 			
-			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
-			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
-			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
-			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
 
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);
 			response.addCookie(userCookie);
 			response.addCookie(loginTypeCookie);
 			
-			response.sendRedirect("http://localhost:4300");
+			response.sendRedirect("http://www.na-kyutae.com");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

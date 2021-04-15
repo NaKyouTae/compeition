@@ -165,10 +165,10 @@ public class LoginController {
 			res.setMessage("LogOut Success :)");
 			res.setResult(refreshTokenService.deRefreshToken(refreshTokenService.seRefreshToken(rwt)));
 			
-			Cookie accessCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
-			Cookie refreshCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
-			Cookie userCookie 		= new CookieUtil.Builder().domain("localhost").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
-			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("localhost").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
+			Cookie accessCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("AWT").value(null).maxAge(0).build().getCookie();
+			Cookie refreshCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("RWT").value(null).maxAge(0).build().getCookie();
+			Cookie userCookie 		= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("UWT").value(null).maxAge(0).build().getCookie();
+			Cookie loginTypeCookie 	= new CookieUtil.Builder().domain("www.na-kyutae.com").path("/").name("loginType").value(null).maxAge(0).build().getCookie();
 
 			response.addCookie(accessCookie);
 			response.addCookie(refreshCookie);

@@ -32,7 +32,7 @@ public class WordTest {
 	}
 
 	public void seWord() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/weekword/lists");
+		URI uri = new URI("http://127.0.0.1:8080/service/weekword/lists");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -42,7 +42,7 @@ public class WordTest {
 	}
 
 	public void inWord() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/weekword/words");
+		URI uri = new URI("http://127.0.0.1:8080/service/weekword/words");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -67,7 +67,7 @@ public class WordTest {
 	}
 
 	public void upWord() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/weekword/words/4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
+		URI uri = new URI("http://127.0.0.1:8080/service/weekword/words/4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -93,7 +93,7 @@ public class WordTest {
 	}
 
 	public void deWord() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/weekword/words/4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
+		URI uri = new URI("http://127.0.0.1:8080/service/weekword/words/4c1513b3-dfb6-4b25-8aee-aec24b323c8f");
 
 		RestTemplate rest = new RestTemplate();
 

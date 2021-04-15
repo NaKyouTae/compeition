@@ -29,7 +29,7 @@ public class LoginTest {
 		
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 		
-		ResponseEntity<AuthenticationToken> rs = rest.postForEntity("http://localhost:8080/user/login", entity, AuthenticationToken.class);
+		ResponseEntity<AuthenticationToken> rs = rest.postForEntity("http://127.0.0.1:8080/user/login", entity, AuthenticationToken.class);
 		
 		System.out.println(rs.toString());
 	}

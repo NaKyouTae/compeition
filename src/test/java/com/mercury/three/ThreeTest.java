@@ -26,7 +26,7 @@ public class ThreeTest {
 	}
 
 	public void seThree() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/three/lists");
+		URI uri = new URI("http://127.0.0.1:8080/service/three/lists");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -39,7 +39,7 @@ public class ThreeTest {
 		System.out.println(re.toString());
 	}
 	public void inThree() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/three/threes");
+		URI uri = new URI("http://127.0.0.1:8080/service/three/threes");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -62,7 +62,7 @@ public class ThreeTest {
 		System.out.println(re.toString());
 	}
 	public void upThree() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/three/threes/idx");
+		URI uri = new URI("http://127.0.0.1:8080/service/three/threes/idx");
 
 		RestTemplate rest = new RestTemplate();
 
@@ -81,7 +81,7 @@ public class ThreeTest {
 
 	}
 	public void deThree() throws Exception {
-		URI uri = new URI("http://localhost:8080/service/three/threes/idx");
+		URI uri = new URI("http://127.0.0.1:8080/service/three/threes/idx");
 
 		RestTemplate rest = new RestTemplate();
 

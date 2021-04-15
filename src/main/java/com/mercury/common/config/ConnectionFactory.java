@@ -26,7 +26,7 @@ public class ConnectionFactory {
  
         GenericObjectPool<PoolableConnection> pool = new GenericObjectPool<PoolableConnection>();
         DriverManagerConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
-                "jdbc:log4jdbc:mariadb://localhost:3306/mercury", properties
+                "jdbc:log4jdbc:mariadb://127.0.0.1:3306/mercury", properties
         );
         new PoolableConnectionFactory(
                 connectionFactory, pool, null, "SELECT 1", 3, false, false, Connection.TRANSACTION_READ_COMMITTED

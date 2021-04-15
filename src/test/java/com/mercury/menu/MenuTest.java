@@ -36,7 +36,7 @@ public class MenuTest {
 	
 	public void seMenu() throws Exception {
 		
-		URI uri = new URI("http://localhost:8080/service/menu/lists");
+		URI uri = new URI("http://127.0.0.1:8080/service/menu/lists");
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json");
@@ -50,7 +50,7 @@ public class MenuTest {
 	
 	public void inMenu() throws Exception {
 		
-		URI uri = new URI("http://localhost:8080/service/menu/menus");
+		URI uri = new URI("http://127.0.0.1:8080/service/menu/menus");
 		
 		
 		MenuVO vo = new MenuVO();
@@ -91,7 +91,7 @@ public class MenuTest {
 	}
 	public void upMenu() throws Exception {
 		
-		URI uri = new URI("http://localhost:8080/service/menu/menus/dc8f2773-66e9-4482-b4ec-8f3204f7c66b");
+		URI uri = new URI("http://127.0.0.1:8080/service/menu/menus/dc8f2773-66e9-4482-b4ec-8f3204f7c66b");
 		
 		
 		MenuVO vo = new MenuVO();
@@ -116,7 +116,7 @@ public class MenuTest {
 	}
 	public void deMenu() throws Exception {
 		
-		URI uri = new URI("http://localhost:8080/service/menu/menus/367aebc8-9afc-428c-ab72-ba02f3a66cb0");
+		URI uri = new URI("http://127.0.0.1:8080/service/menu/menus/367aebc8-9afc-428c-ab72-ba02f3a66cb0");
 		
 		
 		MenuVO vo = new MenuVO();
