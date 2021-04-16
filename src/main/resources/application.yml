@@ -45,7 +45,8 @@ security:
       token-key-access: isAuthenticated()
     jwt:
       key-uri: http://127.0.0.1:8090/oauth/token_key
-#logging:
+logging:
+   config: classpath:log4j2.xml
 #  level:
 #    root: DEBUG
 #    org.springframework.transaction: ERROR

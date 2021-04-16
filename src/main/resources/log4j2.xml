@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="30">
-	<Propertie>	
-		<Property name="logNm">mercury-server</Property>
-		<Property name="layoutPattern">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx</Property>
-	</Propertie>
 	<Appenders>
 		<!-- 
 		<Appender name="DataBase" class="org.apache.log4j.jdbc.JDBCAppender">
@@ -22,33 +18,31 @@
 		    <Column name="MESSAGE" pattern="%message" />
 		    <Column name="THROWABLE" pattern="%ex{full}" />
 	    </JDBC>
-		<Console name="Console" target="SYSTEM_OUT" follow="true">
-        	<PatternLayout pattern="${layoutPattern}"/>
-        </Console>
         <File name="File" fileName="logs/mercury-server.log" append="true">
 	   		<PatternLayout pattern="${layoutPattern}"/>
 	  	</File> -->
-   		<RollingFile name="File" fileName="logs/mercury-server.log" filePattern="logs/${logNm}_%d{yyyy-MM-dd}_%i.log.gz">
-            <PatternLayout>
-                <Pattern>${layoutPattern}</Pattern>
-            </PatternLayout>
+   		<RollingFile name="File" fileName="logs/mercury-server.log" filePattern="logs/mercury-server_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="200KB"/>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
             <DefaultRolloverStrategy max="10" fileIndex="min"/>
         </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+        	<PatternLayout pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} (%4line) %clr{:}{faint} %m%n%xwEx"/>
+        </Console>
 	</Appenders>
 	<Loggers>
 		
 		<Root level="DEBUG">
-		    <!-- <AppenderRef ref="DataBase" />
-			<AppenderRef ref="Console" /> -->
+		    <!-- <AppenderRef ref="DataBase" /> -->
+			<AppenderRef ref="Console" />
 			<AppenderRef ref="File" />
 		</Root>
 		<Logger name="com.mercury.common.filter.LogFilter" level="DEBUG" additivity="false">
-			<!-- <AppenderRef ref="Console" />
-		    <AppenderRef ref="DataBase" /> -->
+			<!-- <AppenderRef ref="Console" /> -->
+		    <AppenderRef ref="DataBase" />
 		    <AppenderRef ref="File" />
 		</Logger>
 		<!-- <Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
